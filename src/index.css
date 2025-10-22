@@ -1,0 +1,105 @@
+/* src/index.css - compatible Tailwind v4 */
+@import "tailwindcss/theme";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
+/* Palette Dark Mode Elegant */
+:root {
+  --color-primary: #7C3AED;
+  --color-primary-hover: #6D28D9;
+  --color-secondary: #94A3B8;
+  --color-accent: #06B6D4;
+  --color-background: #0B1220;
+  --color-surface: #0F1724;
+  --color-text: #E6EEF8;
+  --color-muted: #94A3B8;
+  --color-border: #1F2937;
+  --color-success: #10B981;
+  --color-danger: #F43F5E;
+  --color-info: #60A5FA;
+}
+
+/* Global application of colors */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: 'Inter', ui-sans-serif, system-ui;
+}
+
+/* Layer utilities pour Tailwind */
+@layer utilities {
+
+  /* Backgrounds */
+  .bg-background { background-color: var(--color-background) !important; }
+  .bg-surface { background-color: var(--color-surface) !important; }
+
+  /* Text */
+  .text-primary { color: var(--color-primary) !important; }
+  .text-secondary { color: var(--color-secondary) !important; }
+  .text-accent { color: var(--color-accent) !important; }
+  .text-muted { color: var(--color-muted) !important; }
+  .text-success { color: var(--color-success) !important; }
+  .text-danger { color: var(--color-danger) !important; }
+  .text-info { color: var(--color-info) !important; }
+
+  /* Borders */
+  .border-color { border-color: var(--color-border) !important; }
+
+  /* Buttons */
+  .btn-primary {
+    @apply px-4 py-2 rounded-md font-medium text-white bg-primary transition-colors duration-200;
+  }
+  .btn-primary:hover { background-color: var(--color-primary-hover) !important; }
+
+  .btn-secondary {
+    @apply px-4 py-2 rounded-md font-medium text-white bg-secondary transition-colors duration-200;
+  }
+  .btn-secondary:hover { background-color: var(--color-secondary) !important; }
+
+  .btn-accent {
+    @apply px-4 py-2 rounded-md font-medium text-white bg-accent transition-colors duration-200;
+  }
+  .btn-accent:hover { background-color: var(--color-accent) !important; }
+
+  /* Inputs */
+  .input-default {
+    @apply p-2 rounded-md bg-surface border border-color text-text w-full transition-all duration-150;
+  }
+  .input-default:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary)/30;
+    border-color: var(--color-primary);
+  }
+  .input-disabled {
+    @apply bg-surface/50 text-muted border border-border cursor-not-allowed;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-surface border border-color rounded-lg p-4 shadow-sm;
+  }
+
+  /* Badges / Labels */
+  .badge-primary {
+    @apply inline-block px-2 py-1 rounded text-xs text-white bg-primary;
+  }
+  .badge-secondary {
+    @apply inline-block px-2 py-1 rounded text-xs text-white bg-secondary;
+  }
+  .badge-accent {
+    @apply inline-block px-2 py-1 rounded text-xs text-white bg-accent;
+  }
+  .badge-success {
+    @apply inline-block px-2 py-1 rounded text-xs text-white bg-success;
+  }
+  .badge-danger {
+    @apply inline-block px-2 py-1 rounded text-xs text-white bg-danger;
+  }
+  .badge-info {
+    @apply inline-block px-2 py-1 rounded text-xs text-white bg-info;
+  }
+
+  /* Hover / focus utilities pour tous les boutons et inputs */
+  .hover-primary:hover { background-color: var(--color-primary-hover) !important; }
+  .focus-ring-primary:focus { box-shadow: 0 0 0 2px var(--color-primary)/30; }
+}
