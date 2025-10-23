@@ -1,0 +1,72 @@
+{
+  "header": {
+    "title": "Portfolio",
+    "nav": {
+      "about": "À propos",
+      "experience": "Expérience", 
+      "skills": "Compétences",
+      "contact": "Contact"
+    }
+  },
+  "hero": {
+    "greeting": "Bonjour et bienvenue dans mon espace personnel. Je m'appelle",
+    "name": "Alexis Cattaruzza",
+    "title": "Développeur Frontend passionné par des interfaces modernes et performantes — React, TypeScript, Tailwind.",
+    "download_cv": "Télécharge mon CV !",
+    "contact": "Me contacter"
+  },
+  "timeline": {
+    "title": "Parcours",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "pause": "Pause",
+    "play": "Lecture",
+    "auto_play": "Lecture automatique",
+    "hover_instruction": "Survolez les points pour découvrir les détails",
+    "items": {
+      "contract": {
+        "role": "Full stack Java/Angular — Contrat",
+        "company": "Cronos Europa",
+        "date": "Juil 2025",
+        "description": "Intervention post-livraison : corrections de bugs, maintenance et optimisation. Intégration de l'API LinkedIn pour l'importation automatisée de CV, optimisation de requêtes SQL et amélioration des performances du système.",
+        "category": "Expérience Professionnelle"
+      },
+      "internship": {
+        "role": "Full stack Java/Angular — Stagiaire",
+        "company": "Cronos Europa",
+        "date": "Fév 2025 — Juin 2025",
+        "description": "Développement et livraison de user stories full-stack : front, back, base de données et documentation. Migration de données legacy vers un schéma structuré. Création de fonctions SQL pour calculs et optimisation des requêtes.",
+        "category": "Stage & Formation"
+      },
+      "studies": {
+        "role": "Bachelier en Informatique & Développement d'applications",
+        "company": "Haute école Léonard de Vinci",
+        "date": "2022 — 2025",
+        "description": "Diplôme obtenu avec distinction. Spécialisation Web, projet final et élective en cybersécurité. Formation orientée développement full-stack et bonnes pratiques (architecture, tests).",
+        "category": "Formation"
+      },
+      "retail": {
+        "role": "Caissier",
+        "company": "Intermarché",
+        "date": "Été 2022 & 2023",
+        "description": "Expérience en service client, gestion de caisse et réassort en magasin.",
+        "category": "Expérience Professionnelle"
+      }
+    }
+  },
+  "skills": {
+    "title": "Compétences"
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Vous pouvez m'envoyer un message ou télécharger mon CV.",
+    "download_cv": "Télécharger mon CV",
+    "email": "Me contacter par email",
+    "form": {
+      "name": "Nom",
+      "email": "Email",
+      "message": "Message",
+      "send": "Envoyer"
+    }
+  }
+}

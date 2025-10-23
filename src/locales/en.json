@@ -1,0 +1,72 @@
+{
+  "header": {
+    "title": "Portfolio",
+    "nav": {
+      "about": "About",
+      "experience": "Experience",
+      "skills": "Skills", 
+      "contact": "Contact"
+    }
+  },
+  "hero": {
+    "greeting": "Hello and welcome to my personal space. My name is",
+    "name": "Alexis Cattaruzza",
+    "title": "Frontend Developer passionate about modern and performant interfaces — React, TypeScript, Tailwind.",
+    "download_cv": "Download my CV!",
+    "contact": "Contact me"
+  },
+  "timeline": {
+    "title": "Journey",
+    "previous": "Previous",
+    "next": "Next",
+    "pause": "Pause",
+    "play": "Play",
+    "auto_play": "Auto-play",
+    "hover_instruction": "Hover over the points to discover the details",
+    "items": {
+      "contract": {
+        "role": "Full stack Java/Angular — Contract",
+        "company": "Cronos Europa",
+        "date": "July 2025",
+        "description": "Post-delivery intervention: bug fixes, maintenance and optimization. LinkedIn API integration for automated CV import, SQL query optimization and system performance improvement.",
+        "category": "Professional Experience"
+      },
+      "internship": {
+        "role": "Full stack Java/Angular — Intern",
+        "company": "Cronos Europa",
+        "date": "Feb 2025 — June 2025",
+        "description": "Development and delivery of full-stack user stories: front, back, database and documentation. Legacy data migration to structured schema. SQL function creation for calculations and query optimization.",
+        "category": "Internship & Training"
+      },
+      "studies": {
+        "role": "Bachelor in Computer Science & Application Development",
+        "company": "Haute école Léonard de Vinci",
+        "date": "2022 — 2025",
+        "description": "Degree obtained with distinction. Web specialization, final project and cybersecurity elective. Full-stack development oriented training and best practices (architecture, testing).",
+        "category": "Education"
+      },
+      "retail": {
+        "role": "Cashier",
+        "company": "Intermarché",
+        "date": "Summer 2022 & 2023",
+        "description": "Customer service experience, cash management and store restocking.",
+        "category": "Professional Experience"
+      }
+    }
+  },
+  "skills": {
+    "title": "Skills"
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "You can send me a message or download my CV.",
+    "download_cv": "Download my CV",
+    "email": "Contact me by email",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send"
+    }
+  }
+}

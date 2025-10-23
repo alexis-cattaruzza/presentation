@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Background from "./components/Background";
+import Header from "./components/Header";
 import Section from "./components/Section";
 import Hero from "./components/Hero";
 import Timeline from "./components/Timeline";
@@ -17,14 +18,14 @@ export default function App() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
+      {/* Header fixe */}
+      <Header />
+
       {/* background layers (fixed) */}
       <Background />
 
       {/* scroll indicator with section counter */}
       <div className="scroll-indicator">
-        <div className="scroll-indicator-text">
-          Scroll or use ↑↓ keys
-        </div>
         <div className="scroll-indicator-arrow">↓</div>
         <div className="scroll-indicator-counter">
           {currentSectionIndex + 1} / {totalSections}
@@ -54,6 +55,7 @@ export default function App() {
         initial={{ y: 20 }}
         animate={{ y: 0 }}
         transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+        style={{ paddingTop: '80px' }} // Espace pour le header fixe
       >
         <Section id="hero">
           <Hero />

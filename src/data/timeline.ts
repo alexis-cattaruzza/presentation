@@ -1,17 +1,23 @@
 const timeline = [
   {
     id: "1",
-    role: "Développeur Frontend (Cronos Europa)",
-    company: "Cronos Europa",
-    date: "Juin 2025 — Présent",
-    description: "Maintenance et nouvelles fonctionnalités sur la plateforme client. Refactor, optimisation performance."
+    translationKey: "contract", // Clé pour les traductions
+    skills: ["Java", "Spring Boot", "Angular", "TypeScript", "SQL", "Docker", "Git", "Performance"]
   },
   {
     id: "2",
-    role: "Stagiaire Développement",
-    company: "Entreprise XYZ",
-    date: "Jan 2025 — Mai 2025",
-    description: "Conception d'un outil interne et automatisation de tests."
+    translationKey: "internship",
+    skills: ["Java", "Spring Boot", "Angular", "TypeScript", "SQL", "MariaDB", "Docker", "Git"]
+  },
+  {
+    id: "3",
+    translationKey: "studies",
+    skills: ["Java", "Algorithmique", "HTML/CSS", "JavaScript", "Bases de données", "Sécurité"]
+  },
+  {
+    id: "4",
+    translationKey: "retail",
+    skills: ["Service client", "Gestion de caisse", "Organisation"]
   }
 ];
 

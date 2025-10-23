@@ -7,8 +7,8 @@
    Palette Dark Mode (CSS variables)
    --------------------------- */
 :root {
-  --color-primary: #8041ec;
-  --color-primary-hover: #6D28D9;
+  --color-primary: #7430eb;
+  --color-primary-hover: #7d49d1;
   --color-secondary: #94A3B8;
   --color-accent: #06a0bb;
   --color-background: #0B1220;
@@ -38,8 +38,6 @@ body {
 
 /* ---------------------------
    Reusable components (safe @apply usage)
-   - @apply only uses real Tailwind utilities (spacing/typography/layout)
-   - Colors / borders set using CSS variables
    --------------------------- */
 .btn-primary {
   /* spacing / layout / typography via Tailwind @apply */
@@ -221,15 +219,8 @@ body {
   opacity: 1;
 }
 
-.scroll-indicator-text {
-  font-size: 0.75rem;
-  color: var(--color-muted);
-  text-align: center;
-  white-space: nowrap;
-}
-
 .scroll-indicator-arrow {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--color-primary);
   animation: bounce 2s infinite;
 }
