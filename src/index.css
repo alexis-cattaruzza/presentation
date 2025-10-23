@@ -1,14 +1,16 @@
-/* src/index.css - compatible Tailwind v4 */
-@import "tailwindcss/theme";
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+/* src/index.css - Tailwind v4 minimal import + clean components */
 
-/* Palette Dark Mode Elegant */
+/* Tailwind v4 minimal import (injects base, components, utilities) */
+@import "tailwindcss";
+
+/* ---------------------------
+   Palette Dark Mode (CSS variables)
+   --------------------------- */
 :root {
-  --color-primary: #7C3AED;
+  --color-primary: #8041ec;
   --color-primary-hover: #6D28D9;
   --color-secondary: #94A3B8;
-  --color-accent: #06B6D4;
+  --color-accent: #06a0bb;
   --color-background: #0B1220;
   --color-surface: #0F1724;
   --color-text: #E6EEF8;
@@ -19,87 +21,328 @@
   --color-info: #60A5FA;
 }
 
-/* Global application of colors */
+/* ---------------------------
+   Global fallback / base
+   --------------------------- */
+html, body, #root {
+  height: 100%;
+}
 body {
+  margin: 0;
   background-color: var(--color-background);
   color: var(--color-text);
-  font-family: 'Inter', ui-sans-serif, system-ui;
+  font-family: Inter, ui-sans-serif, system-ui;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Layer utilities pour Tailwind */
-@layer utilities {
-
-  /* Backgrounds */
-  .bg-background { background-color: var(--color-background) !important; }
-  .bg-surface { background-color: var(--color-surface) !important; }
-
-  /* Text */
-  .text-primary { color: var(--color-primary) !important; }
-  .text-secondary { color: var(--color-secondary) !important; }
-  .text-accent { color: var(--color-accent) !important; }
-  .text-muted { color: var(--color-muted) !important; }
-  .text-success { color: var(--color-success) !important; }
-  .text-danger { color: var(--color-danger) !important; }
-  .text-info { color: var(--color-info) !important; }
-
-  /* Borders */
-  .border-color { border-color: var(--color-border) !important; }
-
-  /* Buttons */
-  .btn-primary {
-    @apply px-4 py-2 rounded-md font-medium text-white bg-primary transition-colors duration-200;
-  }
-  .btn-primary:hover { background-color: var(--color-primary-hover) !important; }
-
-  .btn-secondary {
-    @apply px-4 py-2 rounded-md font-medium text-white bg-secondary transition-colors duration-200;
-  }
-  .btn-secondary:hover { background-color: var(--color-secondary) !important; }
-
-  .btn-accent {
-    @apply px-4 py-2 rounded-md font-medium text-white bg-accent transition-colors duration-200;
-  }
-  .btn-accent:hover { background-color: var(--color-accent) !important; }
-
-  /* Inputs */
-  .input-default {
-    @apply p-2 rounded-md bg-surface border border-color text-text w-full transition-all duration-150;
-  }
-  .input-default:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--color-primary)/30;
-    border-color: var(--color-primary);
-  }
-  .input-disabled {
-    @apply bg-surface/50 text-muted border border-border cursor-not-allowed;
-  }
-
-  /* Cards */
-  .card {
-    @apply bg-surface border border-color rounded-lg p-4 shadow-sm;
-  }
-
-  /* Badges / Labels */
-  .badge-primary {
-    @apply inline-block px-2 py-1 rounded text-xs text-white bg-primary;
-  }
-  .badge-secondary {
-    @apply inline-block px-2 py-1 rounded text-xs text-white bg-secondary;
-  }
-  .badge-accent {
-    @apply inline-block px-2 py-1 rounded text-xs text-white bg-accent;
-  }
-  .badge-success {
-    @apply inline-block px-2 py-1 rounded text-xs text-white bg-success;
-  }
-  .badge-danger {
-    @apply inline-block px-2 py-1 rounded text-xs text-white bg-danger;
-  }
-  .badge-info {
-    @apply inline-block px-2 py-1 rounded text-xs text-white bg-info;
-  }
-
-  /* Hover / focus utilities pour tous les boutons et inputs */
-  .hover-primary:hover { background-color: var(--color-primary-hover) !important; }
-  .focus-ring-primary:focus { box-shadow: 0 0 0 2px var(--color-primary)/30; }
+/* ---------------------------
+   Reusable components (safe @apply usage)
+   - @apply only uses real Tailwind utilities (spacing/typography/layout)
+   - Colors / borders set using CSS variables
+   --------------------------- */
+.btn-primary {
+  /* spacing / layout / typography via Tailwind @apply */
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-colors duration-200;
+  /* colors via CSS vars (safe for v4) */
+  background-color: var(--color-primary);
+  color: white;
 }
+.btn-primary:hover { background-color: var(--color-primary-hover); }
+
+.btn-accent {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-colors duration-200;
+  background-color: var(--color-accent);
+  color: var(--color-background);
+}
+.btn-accent:hover { filter: brightness(0.95); }
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center px-3 py-1 rounded-md font-medium transition-colors duration-150;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid transparent;
+}
+.btn-ghost:hover {
+  border-color: rgba(255,255,255,0.06);
+}
+
+/* Card */
+.card {
+  @apply rounded-lg p-4 shadow-sm;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+/* Input */
+.input-default {
+  @apply rounded-md p-2 w-full transition-shadow duration-150;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.input-default:focus {
+  outline: none;
+  box-shadow: 0 0 0 6px rgba(124,58,237,0.08); /* subtle ring */
+  border-color: var(--color-primary);
+}
+
+/* Badge */
+.badge-primary {
+  @apply inline-block px-2 py-1 rounded text-xs font-medium;
+  background-color: var(--color-primary);
+  color: white;
+}
+.badge-secondary {
+  @apply inline-block px-2 py-1 rounded text-xs font-medium;
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+/* Utility helpers (direct usage allowed) */
+.bg-surface { background-color: var(--color-surface) !important; }
+.bg-background { background-color: var(--color-background) !important; }
+.text-primary { color: var(--color-primary) !important; }
+.text-secondary { color: var(--color-secondary) !important; }
+.text-muted { color: var(--color-muted) !important; }
+.border-border { border-color: var(--color-border) !important; }
+
+/* small responsive tweaks if needed */
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary, .btn-accent, .btn-ghost {
+    transition: none;
+  }
+}
+
+/* ---------- Scrolling / Layout helpers ---------- */
+
+/* Enhanced smooth scroll with momentum */
+:root { 
+  scroll-behavior: smooth;
+  scroll-padding-top: 0;
+}
+
+/* Smooth scroll container */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: hidden; /* Disable normal scrolling */
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: hidden; /* Disable normal scrolling */
+  scroll-behavior: smooth;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* full page snap container */
+.scroll-snap-y {
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* each section will snap to start */
+.section-snap {
+  scroll-snap-align: start;
+  min-height: 100vh; /* full viewport height */
+  min-height: 100dvh; /* dynamic viewport height for mobile */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+/* content wrapper to center content and limit width */
+.section-inner {
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem; /* px-6 */
+  padding-right: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* Static background with same color palette */
+.bg-static {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(124,58,237,0.1), transparent 30%),
+    radial-gradient(circle at 80% 80%, rgba(6,182,212,0.06), transparent 35%),
+    radial-gradient(circle at 50% 10%, rgba(16,185,129,0.04), transparent 25%),
+    linear-gradient(135deg, #0B1220 0%, #0F1724 50%, #1E293B 100%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Section-specific background overlays - simplified */
+.section-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+/* ensure page content sits above */
+.page-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-indicator:hover {
+  opacity: 1;
+}
+
+.scroll-indicator-text {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.scroll-indicator-arrow {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  animation: bounce 2s infinite;
+}
+
+.scroll-indicator-counter {
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Section navigation dots */
+.section-dots {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.section-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--color-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+.section-dot:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.section-dot.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* Hide navigation elements on mobile */
+@media (max-width: 768px) {
+  .scroll-indicator,
+  .section-dots {
+    display: none;
+  }
+}
+
+/* Responsive design improvements */
+@media (max-width: 1024px) {
+  .section-inner { 
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-inner { 
+    padding-left: 1rem; 
+    padding-right: 1rem; 
+    max-width: 100%;
+  }
+  
+  .section-overlay {
+    opacity: 0.2;
+  }
+  
+  .section-snap {
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-inner { 
+    padding-left: 0.75rem; 
+    padding-right: 0.75rem; 
+  }
+  
+  .section-overlay {
+    opacity: 0.15;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-inner { 
+    padding-left: 0.5rem; 
+    padding-right: 0.5rem; 
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .bg-static {
+    background-size: 100% 100%;
+  }
+}
+
