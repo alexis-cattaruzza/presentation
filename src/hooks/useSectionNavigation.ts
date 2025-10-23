@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const SECTIONS = ['hero', 'experience', 'skills', 'contact'];
+const SECTIONS = ['hero', 'experience', 'skills', 'location', 'hobbies', 'contact'];
 const STORAGE_KEY = 'current-section-index';
 
 export const useSectionNavigation = () => {

@@ -5,6 +5,8 @@ import Section from "./components/Section";
 import Hero from "./components/Hero";
 import Timeline from "./components/Timeline";
 import Skills from "./components/Skills";
+import Location from "./components/Location";
+import Hobbies from "./components/Hobbies";
 import ContactForm from "./components/ContactForm";
 import { useSectionNavigation } from "./hooks/useSectionNavigation";
 
@@ -38,7 +40,7 @@ export default function App() {
             key={index}
             className={`section-dot ${index === currentSectionIndex ? 'active' : ''}`}
             onClick={() => {
-              const section = document.getElementById(['hero', 'experience', 'skills', 'contact'][index]);
+              const section = document.getElementById(['hero', 'experience', 'skills', 'location', 'hobbies', 'contact'][index]);
               if (section) {
                 section.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
@@ -66,6 +68,14 @@ export default function App() {
 
         <Section id="skills">
           <Skills />
+        </Section>
+
+        <Section id="location">
+          <Location />
+        </Section>
+
+        <Section id="hobbies">
+          <Hobbies />
         </Section>
 
         <Section id="contact">

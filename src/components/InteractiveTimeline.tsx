@@ -49,7 +49,7 @@ export default function InteractiveTimeline() {
             animate={{ x: `-${currentSlide * 100}%` }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
-            {timeline.map((item, index) => (
+            {timeline.map((item) => (
               <div key={item.id} className="w-full shrink-0">
                 <div className="p-4 sm:p-6">
                   {/* En-tête compact */}
@@ -208,11 +208,20 @@ export default function InteractiveTimeline() {
 
         {/* Barre de progression simplifiée */}
         <div className="relative">
+          {/* Barre de base (complète) */}
+          <div 
+            className="absolute top-1/2 left-0 h-1 transform -translate-y-1/2 rounded-full"
+            style={{ 
+              width: '100%',
+              backgroundColor: 'var(--color-muted)'
+            }}
+          />
+          
           {/* Ligne de progression */}
           <div 
             className="absolute top-1/2 left-0 h-1 transform -translate-y-1/2 rounded-full"
             style={{ 
-              width: `${((currentSlide + 1) / timeline.length) * 100}%`,
+              width: `${(currentSlide / (timeline.length - 1)) * 100}%`,
               backgroundColor: 'var(--color-primary)'
             }}
           />

@@ -86,6 +86,20 @@ export default function Header() {
             {t('header.nav.skills')}
           </button>
           <button
+            onClick={() => scrollToSection('location')}
+            className="text-sm font-medium transition-colors duration-200 hover:scale-105"
+            style={{ color: 'var(--color-text)' }}
+          >
+            Localisation
+          </button>
+          <button
+            onClick={() => scrollToSection('hobbies')}
+            className="text-sm font-medium transition-colors duration-200 hover:scale-105"
+            style={{ color: 'var(--color-text)' }}
+          >
+            Hobbies
+          </button>
+          <button
             onClick={() => scrollToSection('contact')}
             className="text-sm font-medium transition-colors duration-200 hover:scale-105"
             style={{ color: 'var(--color-text)' }}
@@ -292,6 +306,26 @@ export default function Header() {
                 style={{ color: 'var(--color-text)' }}
               >
                 <span>{t('header.nav.skills')}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </button>
+              <button
+                onClick={() => scrollToSection('location')}
+                className="flex items-center justify-between px-4 py-3 text-sm font-medium transition-colors duration-200 rounded-lg hover:bg-opacity-10"
+                style={{ color: 'var(--color-text)' }}
+              >
+                <span>Localisation</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </button>
+              <button
+                onClick={() => scrollToSection('hobbies')}
+                className="flex items-center justify-between px-4 py-3 text-sm font-medium transition-colors duration-200 rounded-lg hover:bg-opacity-10"
+                style={{ color: 'var(--color-text)' }}
+              >
+                <span>Hobbies</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="m9 18 6-6-6-6"/>
                 </svg>
