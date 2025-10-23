@@ -1,18 +1,61 @@
-const skills = [
-  { name: "Java", level: "Avancé", percentage: 90 },
-  { name: "SQL (PostgreSQL, MariaDB, MySQL)", level: "Avancé", percentage: 90 },
-  { name: "Git", level: "Avancé", percentage: 90 },
-  { name: "HTML/CSS", level: "Avancé", percentage: 90 },
-  { name: "Spring Boot", level: "Avancé", percentage: 80 },
-  { name: "Angular", level: "Avancé", percentage: 80 },
-  { name: "TypeScript", level: "Avancé", percentage: 80 },
-  { name: "JavaScript", level: "Intermédiaire", percentage: 70 },
-  { name: "Tests unitaires & intégration", level: "Intermédiaire", percentage: 70 },
-  { name: "React", level: "Intermédaire", percentage: 70 },
-  { name: "Docker", level: "Intermédiaire", percentage: 60 },
-  { name: "DevOps", level: "Intermédiaire", percentage: 60 },
-  { name: "Python", level: "Connaissance", percentage: 50 },
-  { name: "CI/CD", level: "Connaissance", percentage: 40 },
+export interface SkillItem {
+  name: string;
+  level: string;
+  icon: string;
+}
+
+export interface SkillCategory {
+  id: string;
+  title: string;
+  icon: string;
+  skills: SkillItem[];
+}
+
+const skillCategories: SkillCategory[] = [
+  {
+    id: 'skills',
+    title: 'Compétences Techniques',
+    icon: '🎯',
+    skills: [
+      { name: "Développement Full-Stack", level: "Expert", icon: "💻" },
+      { name: "Architecture Logicielle", level: "Avancé", icon: "🏗️" },
+      { name: "Optimisation Performance", level: "Avancé", icon: "⚡" },
+      { name: "Tests & Qualité", level: "Intermédiaire", icon: "🧪" },
+      { name: "Gestion de Projet", level: "Intermédiaire", icon: "📋" }
+    ]
+  },
+  {
+    id: 'technologies',
+    title: 'Technologies & Outils',
+    icon: '⚙️',
+    skills: [
+      { name: "Java", level: "Expert", icon: "☕" },
+      { name: "TypeScript", level: "Avancé", icon: "📘" },
+      { name: "Angular", level: "Avancé", icon: "🅰️" },
+      { name: "React", level: "Intermédiaire", icon: "⚛️" },
+      { name: "SQL", level: "Avancé", icon: "🗄️" },
+      { name: "Docker", level: "Intermédiaire", icon: "🐳" },
+      { name: "Git", level: "Avancé", icon: "🌿" },
+      { name: "HTML/CSS", level: "Avancé", icon: "🎨" },
+      { name: "Spring Boot", level: "Avancé", icon: "🍃" },
+      { name: "JavaScript", level: "Intermédiaire", icon: "🟨" },
+      { name: "Python", level: "Connaissance", icon: "🐍" }
+    ]
+  },
+  {
+    id: 'methods',
+    title: 'Méthodes & Processus',
+    icon: '🔄',
+    skills: [
+      { name: "Agile/Scrum", level: "Avancé", icon: "🏃" },
+      { name: "DevOps", level: "Intermédiaire", icon: "🔄" },
+      { name: "Code Review", level: "Avancé", icon: "👀" },
+      { name: "Documentation", level: "Avancé", icon: "📚" },
+      { name: "Debugging", level: "Avancé", icon: "🐛" },
+      { name: "CI/CD", level: "Intermédiaire", icon: "🚀" },
+      { name: "Tests Unitaires", level: "Intermédiaire", icon: "🧪" }
+    ]
+  }
 ];
 
-export default skills;
+export default skillCategories;

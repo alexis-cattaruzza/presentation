@@ -26,7 +26,6 @@ export default function App() {
 
       {/* scroll indicator with section counter */}
       <div className="scroll-indicator">
-        <div className="scroll-indicator-arrow">↓</div>
         <div className="scroll-indicator-counter">
           {currentSectionIndex + 1} / {totalSections}
         </div>

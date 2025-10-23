@@ -219,12 +219,6 @@ body {
   opacity: 1;
 }
 
-.scroll-indicator-arrow {
-  font-size: 2rem;
-  color: var(--color-primary);
-  animation: bounce 2s infinite;
-}
-
 .scroll-indicator-counter {
   font-size: 0.7rem;
   color: var(--color-muted);
@@ -290,6 +284,18 @@ body {
 }
 
 /* Responsive design improvements */
+@media (max-width: 1536px) {
+  .section-inner { 
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .section-inner { 
+    max-width: 1000px;
+  }
+}
+
 @media (max-width: 1024px) {
   .section-inner { 
     max-width: 900px;
@@ -331,9 +337,177 @@ body {
   }
 }
 
+@media (max-width: 360px) {
+  .section-inner { 
+    padding-left: 0.25rem; 
+    padding-right: 0.25rem; 
+  }
+}
+
+/* Améliorations pour très petits écrans */
+@media (max-width: 320px) {
+  .section-inner { 
+    padding-left: 0.125rem; 
+    padding-right: 0.125rem; 
+  }
+  
+  .card {
+    padding: 0.75rem;
+  }
+  
+  .btn-primary, .btn-accent, .btn-ghost {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Améliorations pour les écrans très larges */
+@media (min-width: 1920px) {
+  .section-inner { 
+    max-width: 1400px;
+  }
+}
+
+/* Skills Section - Optimized for Single Section Display */
+.skills-section {
+  height: 100%;
+  max-height: calc(100vh - 120px); /* Account for header */
+  overflow: hidden;
+}
+
+/* Skills Categories Grid - Responsive Layout */
+.skills-categories-grid {
+  display: grid;
+  gap: 1rem;
+  height: 100%;
+}
+
+/* Mobile: Single column */
+@media (max-width: 767px) {
+  .skills-categories-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Tablet: Single column with more space */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .skills-categories-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Desktop: Three columns */
+@media (min-width: 1024px) {
+  .skills-categories-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Large Desktop: Three columns with more space */
+@media (min-width: 1280px) {
+  .skills-categories-grid {
+    gap: 2.5rem;
+  }
+}
+
+/* Ultra-wide: Three columns with maximum space */
+@media (min-width: 1920px) {
+  .skills-categories-grid {
+    gap: 3rem;
+  }
+}
+
+/* Optimisations pour les très petits écrans */
+@media (max-width: 320px) {
+  .skills-item {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .skills-icon {
+    font-size: 1rem;
+  }
+}
+
+/* Optimisations pour les écrans 4K et plus */
+@media (min-width: 2560px) {
+  .skills-item {
+    padding: 1.5rem;
+    font-size: 1.125rem;
+  }
+  
+  .skills-icon {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 3840px) {
+  .skills-item {
+    padding: 2rem;
+    font-size: 1.25rem;
+  }
+  
+  .skills-icon {
+    font-size: 2.5rem;
+  }
+}
+
+/* Améliorations pour les tablettes en mode paysage */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .section-snap {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
+
+/* Améliorations pour les mobiles en mode paysage */
+@media (max-width: 896px) and (orientation: landscape) {
+  .section-snap {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  
+  .section-inner {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+/* Améliorations pour les écrans haute résolution */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .bg-static {
     background-size: 100% 100%;
+  }
+}
+
+/* Améliorations pour l'accessibilité et les préférences utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-indicator-arrow {
+    animation: none;
+  }
+  
+  .section-dot {
+    transition: none;
+  }
+}
+
+/* Améliorations pour le mode sombre (déjà géré par les variables CSS) */
+@media (prefers-color-scheme: light) {
+  /* Les couleurs sont déjà gérées par les variables CSS */
+}
+
+/* Améliorations pour les écrans tactiles */
+@media (hover: none) and (pointer: coarse) {
+  .section-dot {
+    min-width: 16px;
+    min-height: 16px;
+  }
+  
+  .btn-primary, .btn-accent, .btn-ghost {
+    min-height: 44px;
   }
 }
 

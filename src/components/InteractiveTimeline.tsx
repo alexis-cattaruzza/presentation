@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import timeline from "../data/timeline";
 
@@ -36,14 +36,14 @@ export default function InteractiveTimeline() {
 
   return (
     <div className="w-full">
-      <h2 className="text-3xl font-bold mb-8" style={{ color: 'var(--color-primary)' }}>
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center lg:text-left" style={{ color: 'var(--color-primary)' }}>
         Parcours
       </h2>
       
       {/* Container principal */}
       <div className="relative">
         {/* Zone de contenu avec slide */}
-        <div className="relative overflow-hidden rounded-xl mb-8" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+        <div className="relative overflow-hidden rounded-xl mb-6" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
           <motion.div 
             className="flex"
             animate={{ x: `-${currentSlide * 100}%` }}
@@ -51,11 +51,11 @@ export default function InteractiveTimeline() {
           >
             {timeline.map((item, index) => (
               <div key={item.id} className="w-full shrink-0">
-                <div className="p-8">
-                  {/* En-tête de la slide */}
-                  <div className="text-center mb-6">
+                <div className="p-4 sm:p-6">
+                  {/* En-tête compact */}
+                  <div className="text-center mb-4">
                     <motion.h3 
-                      className="text-2xl font-bold mb-2"
+                      className="text-lg sm:text-xl font-bold mb-1"
                       style={{ color: 'var(--color-primary)' }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -64,7 +64,7 @@ export default function InteractiveTimeline() {
                       {t(`timeline.items.${item.translationKey}.role`)}
                     </motion.h3>
                     <motion.div 
-                      className="text-lg font-medium mb-1"
+                      className="text-sm sm:text-base font-medium mb-1"
                       style={{ color: 'var(--color-secondary)' }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ export default function InteractiveTimeline() {
                       {t(`timeline.items.${item.translationKey}.company`)}
                     </motion.div>
                     <motion.div 
-                      className="text-sm"
+                      className="text-xs sm:text-sm"
                       style={{ color: 'var(--color-muted)' }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -83,81 +83,48 @@ export default function InteractiveTimeline() {
                     </motion.div>
                   </div>
 
-                  {/* Contenu principal */}
-                  <div className="grid md:grid-cols-2 gap-8 items-center">
-                    {/* Description */}
-                    <motion.div
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 }}
+                  {/* Description compacte */}
+                  <motion.div
+                    className="text-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <p 
+                      className="text-sm sm:text-base leading-relaxed mb-3"
+                      style={{ color: 'var(--color-text)' }}
                     >
-                      <p 
-                        className="text-lg leading-relaxed mb-6"
-                        style={{ color: 'var(--color-text)' }}
-                      >
-                        {t(`timeline.items.${item.translationKey}.description`)}
-                      </p>
+                      {t(`timeline.items.${item.translationKey}.description`)}
+                    </p>
 
-                      {/* Badges de compétences */}
-                      <div className="flex flex-wrap gap-2">
-                        {item.skills?.map((skill, skillIndex) => {
-                          const colors = [
-                            'var(--color-primary)',
-                            'var(--color-accent)', 
-                            'var(--color-success)',
-                            'var(--color-info)',
-                            'var(--color-secondary)'
-                          ];
-                          return (
-                            <motion.span
-                              key={skill}
-                              className="px-3 py-1 text-sm rounded-full font-medium"
-                              style={{ 
-                                backgroundColor: colors[skillIndex % colors.length],
-                                color: 'white'
-                              }}
-                              initial={{ opacity: 0, scale: 0.8 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: 0.6 + skillIndex * 0.1 }}
-                            >
-                              {skill}
-                            </motion.span>
-                          );
-                        })}
-                      </div>
-                    </motion.div>
-
-                    {/* Zone d'illustration (placeholder pour images) */}
-                    <motion.div
-                      className="relative"
-                      initial={{ opacity: 0, x: 30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.7 }}
-                    >
-                      <div 
-                        className="w-full h-64 rounded-lg flex items-center justify-center"
-                        style={{ 
-                          backgroundColor: 'var(--color-background)',
-                          border: '2px dashed var(--color-border)'
-                        }}
-                      >
-                        <div className="text-center">
-                          <div 
-                            className="text-4xl mb-2"
-                            style={{ color: 'var(--color-primary)' }}
+                    {/* Badges de compétences compacts */}
+                    <div className="flex flex-wrap justify-center gap-1 sm:gap-1.5">
+                      {item.skills?.map((skill, skillIndex) => {
+                        const colors = [
+                          'var(--color-primary)',
+                          'var(--color-accent)', 
+                          'var(--color-success)',
+                          'var(--color-info)',
+                          'var(--color-secondary)'
+                        ];
+                        return (
+                          <motion.span
+                            key={skill}
+                            className="px-2 py-1 text-xs rounded-full font-medium"
+                            style={{ 
+                              backgroundColor: colors[skillIndex % colors.length],
+                              color: 'white'
+                            }}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.6 + skillIndex * 0.1 }}
                           >
-                            {index === 0 ? '💼' : index === 1 ? '🎓' : index === 2 ? '📚' : '🏫'}
-                          </div>
-                          <p 
-                            className="text-sm"
-                            style={{ color: 'var(--color-muted)' }}
-                          >
-                            {t(`timeline.items.${item.translationKey}.category`)}
-                          </p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
+                            {skill}
+                          </motion.span>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
                 </div>
               </div>
             ))}
@@ -165,11 +132,11 @@ export default function InteractiveTimeline() {
         </div>
 
         {/* Contrôles de navigation */}
-        <div className="flex items-center justify-center gap-8 mb-6">
+        <div className="flex items-center justify-center gap-4 sm:gap-6 lg:gap-8 mb-4 sm:mb-6">
           {/* Bouton précédent */}
           <motion.button
             onClick={prevSlide}
-            className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200"
             style={{ 
               backgroundColor: 'var(--color-surface)',
               color: 'var(--color-text)',
@@ -215,7 +182,7 @@ export default function InteractiveTimeline() {
           {/* Bouton suivant */}
           <motion.button
             onClick={nextSlide}
-            className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200"
             style={{ 
               backgroundColor: 'var(--color-primary)',
               color: 'var(--color-text)',
@@ -239,7 +206,7 @@ export default function InteractiveTimeline() {
           </motion.button>
         </div>
 
-        {/* Timeline horizontale avec indicateurs */}
+        {/* Barre de progression simplifiée */}
         <div className="relative">
           {/* Ligne de progression */}
           <div 
@@ -251,7 +218,7 @@ export default function InteractiveTimeline() {
           />
 
           {/* Points de la timeline */}
-          <div className="relative flex justify-between items-center py-4">
+          <div className="relative flex justify-between items-center py-3">
             {timeline.map((item, index) => (
               <motion.button
                 key={item.id}
@@ -262,7 +229,7 @@ export default function InteractiveTimeline() {
               >
                 {/* Point de la timeline */}
                 <motion.div
-                  className={`w-4 h-4 rounded-full ${
+                  className={`w-3 h-3 rounded-full ${
                     index <= currentSlide ? 'scale-110' : ''
                   }`}
                   style={{ 
@@ -270,31 +237,17 @@ export default function InteractiveTimeline() {
                       ? 'var(--color-primary)' 
                       : 'var(--color-muted)'
                   }}
-                  transition={{ duration: 1, repeat: index === currentSlide ? Infinity : 0 }}
                 />
-
-                {/* Date sous le point */}
-                <motion.div
-                  className={`mt-2 text-xs font-medium text-center ${
-                    index === currentSlide ? 'font-bold' : ''
-                  }`}
-                  style={{ 
-                    color: index <= currentSlide 
-                      ? 'var(--color-primary)' 
-                      : 'var(--color-muted)'
-                  }}
-                >
-                </motion.div>
               </motion.button>
             ))}
           </div>
         </div>
 
-        {/* Contrôles additionnels */}
-        <div className="flex items-center justify-center gap-4 mt-6">
+        {/* Contrôles additionnels compacts */}
+        <div className="flex items-center justify-center gap-2 mt-3">
           <motion.button
             onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+            className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-all duration-200"
             style={{ 
               backgroundColor: 'var(--color-surface)',
               color: 'var(--color-text)',
@@ -305,8 +258,8 @@ export default function InteractiveTimeline() {
           >
             {isAutoPlaying ? (
               <svg 
-                width="16" 
-                height="16" 
+                width="12" 
+                height="12" 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
@@ -319,8 +272,8 @@ export default function InteractiveTimeline() {
               </svg>
             ) : (
               <svg 
-                width="16" 
-                height="16" 
+                width="12" 
+                height="12" 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
@@ -334,7 +287,7 @@ export default function InteractiveTimeline() {
           </motion.button>
 
           <div 
-            className="text-sm"
+            className="text-xs"
             style={{ color: 'var(--color-muted)' }}
           >
             {currentSlide + 1} / {timeline.length}
