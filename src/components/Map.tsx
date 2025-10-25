@@ -60,26 +60,6 @@ export default function Map({ className = '', style = {} }: MapProps) {
 
     grayscaleLayer.addTo(map);
 
-    // Ajouter un marqueur pour Genève
-    const marker = L.marker(genevaCoords, {
-      icon: DefaultIcon
-    }).addTo(map);
-
-    // Popup avec informations
-    /*marker.bindPopup(`
-      <div style="text-align: center; font-family: Inter, sans-serif;">
-        <h3 style="margin: 0 0 8px 0; color: var(--color-primary); font-size: 16px; font-weight: 600;">
-          🏠 Genève, Suisse
-        </h3>
-        <p style="margin: 0; color: var(--color-text); font-size: 14px;">
-          Basé ici • Disponible dans un rayon de 5km
-        </p>
-        <p style="margin: 4px 0 0 0; color: var(--color-muted); font-size: 12px;">
-          Ouvert au full remote partout dans le monde
-        </p>
-      </div>
-    `).openPopup();*/
-
     // Ajouter un cercle pour montrer la zone de 5km
     const circle = L.circle(genevaCoords, {
       color: 'var(--color-primary)',

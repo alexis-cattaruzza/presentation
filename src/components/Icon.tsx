@@ -40,7 +40,6 @@ import {
   ChevronUp,
   ChevronDown,
   Menu,
-  X,
   Search,
   Filter,
   Settings,
