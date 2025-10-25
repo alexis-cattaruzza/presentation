@@ -55,7 +55,133 @@
     }
   },
   "skills": {
-    "title": "Skills"
+    "title": "Skills",
+    "categories": {
+      "skills": {
+        "title": "Technical Skills",
+        "icon": "🎯"
+      },
+      "technologies": {
+        "title": "Technologies & Tools", 
+        "icon": "⚙️"
+      },
+      "methods": {
+        "title": "Methods & Processes",
+        "icon": "🔄"
+      }
+    },
+    "levels": {
+      "expert": "Expert",
+      "advanced": "Advanced", 
+      "intermediate": "Intermediate",
+      "knowledge": "Knowledge"
+    },
+    "items": {
+      "fullstack": "Full-Stack Development",
+      "architecture": "Software Architecture",
+      "performance": "Performance Optimization",
+      "testing": "Testing & Quality",
+      "project": "Project Management",
+      "java": "Java",
+      "typescript": "TypeScript",
+      "angular": "Angular",
+      "react": "React",
+      "sql": "SQL",
+      "docker": "Docker",
+      "git": "Git",
+      "htmlcss": "HTML/CSS",
+      "spring": "Spring Boot",
+      "javascript": "JavaScript",
+      "python": "Python",
+      "agile": "Agile/Scrum",
+      "devops": "DevOps",
+      "codereview": "Code Review",
+      "documentation": "Documentation",
+      "debugging": "Debugging",
+      "cicd": "CI/CD",
+      "unittests": "Unit Testing"
+    }
+  },
+  "hobbies": {
+    "title": "Interests",
+    "categories": {
+      "sport": {
+        "name": "Sports",
+        "icon": "⚽"
+      },
+      "travel": {
+        "name": "Travel", 
+        "icon": "🌍"
+      },
+      "tech": {
+        "name": "Technology",
+        "icon": "💻"
+      },
+      "lifestyle": {
+        "name": "Lifestyle",
+        "icon": "🎨"
+      }
+    },
+    "levels": {
+      "passion": "Passion",
+      "hobby": "Hobby",
+      "interest": "Interest"
+    },
+    "items": {
+      "f1": {
+        "name": "Formula 1",
+        "description": "F1 enthusiast, I follow races and the technological evolution of this sport"
+      },
+      "padel": {
+        "name": "Padel",
+        "description": "Racket sport that I practice regularly for the social and competitive aspect"
+      },
+      "travel": {
+        "name": "Travel",
+        "description": "Discovery of new cultures and landscapes, a constant source of inspiration"
+      },
+      "running": {
+        "name": "Running",
+        "description": "Running to maintain physical fitness and mental balance"
+      },
+      "dev": {
+        "name": "Personal IT development",
+        "description": "Personal projects and technological experiments outside of work"
+      },
+      "reading": {
+        "name": "Technical reading",
+        "description": "Technology watch and reading articles on the latest IT innovations"
+      },
+      "cooking": {
+        "name": "Cooking",
+        "description": "Discovery of new recipes and culinary techniques"
+      }
+    }
+  },
+  "location": {
+    "title": "Location",
+    "description": "Based in Geneva, I am available for local and international projects",
+    "address": "Based in Geneva",
+    "region": "Switzerland - Lake Geneva region",
+    "local_zone": {
+      "title": "Local zone (20km)",
+      "description": "Available for travel within a 20km radius around Geneva",
+      "status": "✅ Available"
+    },
+    "remote": {
+      "title": "Full Remote",
+      "description": "Open to remote work opportunities worldwide",
+      "status": "🌍 Remote OK"
+    },
+    "timezone": {
+      "title": "Time zone",
+      "description": "UTC+1 (CET) / UTC+2 (CEST)"
+    },
+    "languages": {
+      "title": "Languages",
+      "french": "🇫🇷 French (Native)",
+      "english": "🇬🇧 English (Fluent)"
+    }
   },
   "contact": {
     "title": "Contact",

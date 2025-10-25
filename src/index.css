@@ -283,6 +283,66 @@ body {
   }
 }
 
+/* ===========================================
+   RESPONSIVE DESIGN - HOMOGÉNÉISATION
+   =========================================== */
+
+/* Typography Scale - Homogénéisé pour toutes les sections */
+:root {
+  /* Mobile First - Base sizes */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  
+  /* Responsive breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* Section Titles - Homogénéisés */
+.section-title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+/* Section Subtitle */
+.section-subtitle {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+/* Section Text */
+.section-text {
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+
+/* Card Title */
+.card-title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Card Text */
+.card-text {
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
 /* Responsive design improvements */
 @media (max-width: 1536px) {
   .section-inner { 
@@ -294,11 +354,23 @@ body {
   .section-inner { 
     max-width: 1000px;
   }
+  
+  .section-title {
+    font-size: var(--text-xl);
+  }
 }
 
 @media (max-width: 1024px) {
   .section-inner { 
     max-width: 900px;
+  }
+  
+  .section-title {
+    font-size: var(--text-lg);
+  }
+  
+  .section-subtitle {
+    font-size: var(--text-base);
   }
 }
 
@@ -317,6 +389,19 @@ body {
     min-height: 100vh;
     min-height: 100svh;
   }
+  
+  .section-title {
+    font-size: var(--text-base);
+    margin-bottom: 1rem;
+  }
+  
+  .section-subtitle {
+    font-size: var(--text-sm);
+  }
+  
+  .section-text {
+    font-size: var(--text-sm);
+  }
 }
 
 @media (max-width: 640px) {
@@ -327,6 +412,18 @@ body {
   
   .section-overlay {
     opacity: 0.15;
+  }
+  
+  .section-title {
+    font-size: var(--text-sm);
+  }
+  
+  .section-subtitle {
+    font-size: var(--text-xs);
+  }
+  
+  .section-text {
+    font-size: var(--text-xs);
   }
 }
 

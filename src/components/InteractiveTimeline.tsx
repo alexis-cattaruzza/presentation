@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import timeline from "../data/timeline";
+import Icon from "./Icon";
 
 export default function InteractiveTimeline() {
   const { t } = useTranslation();
@@ -36,7 +37,7 @@ export default function InteractiveTimeline() {
 
   return (
     <div className="w-full">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center lg:text-left" style={{ color: 'var(--color-primary)' }}>
+      <h2 className="section-title text-center lg:text-left" style={{ color: 'var(--color-primary)' }}>
         Parcours
       </h2>
       
@@ -55,7 +56,7 @@ export default function InteractiveTimeline() {
                   {/* En-tête compact */}
                   <div className="text-center mb-4">
                     <motion.h3 
-                      className="text-lg sm:text-xl font-bold mb-1"
+                      className="section-subtitle mb-1"
                       style={{ color: 'var(--color-primary)' }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -64,7 +65,7 @@ export default function InteractiveTimeline() {
                       {t(`timeline.items.${item.translationKey}.role`)}
                     </motion.h3>
                     <motion.div 
-                      className="text-sm sm:text-base font-medium mb-1"
+                      className="card-title mb-1"
                       style={{ color: 'var(--color-secondary)' }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -73,7 +74,7 @@ export default function InteractiveTimeline() {
                       {t(`timeline.items.${item.translationKey}.company`)}
                     </motion.div>
                     <motion.div 
-                      className="text-xs sm:text-sm"
+                      className="card-text"
                       style={{ color: 'var(--color-muted)' }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -91,7 +92,7 @@ export default function InteractiveTimeline() {
                     transition={{ delay: 0.5 }}
                   >
                     <p 
-                      className="text-sm sm:text-base leading-relaxed mb-3"
+                      className="section-text leading-relaxed mb-3"
                       style={{ color: 'var(--color-text)' }}
                     >
                       {t(`timeline.items.${item.translationKey}.description`)}
@@ -145,18 +146,7 @@ export default function InteractiveTimeline() {
             whileHover={{ scale: 1.1, borderColor: 'var(--color-primary)' }}
             whileTap={{ scale: 0.95 }}
           >
-            <svg 
-              width="20" 
-              height="20" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <path d="m15 18-6-6 6-6"/>
-            </svg>
+            <Icon name="chevron-left" size={20} />
           </motion.button>
 
           {/* Indicateurs de position */}
@@ -191,18 +181,7 @@ export default function InteractiveTimeline() {
             whileHover={{ scale: 1.1, borderColor: 'var(--color-text)' }}
             whileTap={{ scale: 0.95 }}
           >
-            <svg 
-              width="20" 
-              height="20" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <path d="m9 18 6-6-6-6"/>
-            </svg>
+            <Icon name="chevron-right" size={20} />
           </motion.button>
         </div>
 
@@ -265,34 +244,7 @@ export default function InteractiveTimeline() {
             whileHover={{ scale: 1.05, borderColor: 'var(--color-primary)' }}
             whileTap={{ scale: 0.95 }}
           >
-            {isAutoPlaying ? (
-              <svg 
-                width="12" 
-                height="12" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              >
-                <rect x="6" y="4" width="4" height="16"/>
-                <rect x="14" y="4" width="4" height="16"/>
-              </svg>
-            ) : (
-              <svg 
-                width="12" 
-                height="12" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              >
-                <polygon points="5,3 19,12 5,21"/>
-              </svg>
-            )}
+            <Icon name={isAutoPlaying ? "pause" : "play"} size={12} />
           </motion.button>
 
           <div 

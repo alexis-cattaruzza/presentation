@@ -55,7 +55,133 @@
     }
   },
   "skills": {
-    "title": "Compétences"
+    "title": "Compétences",
+    "categories": {
+      "skills": {
+        "title": "Compétences Techniques",
+        "icon": "🎯"
+      },
+      "technologies": {
+        "title": "Technologies & Outils", 
+        "icon": "⚙️"
+      },
+      "methods": {
+        "title": "Méthodes & Processus",
+        "icon": "🔄"
+      }
+    },
+    "levels": {
+      "expert": "Expert",
+      "advanced": "Avancé", 
+      "intermediate": "Intermédiaire",
+      "knowledge": "Connaissance"
+    },
+    "items": {
+      "fullstack": "Développement Full-Stack",
+      "architecture": "Architecture Logicielle",
+      "performance": "Optimisation Performance",
+      "testing": "Tests & Qualité",
+      "project": "Gestion de Projet",
+      "java": "Java",
+      "typescript": "TypeScript",
+      "angular": "Angular",
+      "react": "React",
+      "sql": "SQL",
+      "docker": "Docker",
+      "git": "Git",
+      "htmlcss": "HTML/CSS",
+      "spring": "Spring Boot",
+      "javascript": "JavaScript",
+      "python": "Python",
+      "agile": "Agile/Scrum",
+      "devops": "DevOps",
+      "codereview": "Code Review",
+      "documentation": "Documentation",
+      "debugging": "Debugging",
+      "cicd": "CI/CD",
+      "unittests": "Tests Unitaires"
+    }
+  },
+  "hobbies": {
+    "title": "Centres d'intérêt",
+    "categories": {
+      "sport": {
+        "name": "Sports",
+        "icon": "⚽"
+      },
+      "travel": {
+        "name": "Voyage", 
+        "icon": "🌍"
+      },
+      "tech": {
+        "name": "Technologie",
+        "icon": "💻"
+      },
+      "lifestyle": {
+        "name": "Lifestyle",
+        "icon": "🎨"
+      }
+    },
+    "levels": {
+      "passion": "Passion",
+      "hobby": "Loisir",
+      "interest": "Intérêt"
+    },
+    "items": {
+      "f1": {
+        "name": "Formule 1",
+        "description": "Passionné de F1, je suis les courses et l'évolution technologique de ce sport"
+      },
+      "padel": {
+        "name": "Padel",
+        "description": "Sport de raquette que je pratique régulièrement pour l'aspect social et compétitif"
+      },
+      "travel": {
+        "name": "Voyage",
+        "description": "Découverte de nouvelles cultures et paysages, source d'inspiration constante"
+      },
+      "running": {
+        "name": "Course à pied",
+        "description": "Running pour maintenir la forme physique et l'équilibre mental"
+      },
+      "dev": {
+        "name": "Développement IT personnel",
+        "description": "Projets personnels et expérimentations technologiques en dehors du travail"
+      },
+      "reading": {
+        "name": "Lecture technique",
+        "description": "Veille technologique et lecture d'articles sur les dernières innovations IT"
+      },
+      "cooking": {
+        "name": "Cuisine",
+        "description": "Découverte de nouvelles recettes et techniques culinaires"
+      }
+    }
+  },
+  "location": {
+    "title": "Localisation",
+    "description": "Basé à Genève, je suis disponible pour des projets locaux et internationaux",
+    "address": "Basé à Genève",
+    "region": "Suisse - Région lémanique",
+    "local_zone": {
+      "title": "Zone locale (20km)",
+      "description": "Disponible pour déplacements dans un rayon de 20km autour de Genève",
+      "status": "✅ Disponible"
+    },
+    "remote": {
+      "title": "Full Remote",
+      "description": "Ouvert aux opportunités de travail à distance partout dans le monde",
+      "status": "🌍 Remote OK"
+    },
+    "timezone": {
+      "title": "Fuseau horaire",
+      "description": "UTC+1 (CET) / UTC+2 (CEST)"
+    },
+    "languages": {
+      "title": "Langues",
+      "french": "🇫🇷 Français (Natif)",
+      "english": "🇬🇧 Anglais (Courant)"
+    }
   },
   "contact": {
     "title": "Contact",

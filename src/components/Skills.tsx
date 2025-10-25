@@ -1,23 +1,26 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import skillCategories from "../data/skills";
+import Icon from "./Icon";
 
 export default function Skills() {
   const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
-  // Detect mobile screen size
+  // Detect screen size and type
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+    const checkScreen = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      setIsMobile(width < 1024);
+      setIsLargeScreen(width >= 1000 && height >= 645);
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    checkScreen();
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
   }, []);
 
   // Auto-scroll for mobile
@@ -36,50 +39,74 @@ export default function Skills() {
       case 'Expert': return 'var(--color-success)';
       case 'Avancé': return 'var(--color-primary)';
       case 'Intermédiaire': return 'var(--color-accent)';
+      case 'Connaissance': return 'var(--color-muted)';
       default: return 'var(--color-muted)';
     }
   };
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % skillCategories.length);
+  const getTranslatedLevel = (level: string) => {
+    switch (level) {
+      case 'Expert': return t('skills.levels.expert');
+      case 'Avancé': return t('skills.levels.advanced');
+      case 'Intermédiaire': return t('skills.levels.intermediate');
+      case 'Connaissance': return t('skills.levels.knowledge');
+      default: return level;
+    }
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + skillCategories.length) % skillCategories.length);
+  const getTranslatedSkillName = (skillName: string) => {
+    const skillKey = skillName.toLowerCase()
+      .replace(/[^a-z0-9]/g, '')
+      .replace('développement', '')
+      .replace('fullstack', 'fullstack')
+      .replace('architecture', 'architecture')
+      .replace('logicielle', '')
+      .replace('optimisation', 'performance')
+      .replace('performance', '')
+      .replace('tests', 'testing')
+      .replace('qualité', '')
+      .replace('gestion', 'project')
+      .replace('projet', '')
+      .replace('java', 'java')
+      .replace('typescript', 'typescript')
+      .replace('angular', 'angular')
+      .replace('react', 'react')
+      .replace('sql', 'sql')
+      .replace('docker', 'docker')
+      .replace('git', 'git')
+      .replace('html', 'htmlcss')
+      .replace('css', '')
+      .replace('spring', 'spring')
+      .replace('boot', '')
+      .replace('javascript', 'javascript')
+      .replace('python', 'python')
+      .replace('agile', 'agile')
+      .replace('scrum', '')
+      .replace('devops', 'devops')
+      .replace('code', 'codereview')
+      .replace('review', '')
+      .replace('documentation', 'documentation')
+      .replace('debugging', 'debugging')
+      .replace('cicd', 'cicd')
+      .replace('tests', 'unittests')
+      .replace('unitaires', '');
+    
+    return t(`skills.items.${skillKey}`, skillName);
+  };
+
+  const getTranslatedCategoryTitle = (categoryId: string) => {
+    return t(`skills.categories.${categoryId}.title`);
   };
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
   };
 
-  // Touch handlers for mobile swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      nextSlide();
-    } else if (isRightSwipe) {
-      prevSlide();
-    }
-  };
 
   return (
     <div className="skills-section w-full">
       {/* Header */}
-      <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-3 sm:mb-4 text-left" style={{ color: 'var(--color-primary)' }}>
+      <h2 className="section-title text-left" style={{ color: 'var(--color-primary)' }}>
         {t('skills.title')}
       </h2>
 
@@ -87,12 +114,7 @@ export default function Skills() {
       {isMobile ? (
         <div className="relative">
           {/* Mobile Carousel */}
-          <div 
-            className="overflow-hidden rounded-lg"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
+          <div className="overflow-hidden rounded-lg">
             <div 
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -102,9 +124,9 @@ export default function Skills() {
                   <div className="flex flex-col h-full">
                     {/* Category Header */}
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xl">{category.icon}</span>
-                      <h3 className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>
-                        {category.title}
+                      <Icon name={category.icon} size={20} style={{ color: 'var(--color-primary)' }} />
+                      <h3 className="card-title" style={{ color: 'var(--color-text)' }}>
+                        {getTranslatedCategoryTitle(category.id)}
                       </h3>
                     </div>
 
@@ -113,28 +135,20 @@ export default function Skills() {
                       {category.skills.map((skill) => (
                         <div
                           key={skill.name}
-                          className="skills-item flex items-center gap-1.5 p-1.5 rounded-lg transition-all duration-200 hover:scale-105"
+                          className="skills-item flex flex-col p-2 rounded-lg transition-all duration-200 hover:scale-105"
                           style={{ 
                             backgroundColor: 'var(--color-surface)',
                             border: '1px solid var(--color-border)'
                           }}
                         >
-                          {/* Icon */}
-                          <span className="skills-icon shrink-0 text-sm">
-                            {skill.icon}
-                          </span>
-                          
-                          {/* Content */}
-                          <div className="flex-1 min-w-0">
-                            <div className="font-medium text-xs truncate" style={{ color: 'var(--color-text)' }}>
-                              {skill.name}
-                            </div>
-                            <div 
-                              className="text-xs font-medium"
-                              style={{ color: getLevelColor(skill.level) }}
-                            >
-                              {skill.level}
-                            </div>
+                          <div className="card-title text-center" style={{ color: 'var(--color-text)' }}>
+                            {getTranslatedSkillName(skill.name)}
+                          </div>
+                          <div 
+                            className="card-text text-center"
+                            style={{ color: getLevelColor(skill.level) }}
+                          >
+                            {getTranslatedLevel(skill.level)}
                           </div>
                         </div>
                       ))}
@@ -145,118 +159,214 @@ export default function Skills() {
             </div>
           </div>
 
-          {/* Mobile Navigation */}
-          <div className="flex flex-col items-center gap-3 mt-4">
-            {/* Slide Counter & Info */}
-            <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--color-muted)' }}>
-              <span>{currentSlide + 1} / {skillCategories.length}</span>
-              <span>•</span>
-              <span>Glissez pour naviguer</span>
+          {/* Mobile Navigation - Flèches + Bulles */}
+          <div className="flex items-center justify-center gap-4 mt-4">
+            {/* Previous Button */}
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev - 1 + skillCategories.length) % skillCategories.length)}
+              className="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+              style={{ 
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-text)',
+                border: '1px solid var(--color-border)'
+              }}
+            >
+              <Icon name="chevron-left" size={14} />
+            </button>
+
+            {/* Bulles */}
+            <div className="flex items-center gap-2">
+              {skillCategories.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index ? 'w-6' : ''
+                  }`}
+                  style={{
+                    backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
+                  }}
+                  title={`Catégorie ${index + 1}`}
+                />
+              ))}
             </div>
 
-            {/* Navigation Controls */}
-            <div className="flex items-center justify-center gap-4">
+            {/* Next Button */}
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev + 1) % skillCategories.length)}
+              className="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+              style={{ 
+                backgroundColor: 'var(--color-primary)',
+                color: 'white',
+                border: '1px solid var(--color-primary)'
+              }}
+            >
+              <Icon name="chevron-right" size={14} />
+            </button>
+          </div>
+        </div>
+      ) : isLargeScreen ? (
+        /* Large Screen: Tabbed Layout */
+        <div className="w-full">
+          
+
+          {/* Tab Content */}
+          <div className="relative">
+            <div className="overflow-hidden rounded-xl" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+              <div 
+                className="flex transition-transform duration-300 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {skillCategories.map((category) => (
+                  <div key={category.id} className="w-full shrink-0">
+                    <div className="p-6">
+                      {/* Category Header */}
+                      <div className="text-center mb-6">
+                        <div className="flex items-center justify-center gap-3 mb-2">
+                          <Icon name={category.icon} size={32} style={{ color: 'var(--color-primary)' }} />
+                          <h3 className="section-subtitle" style={{ color: 'var(--color-text)' }}>
+                            {getTranslatedCategoryTitle(category.id)}
+                          </h3>
+                        </div>
+                        <p className="card-text" style={{ color: 'var(--color-muted)' }}>
+                          {category.skills.length} compétences
+                        </p>
+                      </div>
+
+                      {/* Skills Grid - Compact */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3">
+                        {category.skills.map((skill) => (
+                          <div
+                            key={skill.name}
+                            className="group relative overflow-hidden rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md"
+                            style={{
+                              backgroundColor: 'var(--color-background)',
+                              border: '1px solid var(--color-border)',
+                              boxShadow: '0 1px 4px rgba(0,0,0,0.1)'
+                            }}
+                          >
+                            <div className="p-3 sm:p-4">
+                              <div className="flex flex-col items-center text-center">
+                                <h4 className="card-title leading-tight mb-2" style={{ color: 'var(--color-text)' }}>
+                                  {getTranslatedSkillName(skill.name)}
+                                </h4>
+                                <div
+                                  className="card-text"
+                                  style={{ color: getLevelColor(skill.level) }}
+                                >
+                                  {getTranslatedLevel(skill.level)}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation Controls - Flèches + Bulles */}
+            <div className="flex items-center justify-center gap-4 mt-6">
               {/* Previous Button */}
               <button
-                onClick={prevSlide}
-                className="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                style={{ 
+                onClick={() => setCurrentSlide((prev) => (prev - 1 + skillCategories.length) % skillCategories.length)}
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                style={{
                   backgroundColor: 'var(--color-surface)',
                   color: 'var(--color-text)',
                   border: '1px solid var(--color-border)'
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="m15 18-6-6 6-6"/>
-                </svg>
+                <Icon name="chevron-left" size={20} />
               </button>
 
-              {/* Slide Indicators */}
-              <div className="flex items-center gap-1.5">
-                {skillCategories.map((category, index) => (
+              {/* Bulles */}
+              <div className="flex items-center gap-2">
+                {skillCategories.map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => goToSlide(index)}
-                    className={`rounded-full transition-all duration-300 flex items-center gap-1 px-2 py-1 ${
-                      index === currentSlide ? 'px-3' : 'px-2'
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      currentSlide === index ? 'w-6' : ''
                     }`}
                     style={{
-                      backgroundColor: index === currentSlide 
-                        ? 'var(--color-primary)' 
-                        : 'var(--color-surface)',
-                      border: `1px solid ${index === currentSlide ? 'var(--color-primary)' : 'var(--color-border)'}`
+                      backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
                     }}
-                  >
-                    <span className="text-xs">{category.icon}</span>
-                    {index === currentSlide && (
-                      <span className="text-xs font-medium text-white truncate max-w-16">
-                        {category.title.split(' ')[0]}
-                      </span>
-                    )}
-                  </button>
+                    title={`Catégorie ${index + 1}`}
+                  />
                 ))}
               </div>
 
               {/* Next Button */}
               <button
-                onClick={nextSlide}
-                className="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                style={{ 
+                onClick={() => setCurrentSlide((prev) => (prev + 1) % skillCategories.length)}
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                style={{
                   backgroundColor: 'var(--color-primary)',
                   color: 'white',
                   border: '1px solid var(--color-primary)'
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="m9 18 6-6-6-6"/>
-                </svg>
+                <Icon name="chevron-right" size={20} />
               </button>
             </div>
           </div>
         </div>
       ) : (
-        /* Desktop: Grid Layout */
-        <div className="skills-categories-grid">
+        /* Mobile/Tablet: Accordion Layout */
+        <div className="w-full space-y-3 sm:space-y-4">
           {skillCategories.map((category) => (
-            <div key={category.id} className="flex flex-col h-full">
-              {/* Category Header */}
-              <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                <span className="text-lg sm:text-xl lg:text-2xl">{category.icon}</span>
-                <h3 className="text-xs sm:text-sm lg:text-base xl:text-lg font-semibold" style={{ color: 'var(--color-text)' }}>
-                  {category.title}
-                </h3>
-              </div>
-
-              {/* Skills Grid - Ultra Compact */}
-              <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-1 sm:gap-1.5 overflow-y-auto">
-                {category.skills.map((skill) => (
-                  <div
-                    key={skill.name}
-                    className="skills-item flex items-center gap-1.5 p-1.5 rounded-lg transition-all duration-200 hover:scale-105"
-                    style={{ 
-                      backgroundColor: 'var(--color-surface)',
-                      border: '1px solid var(--color-border)'
-                    }}
-                  >
-                    {/* Icon */}
-                    <span className="skills-icon shrink-0 text-xs sm:text-sm">
-                      {skill.icon}
-                    </span>
-                    
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="font-medium text-xs truncate" style={{ color: 'var(--color-text)' }}>
-                        {skill.name}
-                      </div>
-                      <div 
-                        className="text-xs font-medium"
-                        style={{ color: getLevelColor(skill.level) }}
-                      >
-                        {skill.level}
-                      </div>
+            <div 
+              key={category.id} 
+              className="rounded-xl overflow-hidden"
+              style={{ 
+                backgroundColor: 'var(--color-surface)',
+                border: '1px solid var(--color-border)'
+              }}
+            >
+              {/* Category Header - Always Visible */}
+              <div className="p-3 sm:p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Icon name={category.icon} size={24} style={{ color: 'var(--color-primary)' }} />
+                    <div>
+                      <h3 className="card-title" style={{ color: 'var(--color-text)' }}>
+                        {getTranslatedCategoryTitle(category.id)}
+                      </h3>
+                      <p className="card-text" style={{ color: 'var(--color-muted)' }}>
+                        {category.skills.length} compétences
+                      </p>
                     </div>
                   </div>
-                ))}
+                </div>
+              </div>
+
+              {/* Skills List - Compact Cards */}
+              <div className="px-3 sm:px-4 pb-3 sm:pb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                  {category.skills.map((skill) => (
+                    <div
+                      key={skill.name}
+                      className="flex flex-col p-3 sm:p-4 rounded-lg transition-all duration-200 hover:scale-105"
+                      style={{ 
+                        backgroundColor: 'var(--color-background)',
+                        border: '1px solid var(--color-border)'
+                      }}
+                    >
+                      <div className="card-title text-center mb-1" style={{ color: 'var(--color-text)' }}>
+                        {getTranslatedSkillName(skill.name)}
+                      </div>
+                      <div 
+                        className="card-text text-center"
+                        style={{ color: getLevelColor(skill.level) }}
+                      >
+                        {getTranslatedLevel(skill.level)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}

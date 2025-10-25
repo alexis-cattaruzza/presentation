@@ -10,64 +10,57 @@ export const hobbies: Hobby[] = [
   {
     name: "Formule 1",
     description: "Passionné de F1, je suis les courses et l'évolution technologique de ce sport",
-    icon: "🏎️",
+    icon: "trophy",
     category: 'sport',
     level: 'passion'
   },
   {
     name: "Padel",
     description: "Sport de raquette que je pratique régulièrement pour l'aspect social et compétitif",
-    icon: "🎾",
+    icon: "gamepad",
     category: 'sport',
     level: 'hobby'
   },
   {
     name: "Voyage",
     description: "Découverte de nouvelles cultures et paysages, source d'inspiration constante",
-    icon: "✈️",
+    icon: "plane",
     category: 'travel',
     level: 'passion'
   },
   {
     name: "Course à pied",
     description: "Running pour maintenir la forme physique et l'équilibre mental",
-    icon: "🏃",
+    icon: "dumbbell",
     category: 'sport',
     level: 'hobby'
   },
   {
     name: "Développement IT personnel",
     description: "Projets personnels et expérimentations technologiques en dehors du travail",
-    icon: "💻",
+    icon: "laptop",
     category: 'tech',
     level: 'passion'
   },
   {
-    name: "Photographie",
-    description: "Capture de moments et paysages lors de mes voyages et sorties",
-    icon: "📸",
-    category: 'lifestyle',
-    level: 'hobby'
-  },
-  {
     name: "Lecture technique",
     description: "Veille technologique et lecture d'articles sur les dernières innovations IT",
-    icon: "📚",
+    icon: "book",
     category: 'tech',
     level: 'interest'
   },
   {
     name: "Cuisine",
     description: "Découverte de nouvelles recettes et techniques culinaires",
-    icon: "👨‍🍳",
+    icon: "utensils",
     category: 'lifestyle',
     level: 'hobby'
   }
 ];
 
 export const hobbyCategories = {
-  sport: { name: 'Sports', icon: '⚽', color: 'var(--color-success)' },
-  travel: { name: 'Voyage', icon: '🌍', color: 'var(--color-accent)' },
-  tech: { name: 'Technologie', icon: '💻', color: 'var(--color-primary)' },
-  lifestyle: { name: 'Lifestyle', icon: '🎨', color: 'var(--color-secondary)' }
+  sport: { name: 'Sports', icon: 'trophy', color: 'var(--color-success)' },
+  travel: { name: 'Voyage', icon: 'globe', color: 'var(--color-accent)' },
+  tech: { name: 'Technologie', icon: 'laptop', color: 'var(--color-primary)' },
+  lifestyle: { name: 'Lifestyle', icon: 'palette', color: 'var(--color-secondary)' }
 };

@@ -12,14 +12,14 @@ export default function Hero() {
         transition={{ duration: 0.6 }}
         className="flex-1 text-center lg:text-left"
       >
-        <p className="text-sm sm:text-base" style={{ color: 'var(--color-secondary)' }}>
+        <p className="section-text" style={{ color: 'var(--color-secondary)' }}>
           {t('hero.greeting')}
         </p>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mt-2" style={{ color: 'var(--color-primary)' }}>
+        <h1 className="section-title" style={{ color: 'var(--color-primary)' }}>
           {t('hero.name')}
         </h1>
 
-        <p className="mt-4 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0" style={{ color: 'var(--color-text)' }}>
+        <p className="section-text mt-4 max-w-2xl mx-auto lg:mx-0" style={{ color: 'var(--color-text)' }}>
           {t('hero.title')}
         </p>
       </motion.div>
@@ -31,7 +31,7 @@ export default function Hero() {
         className="w-40 h-40 sm:w-48 sm:h-48 lg:w-52 lg:h-52 rounded-xl overflow-hidden shrink-0"
         style={{ border: '1px solid var(--color-border)', backgroundColor: 'var(--color-surface)' }}
       >
-        <img src="/images/cv3.jpg" alt="Photo Alexis" className="w-full h-full object-cover" />
+        <img src="/images/Pro-linkedIn.jpg" alt="Photo Alexis" className="w-full h-full object-cover" />
       </motion.div>
     </div>
   );
