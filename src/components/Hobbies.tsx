@@ -7,6 +7,8 @@ export default function Hobbies() {
   const { t } = useTranslation();
   const [isMobile, setIsMobile] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   // Detect mobile screen size
   useEffect(() => {
@@ -85,16 +87,33 @@ export default function Hobbies() {
   };
 
   // Navigation functions for slider
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % Object.keys(hobbyCategories).length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + Object.keys(hobbyCategories).length) % Object.keys(hobbyCategories).length);
-  };
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
+  };
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setCurrentSlide((prev) => (prev + 1) % Object.keys(hobbyCategories).length);
+    } else if (isRightSwipe) {
+      setCurrentSlide((prev) => (prev - 1 + Object.keys(hobbyCategories).length) % Object.keys(hobbyCategories).length);
+    }
   };
 
 
@@ -110,7 +129,13 @@ export default function Hobbies() {
       {/* Hobbies Slider */}
       <div className="relative">
         {/* Hobbies Container */}
-        <div className="overflow-hidden rounded-xl" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+        <div 
+          className="overflow-hidden rounded-xl" 
+          style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <div 
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -195,50 +220,21 @@ export default function Hobbies() {
         </div>
       </div>
 
-      {/* Simplified Navigation - Only Bulles and Arrows */}
-      <div className="flex items-center justify-center gap-2 sm:gap-4 mt-6 sm:mt-8">
-        {/* Previous Button */}
-        <button
-          onClick={prevSlide}
-          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-          style={{ 
-            backgroundColor: 'var(--color-surface)',
-            color: 'var(--color-text)',
-            border: '1px solid var(--color-border)'
-          }}
-        >
-          <Icon name="chevron-left" size={16} />
-        </button>
-
-        {/* Category Bulles */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {Object.entries(hobbyCategories).map(([key], index) => (
-            <button
-              key={key}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
-                currentSlide === index ? 'w-6 sm:w-8' : ''
-              }`}
-              style={{
-                backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
-              }}
-              title={getTranslatedCategoryName(key)}
-            />
-          ))}
-        </div>
-
-        {/* Next Button */}
-        <button
-          onClick={nextSlide}
-          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-          style={{ 
-            backgroundColor: 'var(--color-primary)',
-            color: 'white',
-            border: '1px solid var(--color-primary)'
-          }}
-        >
-          <Icon name="chevron-right" size={16} />
-        </button>
+      {/* Simplified Navigation - Bulles seulement */}
+      <div className="flex items-center justify-center gap-2 mt-6 sm:mt-8">
+        {Object.entries(hobbyCategories).map(([key], index) => (
+          <button
+            key={key}
+            onClick={() => goToSlide(index)}
+            className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
+              currentSlide === index ? 'w-6 sm:w-8' : ''
+            }`}
+            style={{
+              backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
+            }}
+            title={getTranslatedCategoryName(key)}
+          />
+        ))}
       </div>
 
     </div>

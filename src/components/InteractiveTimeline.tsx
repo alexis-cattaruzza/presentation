@@ -8,17 +8,31 @@ export default function InteractiveTimeline() {
   const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  // Auto-play functionality
+  // Detect mobile screen size
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Auto-play functionality (desktop only)
+  useEffect(() => {
+    if (!isAutoPlaying || isMobile) return;
     
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % timeline.length);
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isMobile]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % timeline.length);
@@ -35,6 +49,32 @@ export default function InteractiveTimeline() {
     setIsAutoPlaying(false);
   };
 
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setCurrentSlide((prev) => (prev + 1) % timeline.length);
+      setIsAutoPlaying(false);
+    } else if (isRightSwipe) {
+      setCurrentSlide((prev) => (prev - 1 + timeline.length) % timeline.length);
+      setIsAutoPlaying(false);
+    }
+  };
+
   return (
     <div className="w-full">
       <h2 className="section-title text-center lg:text-left" style={{ color: 'var(--color-primary)' }}>
@@ -44,7 +84,13 @@ export default function InteractiveTimeline() {
       {/* Container principal */}
       <div className="relative">
         {/* Zone de contenu avec slide */}
-        <div className="relative overflow-hidden rounded-xl mb-6" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+        <div 
+          className="relative overflow-hidden rounded-xl mb-6" 
+          style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <motion.div 
             className="flex"
             animate={{ x: `-${currentSlide * 100}%` }}
@@ -134,20 +180,22 @@ export default function InteractiveTimeline() {
 
         {/* Contrôles de navigation */}
         <div className="flex items-center justify-center gap-4 sm:gap-6 lg:gap-8 mb-4 sm:mb-6">
-          {/* Bouton précédent */}
-          <motion.button
-            onClick={prevSlide}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200"
-            style={{ 
-              backgroundColor: 'var(--color-surface)',
-              color: 'var(--color-text)',
-              border: '1px solid var(--color-border)'
-            }}
-            whileHover={{ scale: 1.1, borderColor: 'var(--color-primary)' }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Icon name="chevron-left" size={20} />
-          </motion.button>
+          {/* Bouton précédent - Desktop seulement */}
+          {!isMobile && (
+            <motion.button
+              onClick={prevSlide}
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200"
+              style={{ 
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-text)',
+                border: '1px solid var(--color-border)'
+              }}
+              whileHover={{ scale: 1.1, borderColor: 'var(--color-primary)' }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Icon name="chevron-left" size={20} />
+            </motion.button>
+          )}
 
           {/* Indicateurs de position */}
           <div className="flex items-center gap-3">
@@ -169,20 +217,22 @@ export default function InteractiveTimeline() {
             ))}
           </div>
 
-          {/* Bouton suivant */}
-          <motion.button
-            onClick={nextSlide}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200"
-            style={{ 
-              backgroundColor: 'var(--color-primary)',
-              color: 'var(--color-text)',
-              border: '1px solid var(--color-border)'
-            }}
-            whileHover={{ scale: 1.1, borderColor: 'var(--color-text)' }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Icon name="chevron-right" size={20} />
-          </motion.button>
+          {/* Bouton suivant - Desktop seulement */}
+          {!isMobile && (
+            <motion.button
+              onClick={nextSlide}
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200"
+              style={{ 
+                backgroundColor: 'var(--color-primary)',
+                color: 'var(--color-text)',
+                border: '1px solid var(--color-border)'
+              }}
+              whileHover={{ scale: 1.1, borderColor: 'var(--color-text)' }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Icon name="chevron-right" size={20} />
+            </motion.button>
+          )}
         </div>
 
         {/* Barre de progression simplifiée */}

@@ -8,6 +8,8 @@ export default function Skills() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   // Detect screen size and type
   useEffect(() => {
@@ -102,6 +104,30 @@ export default function Skills() {
     setCurrentSlide(index);
   };
 
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setCurrentSlide((prev) => (prev + 1) % skillCategories.length);
+    } else if (isRightSwipe) {
+      setCurrentSlide((prev) => (prev - 1 + skillCategories.length) % skillCategories.length);
+    }
+  };
+
 
   return (
     <div className="skills-section w-full">
@@ -114,7 +140,12 @@ export default function Skills() {
       {isMobile ? (
         <div className="relative">
           {/* Mobile Carousel */}
-          <div className="overflow-hidden rounded-lg">
+          <div 
+            className="overflow-hidden rounded-lg"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div 
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -124,7 +155,7 @@ export default function Skills() {
                   <div className="flex flex-col h-full">
                     {/* Category Header */}
                     <div className="flex items-center gap-2 mb-3">
-                      <Icon name={category.icon} size={20} style={{ color: 'var(--color-primary)' }} />
+                      <Icon name={category.icon} size={20}/>
                       <h3 className="card-title" style={{ color: 'var(--color-text)' }}>
                         {getTranslatedCategoryTitle(category.id)}
                       </h3>
@@ -135,20 +166,23 @@ export default function Skills() {
                       {category.skills.map((skill) => (
                         <div
                           key={skill.name}
-                          className="skills-item flex flex-col p-2 rounded-lg transition-all duration-200 hover:scale-105"
+                          className="skills-item flex items-center gap-3 p-2 rounded-lg transition-all duration-200 hover:scale-105"
                           style={{ 
                             backgroundColor: 'var(--color-surface)',
                             border: '1px solid var(--color-border)'
                           }}
                         >
-                          <div className="card-title text-center" style={{ color: 'var(--color-text)' }}>
-                            {getTranslatedSkillName(skill.name)}
-                          </div>
-                          <div 
-                            className="card-text text-center"
-                            style={{ color: getLevelColor(skill.level) }}
-                          >
-                            {getTranslatedLevel(skill.level)}
+                          <Icon name={skill.icon} size={20}/>
+                          <div className="flex-1 min-w-0">
+                            <div className="card-title truncate" style={{ color: 'var(--color-text)' }}>
+                              {getTranslatedSkillName(skill.name)}
+                            </div>
+                            <div 
+                              className="card-text"
+                              style={{ color: getLevelColor(skill.level) }}
+                            >
+                              {getTranslatedLevel(skill.level)}
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -159,50 +193,21 @@ export default function Skills() {
             </div>
           </div>
 
-          {/* Mobile Navigation - Flèches + Bulles */}
-          <div className="flex items-center justify-center gap-4 mt-4">
-            {/* Previous Button */}
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev - 1 + skillCategories.length) % skillCategories.length)}
-              className="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-              style={{ 
-                backgroundColor: 'var(--color-surface)',
-                color: 'var(--color-text)',
-                border: '1px solid var(--color-border)'
-              }}
-            >
-              <Icon name="chevron-left" size={14} />
-            </button>
-
-            {/* Bulles */}
-            <div className="flex items-center gap-2">
-              {skillCategories.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    currentSlide === index ? 'w-6' : ''
-                  }`}
-                  style={{
-                    backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
-                  }}
-                  title={`Catégorie ${index + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Next Button */}
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev + 1) % skillCategories.length)}
-              className="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-              style={{ 
-                backgroundColor: 'var(--color-primary)',
-                color: 'white',
-                border: '1px solid var(--color-primary)'
-              }}
-            >
-              <Icon name="chevron-right" size={14} />
-            </button>
+          {/* Mobile Navigation - Bulles seulement */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            {skillCategories.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
+                  currentSlide === index ? 'w-6 sm:w-8' : ''
+                }`}
+                style={{
+                  backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
+                }}
+                title={`Catégorie ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       ) : isLargeScreen ? (
@@ -221,9 +226,9 @@ export default function Skills() {
                   <div key={category.id} className="w-full shrink-0">
                     <div className="p-6">
                       {/* Category Header */}
-                      <div className="text-center mb-6">
-                        <div className="flex items-center justify-center gap-3 mb-2">
-                          <Icon name={category.icon} size={32} style={{ color: 'var(--color-primary)' }} />
+                      <div className="text-center mb-3">
+                        <div className="flex items-center justify-center gap-3 mb-1">
+                          <Icon name={category.icon} size={32} />
                           <h3 className="section-subtitle" style={{ color: 'var(--color-text)' }}>
                             {getTranslatedCategoryTitle(category.id)}
                           </h3>
@@ -246,15 +251,18 @@ export default function Skills() {
                             }}
                           >
                             <div className="p-3 sm:p-4">
-                              <div className="flex flex-col items-center text-center">
-                                <h4 className="card-title leading-tight mb-2" style={{ color: 'var(--color-text)' }}>
-                                  {getTranslatedSkillName(skill.name)}
-                                </h4>
-                                <div
-                                  className="card-text"
-                                  style={{ color: getLevelColor(skill.level) }}
-                                >
-                                  {getTranslatedLevel(skill.level)}
+                              <div className="flex items-center gap-3">
+                                <Icon name={skill.icon} size={24}/>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="card-title leading-tight mb-1" style={{ color: 'var(--color-text)' }}>
+                                    {getTranslatedSkillName(skill.name)}
+                                  </h4>
+                                  <div
+                                    className="card-text"
+                                    style={{ color: getLevelColor(skill.level) }}
+                                  >
+                                    {getTranslatedLevel(skill.level)}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -267,50 +275,21 @@ export default function Skills() {
               </div>
             </div>
 
-            {/* Navigation Controls - Flèches + Bulles */}
-            <div className="flex items-center justify-center gap-4 mt-6">
-              {/* Previous Button */}
-              <button
-                onClick={() => setCurrentSlide((prev) => (prev - 1 + skillCategories.length) % skillCategories.length)}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                style={{
-                  backgroundColor: 'var(--color-surface)',
-                  color: 'var(--color-text)',
-                  border: '1px solid var(--color-border)'
-                }}
-              >
-                <Icon name="chevron-left" size={20} />
-              </button>
-
-              {/* Bulles */}
-              <div className="flex items-center gap-2">
-                {skillCategories.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      currentSlide === index ? 'w-6' : ''
-                    }`}
-                    style={{
-                      backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
-                    }}
-                    title={`Catégorie ${index + 1}`}
-                  />
-                ))}
-              </div>
-
-              {/* Next Button */}
-              <button
-                onClick={() => setCurrentSlide((prev) => (prev + 1) % skillCategories.length)}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                style={{
-                  backgroundColor: 'var(--color-primary)',
-                  color: 'white',
-                  border: '1px solid var(--color-primary)'
-                }}
-              >
-                <Icon name="chevron-right" size={20} />
-              </button>
+            {/* Navigation Controls - Bulles seulement */}
+            <div className="flex items-center justify-center gap-2 mt-6">
+              {skillCategories.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
+                    currentSlide === index ? 'w-6 sm:w-8' : ''
+                  }`}
+                  style={{
+                    backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
+                  }}
+                  title={`Catégorie ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -349,20 +328,23 @@ export default function Skills() {
                   {category.skills.map((skill) => (
                     <div
                       key={skill.name}
-                      className="flex flex-col p-3 sm:p-4 rounded-lg transition-all duration-200 hover:scale-105"
+                      className="flex items-center gap-3 p-3 sm:p-4 rounded-lg transition-all duration-200 hover:scale-105"
                       style={{ 
                         backgroundColor: 'var(--color-background)',
                         border: '1px solid var(--color-border)'
                       }}
                     >
-                      <div className="card-title text-center mb-1" style={{ color: 'var(--color-text)' }}>
-                        {getTranslatedSkillName(skill.name)}
-                      </div>
-                      <div 
-                        className="card-text text-center"
-                        style={{ color: getLevelColor(skill.level) }}
-                      >
-                        {getTranslatedLevel(skill.level)}
+                      <Icon name={skill.icon} size={20} style={{ color: 'var(--color-primary)' }} />
+                      <div className="flex-1 min-w-0">
+                        <div className="card-title truncate" style={{ color: 'var(--color-text)' }}>
+                          {getTranslatedSkillName(skill.name)}
+                        </div>
+                        <div 
+                          className="card-text"
+                          style={{ color: getLevelColor(skill.level) }}
+                        >
+                          {getTranslatedLevel(skill.level)}
+                        </div>
                       </div>
                     </div>
                   ))}

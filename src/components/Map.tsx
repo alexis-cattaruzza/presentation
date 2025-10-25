@@ -60,7 +60,12 @@ export default function Map({ className = '', style = {} }: MapProps) {
 
     grayscaleLayer.addTo(map);
 
-    // Ajouter un cercle pour montrer la zone de 5km
+    // Ajouter un marqueur pour Genève
+    L.marker(genevaCoords, {
+      icon: DefaultIcon
+    }).addTo(map);
+
+    // Ajouter un cercle pour montrer la zone
     const circle = L.circle(genevaCoords, {
       color: 'var(--color-primary)',
       fillColor: 'var(--color-primary)',

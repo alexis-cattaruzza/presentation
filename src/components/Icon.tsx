@@ -104,6 +104,90 @@ import {
   SignalHigh
 } from 'lucide-react';
 
+// DevIcons imports
+import { 
+  SiTypescript,
+  SiAngular,
+  SiReact,
+  SiJavascript,
+  SiPython,
+  SiHtml5,
+  SiCss3,
+  SiSpring,
+  SiDocker,
+  SiGit,
+  SiMysql,
+  SiPostgresql,
+  SiMongodb,
+  SiNodedotjs,
+  SiExpress,
+  SiNextdotjs,
+  SiVuedotjs,
+  SiSvelte,
+  SiTailwindcss,
+  SiBootstrap,
+  SiSass,
+  SiLess,
+  SiWebpack,
+  SiVite,
+  SiNpm,
+  SiYarn,
+  SiPnpm,
+  SiLinux,
+  SiUbuntu,
+  SiMacos,
+  SiIntellijidea,
+  SiAndroidstudio,
+  SiXcode,
+  SiFigma,
+  SiAdobephotoshop,
+  SiAdobeillustrator,
+  SiAdobexd,
+  SiSketch,
+  SiInvision,
+  SiJira,
+  SiConfluence,
+  SiSlack,
+  SiDiscord,
+  SiZoom,
+  SiGooglemeet,
+  SiTrello,
+  SiAsana,
+  SiNotion,
+  SiObsidian,
+  SiMarkdown,
+  SiJson,
+  SiXml,
+  SiYaml,
+  SiToml,
+  SiDotenv,
+  SiGitlab,
+  SiBitbucket,
+  SiJenkins,
+  SiTravisci,
+  SiCircleci,
+  SiGithubactions,
+  SiGooglecloud,
+  SiHeroku,
+  SiVercel,
+  SiNetlify,
+  SiFirebase,
+  SiSupabase,
+  SiPlanetscale,
+  SiRailway,
+  SiRender,
+  SiDigitalocean,
+  SiCloudflare,
+  SiFastly,
+  SiAkamai,
+  SiKeycdn,
+  SiStackpath
+} from 'react-icons/si';
+
+import {
+  DiJava,
+} from 'react-icons/di';
+
 interface IconProps {
   name: string;
   size?: number | string;
@@ -229,7 +313,120 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   'eye': Eye,
   'eye-off': EyeOff,
   'bell': Bell,
-  'calendar': Calendar
+  'calendar': Calendar,
+  
+  // DevIcons - Technologies
+  'java': DiJava,
+  'typescript': SiTypescript,
+  'angular': SiAngular,
+  'react': SiReact,
+  'javascript': SiJavascript,
+  'python': SiPython,
+  'html': SiHtml5,
+  'css': SiCss3,
+  'spring': SiSpring,
+  'docker': SiDocker,
+  'git': SiGit,
+  'mysql': SiMysql,
+  'postgresql': SiPostgresql,
+  'mongodb': SiMongodb,
+  'nodejs': SiNodedotjs,
+  'express': SiExpress,
+  'nextjs': SiNextdotjs,
+  'vue': SiVuedotjs,
+  'svelte': SiSvelte,
+  'tailwind': SiTailwindcss,
+  'bootstrap': SiBootstrap,
+  'sass': SiSass,
+  'less': SiLess,
+  'webpack': SiWebpack,
+  'vite': SiVite,
+  'npm': SiNpm,
+  'yarn': SiYarn,
+  'pnpm': SiPnpm,
+  
+  // DevIcons - Operating Systems
+  'linux': SiLinux,
+  'ubuntu': SiUbuntu,
+  'macos': SiMacos,
+  'windows': Monitor, // Fallback to generic monitor icon
+  
+  // DevIcons - IDEs & Editors
+  'vscode': Code, // Fallback to generic code icon
+  'intellij': SiIntellijidea,
+  'eclipse': Code, // Fallback to generic code icon
+  'android-studio': SiAndroidstudio,
+  'xcode': SiXcode,
+  
+  // DevIcons - Design Tools
+  'figma': SiFigma,
+  'photoshop': SiAdobephotoshop,
+  'illustrator': SiAdobeillustrator,
+  'xd': SiAdobexd,
+  'sketch': SiSketch,
+  'invision': SiInvision,
+  'zeplin': Palette, // Fallback to generic palette icon
+  
+  // DevIcons - Project Management
+  'jira': SiJira,
+  'confluence': SiConfluence,
+  'slack': SiSlack,
+  'discord': SiDiscord,
+  'teams': Users, // Fallback to generic users icon
+  'zoom': SiZoom,
+  'meet': SiGooglemeet,
+  'trello': SiTrello,
+  'asana': SiAsana,
+  'notion': SiNotion,
+  'obsidian': SiObsidian,
+  
+  // DevIcons - File Formats
+  'markdown': SiMarkdown,
+  'json': SiJson,
+  'xml': SiXml,
+  'yaml': SiYaml,
+  'toml': SiToml,
+  'ini': FileText, // Fallback to generic file icon
+  'env': FileText, // Fallback to generic file icon
+  'dotenv': SiDotenv,
+  
+  // DevIcons - Version Control
+  'gitlab': SiGitlab,
+  'bitbucket': SiBitbucket,
+  
+  // DevIcons - CI/CD
+  'jenkins': SiJenkins,
+  'travis': SiTravisci,
+  'circleci': SiCircleci,
+  'github-actions': SiGithubactions,
+  'azure-devops': RefreshCw, // Fallback to generic refresh icon
+  'aws': Globe, // Fallback to generic globe icon
+  'gcp': SiGooglecloud,
+  'azure': RefreshCw, // Fallback to generic refresh icon
+  
+  // DevIcons - Cloud Providers
+  'heroku': SiHeroku,
+  'vercel': SiVercel,
+  'netlify': SiNetlify,
+  'firebase': SiFirebase,
+  'supabase': SiSupabase,
+  'planetscale': SiPlanetscale,
+  'railway': SiRailway,
+  'render': SiRender,
+  'digitalocean': SiDigitalocean,
+  'linode': Database, // Fallback to generic database icon
+  'vultr': Database, // Fallback to generic database icon
+  
+  // DevIcons - CDN & Performance
+  'cloudflare': SiCloudflare,
+  'fastly': SiFastly,
+  'akamai': SiAkamai,
+  'maxcdn': Zap, // Fallback to generic zap icon
+  'keycdn': SiKeycdn,
+  'bunnycdn': Zap, // Fallback to generic zap icon
+  'stackpath': SiStackpath,
+  'incapsula': Shield, // Fallback to generic shield icon
+  'sucuri': Shield // Fallback to generic shield icon
 };
 
 export default function Icon({ name, size = 20, className = '', style = {}, color }: IconProps) {

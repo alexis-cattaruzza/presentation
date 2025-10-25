@@ -12,7 +12,7 @@ export default function Hero() {
         transition={{ duration: 0.6 }}
         className="flex-1 text-center lg:text-left"
       >
-        <p className="section-text" style={{ color: 'var(--color-secondary)' }}>
+        <p className="section-text" style={{ color: 'var(--color-text)' }}>
           {t('hero.greeting')}
         </p>
         <h1 className="section-title" style={{ color: 'var(--color-primary)' }}>
@@ -28,7 +28,7 @@ export default function Hero() {
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
-        className="w-40 h-40 sm:w-48 sm:h-48 lg:w-52 lg:h-52 rounded-xl overflow-hidden shrink-0"
+        className="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-xl overflow-hidden shrink-0"
         style={{ border: '1px solid var(--color-border)', backgroundColor: 'var(--color-surface)' }}
       >
         <img src="/images/Pro-linkedIn.jpg" alt="Photo Alexis" className="w-full h-full object-cover" />

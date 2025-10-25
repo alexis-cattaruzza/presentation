@@ -1,6 +1,7 @@
 export interface SkillItem {
   name: string;
   level: string;
+  icon: string;
 }
 
 export interface SkillCategory {
@@ -16,11 +17,11 @@ const skillCategories: SkillCategory[] = [
     title: 'Compétences Techniques',
     icon: 'target',
     skills: [
-      { name: "Développement Full-Stack", level: "Expert" },
-      { name: "Architecture Logicielle", level: "Avancé" },
-      { name: "Optimisation Performance", level: "Avancé" },
-      { name: "Tests & Qualité", level: "Intermédiaire" },
-      { name: "Gestion de Projet", level: "Intermédiaire" }
+      { name: "Développement Full-Stack", level: "Expert", icon: "code" },
+      { name: "Architecture Logicielle", level: "Avancé", icon: "laptop" },
+      { name: "Optimisation Performance", level: "Avancé", icon: "zap" },
+      { name: "Tests & Qualité", level: "Intermédiaire", icon: "test-tube" },
+      { name: "Gestion de Projet", level: "Intermédiaire", icon: "briefcase" }
     ]
   },
   {
@@ -29,20 +30,20 @@ const skillCategories: SkillCategory[] = [
     icon: 'settings',
     skills: [
       // Expert
-      { name: "Java", level: "Expert" },
+      { name: "Java", level: "Expert", icon: "java" },
       // Avancé
-      { name: "TypeScript", level: "Avancé" },
-      { name: "Angular", level: "Avancé" },
-      { name: "SQL", level: "Avancé" },
-      { name: "Git", level: "Avancé" },
-      { name: "HTML/CSS", level: "Avancé" },
-      { name: "Spring Boot", level: "Avancé" },
+      { name: "TypeScript", level: "Avancé", icon: "typescript" },
+      { name: "Angular", level: "Avancé", icon: "angular" },
+      { name: "SQL", level: "Avancé", icon: "mysql" },
+      { name: "Git", level: "Avancé", icon: "git" },
+      { name: "HTML/CSS", level: "Avancé", icon: "html" },
+      { name: "Spring Boot", level: "Avancé", icon: "spring" },
       // Intermédiaire
-      { name: "React", level: "Intermédiaire" },
-      { name: "Docker", level: "Intermédiaire" },
-      { name: "JavaScript", level: "Intermédiaire" },
+      { name: "React", level: "Intermédiaire", icon: "react" },
+      { name: "Docker", level: "Intermédiaire", icon: "docker" },
+      { name: "JavaScript", level: "Intermédiaire", icon: "javascript" },
       // Connaissance
-      { name: "Python", level: "Connaissance" }
+      { name: "Python", level: "Connaissance", icon: "python" }
     ]
   },
   {
@@ -51,14 +52,14 @@ const skillCategories: SkillCategory[] = [
     icon: 'refresh',
     skills: [
       // Avancé
-      { name: "Agile/Scrum", level: "Avancé" },
-      { name: "Code Review", level: "Avancé" },
-      { name: "Documentation", level: "Avancé" },
-      { name: "Debugging", level: "Avancé" },
+      { name: "Agile/Scrum", level: "Avancé", icon: "trending-up" },
+      { name: "Code Review", level: "Avancé", icon: "eye" },
+      { name: "Documentation", level: "Avancé", icon: "file-text" },
+      { name: "Debugging", level: "Avancé", icon: "bug" },
       // Intermédiaire
-      { name: "DevOps", level: "Intermédiaire" },
-      { name: "CI/CD", level: "Intermédiaire" },
-      { name: "Tests Unitaires", level: "Intermédiaire" }
+      { name: "DevOps", level: "Intermédiaire", icon: "refresh" },
+      { name: "CI/CD", level: "Intermédiaire", icon: "rocket" },
+      { name: "Tests Unitaires", level: "Intermédiaire", icon: "test-tube" }
     ]
   }
 ];

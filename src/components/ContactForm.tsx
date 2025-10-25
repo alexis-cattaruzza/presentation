@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 
 export default function ContactForm() {
   const { t } = useTranslation();
+  const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
   return (
     <div className="w-full">
       <h2 className="section-title text-center lg:text-left" style={{ color: 'var(--color-primary)' }}>{t('contact.title')}</h2>
@@ -13,7 +14,7 @@ export default function ContactForm() {
           <a href="mailto:alexis.cattaruzza@gmail.com" className="btn-accent text-center">{t('contact.email')}</a>
         </div>
 
-        <form action="https://formspree.io/f/xkgqlryo" method="POST" className="mt-6 space-y-3">
+        <form action={`https://formspree.io/f/${formspreeId}`} method="POST" className="mt-6 space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input name="name" placeholder={t('contact.form.name')} required className="input-default" />
             <input name="email" type="email" placeholder={t('contact.form.email')} required className="input-default" />
