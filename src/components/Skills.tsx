@@ -7,7 +7,6 @@ export default function Skills() {
   const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
@@ -15,15 +14,17 @@ export default function Skills() {
   useEffect(() => {
     const checkScreen = () => {
       const width = window.innerWidth;
-      const height = window.innerHeight;
-      setIsMobile(width < 1024);
-      setIsLargeScreen(width >= 1000 && height >= 645);
+      setIsMobile(width < 768); // Only true mobile devices
     };
     
     checkScreen();
     window.addEventListener('resize', checkScreen);
     return () => window.removeEventListener('resize', checkScreen);
   }, []);
+
+  // Check screen types
+  const isTablet = typeof window !== 'undefined' && window.innerWidth >= 768 && window.innerWidth < 1024;
+  const isSmallPC = typeof window !== 'undefined' && window.innerWidth >= 1024 && window.innerWidth < 1200;
 
   // Auto-scroll for mobile
   useEffect(() => {
@@ -57,42 +58,34 @@ export default function Skills() {
   };
 
   const getTranslatedSkillName = (skillName: string) => {
-    const skillKey = skillName.toLowerCase()
-      .replace(/[^a-z0-9]/g, '')
-      .replace('développement', '')
-      .replace('fullstack', 'fullstack')
-      .replace('architecture', 'architecture')
-      .replace('logicielle', '')
-      .replace('optimisation', 'performance')
-      .replace('performance', '')
-      .replace('tests', 'testing')
-      .replace('qualité', '')
-      .replace('gestion', 'project')
-      .replace('projet', '')
-      .replace('java', 'java')
-      .replace('typescript', 'typescript')
-      .replace('angular', 'angular')
-      .replace('react', 'react')
-      .replace('sql', 'sql')
-      .replace('docker', 'docker')
-      .replace('git', 'git')
-      .replace('html', 'htmlcss')
-      .replace('css', '')
-      .replace('spring', 'spring')
-      .replace('boot', '')
-      .replace('javascript', 'javascript')
-      .replace('python', 'python')
-      .replace('agile', 'agile')
-      .replace('scrum', '')
-      .replace('devops', 'devops')
-      .replace('code', 'codereview')
-      .replace('review', '')
-      .replace('documentation', 'documentation')
-      .replace('debugging', 'debugging')
-      .replace('cicd', 'cicd')
-      .replace('tests', 'unittests')
-      .replace('unitaires', '');
+    // Mapping direct des noms vers les clés de traduction
+    const skillKeyMap: { [key: string]: string } = {
+      "Développement Full-Stack": "fullstack",
+      "Architecture Logicielle": "architecture",
+      "Optimisation Performance": "performance",
+      "Tests & Qualité": "testing",
+      "Gestion de Projet": "project",
+      "Java": "java",
+      "TypeScript": "typescript",
+      "Angular": "angular",
+      "SQL": "sql",
+      "Git": "git",
+      "HTML/CSS": "htmlcss",
+      "Spring Boot": "spring",
+      "React": "react",
+      "Docker": "docker",
+      "JavaScript": "javascript",
+      "Python": "python",
+      "Agile/Scrum": "agile",
+      "Code Review": "codereview",
+      "Documentation": "documentation",
+      "Debugging": "debugging",
+      "DevOps": "devops",
+      "CI/CD": "cicd",
+      "Tests Unitaires": "unittests"
+    };
     
+    const skillKey = skillKeyMap[skillName] || skillName.toLowerCase().replace(/[^a-z0-9]/g, '');
     return t(`skills.items.${skillKey}`, skillName);
   };
 
@@ -100,11 +93,20 @@ export default function Skills() {
     return t(`skills.categories.${categoryId}.title`);
   };
 
+  // Navigation functions for slider
+  const goToPrevious = () => {
+    setCurrentSlide((prev) => (prev - 1 + skillCategories.length) % skillCategories.length);
+  };
+
+  const goToNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % skillCategories.length);
+  };
+
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
   };
 
-  // Touch handlers for mobile swipe
+  // Touch handlers for mobile/tablet swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
@@ -118,16 +120,15 @@ export default function Skills() {
     if (!touchStart || !touchEnd) return;
     
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
+    const isLeftSwipe = distance > 75; // Increased threshold for better UX
+    const isRightSwipe = distance < -75;
 
     if (isLeftSwipe) {
-      setCurrentSlide((prev) => (prev + 1) % skillCategories.length);
+      goToNext();
     } else if (isRightSwipe) {
-      setCurrentSlide((prev) => (prev - 1 + skillCategories.length) % skillCategories.length);
+      goToPrevious();
     }
   };
-
 
   return (
     <div className="skills-section w-full">
@@ -193,38 +194,259 @@ export default function Skills() {
             </div>
           </div>
 
-          {/* Mobile Navigation - Bulles seulement */}
+          {/* Enhanced Mobile Navigation - Bulles avec flèches sur les côtés */}
           <div className="flex items-center justify-center gap-2 mt-4">
+            {/* Left Arrow - Only for screens < 1024px */}
+            {(isMobile || isTablet) && (
+              <button
+                onClick={goToPrevious}
+                className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                style={{
+                  backgroundColor: 'var(--color-primary)',
+                  border: '2px solid var(--color-primary-hover)',
+                  color: 'white',
+                  boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
+                }}
+                title={t('common.previous')}
+              >
+                <Icon name="chevron-left" size={16} />
+              </button>
+            )}
+
+            {/* Navigation Bulles */}
             {skillCategories.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
+                className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 hover:scale-110 ${
                   currentSlide === index ? 'w-6 sm:w-8' : ''
-                }`}
+                } ${isSmallPC ? 'hover:shadow-lg cursor-pointer' : ''}`}
                 style={{
-                  backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
+                  backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)',
+                  boxShadow: isSmallPC ? (currentSlide === index ? '0 0 8px rgba(112, 135, 76, 0.4)' : '0 2px 4px rgba(0,0,0,0.1)') : 'none',
+                  border: isSmallPC ? '1px solid rgba(112, 135, 76, 0.2)' : 'none'
                 }}
                 title={`Catégorie ${index + 1}`}
               />
             ))}
+
+            {/* Right Arrow - Only for screens < 1024px */}
+            {(isMobile || isTablet) && (
+              <button
+                onClick={goToNext}
+                className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                style={{
+                  backgroundColor: 'var(--color-primary)',
+                  border: '2px solid var(--color-primary-hover)',
+                  color: 'white',
+                  boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
+                }}
+                title={t('common.next')}
+              >
+                <Icon name="chevron-right" size={16} />
+              </button>
+            )}
           </div>
         </div>
-      ) : isLargeScreen ? (
-        /* Large Screen: Tabbed Layout */
-        <div className="w-full">
-          
-
+      ) : isTablet ? (
+        /* Tablet/Small PC: Improved Grid Layout */
+        <div className="relative">
           {/* Tab Content */}
           <div className="relative">
-            <div className="overflow-hidden rounded-xl" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+            <div className="overflow-hidden rounded-xl relative" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+              {/* Navigation Arrows - Only for screens >= 1024px, integrated in container */}
+              {!isMobile && !isTablet && (
+                <>
+                  {/* Previous Arrow */}
+                  <button
+                    onClick={goToPrevious}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                    style={{
+                      backgroundColor: 'var(--color-primary)',
+                      border: '2px solid var(--color-primary-hover)',
+                      color: 'white',
+                      boxShadow: '0 4px 12px rgba(112, 135, 76, 0.3)'
+                    }}
+                    title={t('common.previous')}
+                  >
+                    <Icon name="chevron-left" size={18} />
+                  </button>
+
+                  {/* Next Arrow */}
+                  <button
+                    onClick={goToNext}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                    style={{
+                      backgroundColor: 'var(--color-primary)',
+                      border: '2px solid var(--color-primary-hover)',
+                      color: 'white',
+                      boxShadow: '0 4px 12px rgba(112, 135, 76, 0.3)'
+                    }}
+                    title={t('common.next')}
+                  >
+                    <Icon name="chevron-right" size={18} />
+                  </button>
+                </>
+              )}
               <div 
                 className="flex transition-transform duration-300 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {skillCategories.map((category) => (
                   <div key={category.id} className="w-full shrink-0">
-                    <div className="p-6">
+                    <div className="p-4 sm:p-6" style={{ paddingLeft: '4rem', paddingRight: '4rem' }}>
+                      {/* Category Header */}
+                      <div className="text-center mb-4">
+                        <div className="flex items-center justify-center gap-3 mb-2">
+                          <Icon name={category.icon} size={28} />
+                          <h3 className="section-subtitle" style={{ color: 'var(--color-text)' }}>
+                            {getTranslatedCategoryTitle(category.id)}
+                          </h3>
+                        </div>
+                        <p className="card-text" style={{ color: 'var(--color-muted)' }}>
+                          {category.skills.length} compétences
+                        </p>
+                      </div>
+
+                      {/* Skills Grid - Optimized for tablet */}
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {category.skills.map((skill) => (
+                          <div
+                            key={skill.name}
+                            className="group relative overflow-hidden rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md"
+                            style={{
+                              backgroundColor: 'var(--color-background)',
+                              border: '1px solid var(--color-border)',
+                              boxShadow: '0 1px 4px rgba(0,0,0,0.1)'
+                            }}
+                          >
+                            <div className="p-3">
+                              <div className="flex items-center gap-3">
+                                <Icon name={skill.icon} size={20}/>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="card-title leading-tight mb-1" style={{ color: 'var(--color-text)' }}>
+                                    {getTranslatedSkillName(skill.name)}
+                                  </h4>
+                                  <div
+                                    className="card-text"
+                                    style={{ color: getLevelColor(skill.level) }}
+                                  >
+                                    {getTranslatedLevel(skill.level)}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Enhanced Navigation Controls - Bulles avec flèches sur les côtés */}
+            <div className="flex items-center justify-center gap-2 mt-6">
+              {/* Left Arrow - Only for screens < 1024px */}
+              {(isMobile || isTablet) && (
+                <button
+                  onClick={goToPrevious}
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                  style={{
+                    backgroundColor: 'var(--color-primary)',
+                    border: '2px solid var(--color-primary-hover)',
+                    color: 'white',
+                    boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
+                  }}
+                  title={t('common.previous')}
+                >
+                  <Icon name="chevron-left" size={16} />
+                </button>
+              )}
+
+              {/* Navigation Bulles */}
+              {skillCategories.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 hover:scale-110 ${
+                    currentSlide === index ? 'w-6 sm:w-8' : ''
+                  } ${isSmallPC ? 'hover:shadow-lg cursor-pointer' : ''}`}
+                  style={{
+                    backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)',
+                    boxShadow: isSmallPC ? (currentSlide === index ? '0 0 8px rgba(112, 135, 76, 0.4)' : '0 2px 4px rgba(0,0,0,0.1)') : 'none',
+                    border: isSmallPC ? '1px solid rgba(112, 135, 76, 0.2)' : 'none'
+                  }}
+                  title={`Catégorie ${index + 1}`}
+                />
+              ))}
+
+              {/* Right Arrow - Only for screens < 1024px */}
+              {(isMobile || isTablet) && (
+                <button
+                  onClick={goToNext}
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                  style={{
+                    backgroundColor: 'var(--color-primary)',
+                    border: '2px solid var(--color-primary-hover)',
+                    color: 'white',
+                    boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
+                  }}
+                  title={t('common.next')}
+                >
+                  <Icon name="chevron-right" size={16} />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Large Screen: Tabbed Layout */
+        <div className="w-full">
+          {/* Tab Content */}
+          <div className="relative">
+            <div className="overflow-hidden rounded-xl relative" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+              {/* Navigation Arrows - Only for screens >= 1024px, integrated in container */}
+              {!isMobile && !isTablet && (
+                <>
+                  {/* Previous Arrow */}
+                  <button
+                    onClick={goToPrevious}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                    style={{
+                      backgroundColor: 'var(--color-primary)',
+                      border: '2px solid var(--color-primary-hover)',
+                      color: 'white',
+                      boxShadow: '0 4px 12px rgba(112, 135, 76, 0.3)'
+                    }}
+                    title={t('common.previous')}
+                  >
+                    <Icon name="chevron-left" size={18} />
+                  </button>
+
+                  {/* Next Arrow */}
+                  <button
+                    onClick={goToNext}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                    style={{
+                      backgroundColor: 'var(--color-primary)',
+                      border: '2px solid var(--color-primary-hover)',
+                      color: 'white',
+                      boxShadow: '0 4px 12px rgba(112, 135, 76, 0.3)'
+                    }}
+                    title={t('common.next')}
+                  >
+                    <Icon name="chevron-right" size={18} />
+                  </button>
+                </>
+              )}
+              <div 
+                className="flex transition-transform duration-300 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {skillCategories.map((category) => (
+                  <div key={category.id} className="w-full shrink-0">
+                    <div className="p-6" style={{ paddingLeft: '4rem', paddingRight: '4rem' }}>
                       {/* Category Header */}
                       <div className="text-center mb-3">
                         <div className="flex items-center justify-center gap-3 mb-1">
@@ -275,83 +497,60 @@ export default function Skills() {
               </div>
             </div>
 
-            {/* Navigation Controls - Bulles seulement */}
+            {/* Enhanced Navigation Controls - Bulles avec flèches sur les côtés */}
             <div className="flex items-center justify-center gap-2 mt-6">
+              {/* Left Arrow - Only for screens < 1024px */}
+              {(isMobile || isTablet) && (
+                <button
+                  onClick={goToPrevious}
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                  style={{
+                    backgroundColor: 'var(--color-primary)',
+                    border: '2px solid var(--color-primary-hover)',
+                    color: 'white',
+                    boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
+                  }}
+                  title={t('common.previous')}
+                >
+                  <Icon name="chevron-left" size={16} />
+                </button>
+              )}
+
+              {/* Navigation Bulles */}
               {skillCategories.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
+                  className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 hover:scale-110 ${
                     currentSlide === index ? 'w-6 sm:w-8' : ''
-                  }`}
+                  } ${isSmallPC ? 'hover:shadow-lg cursor-pointer' : ''}`}
                   style={{
-                    backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
+                    backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)',
+                    boxShadow: isSmallPC ? (currentSlide === index ? '0 0 8px rgba(112, 135, 76, 0.4)' : '0 2px 4px rgba(0,0,0,0.1)') : 'none',
+                    border: isSmallPC ? '1px solid rgba(112, 135, 76, 0.2)' : 'none'
                   }}
                   title={`Catégorie ${index + 1}`}
                 />
               ))}
+
+              {/* Right Arrow - Only for screens < 1024px */}
+              {(isMobile || isTablet) && (
+                <button
+                  onClick={goToNext}
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                  style={{
+                    backgroundColor: 'var(--color-primary)',
+                    border: '2px solid var(--color-primary-hover)',
+                    color: 'white',
+                    boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
+                  }}
+                  title={t('common.next')}
+                >
+                  <Icon name="chevron-right" size={16} />
+                </button>
+              )}
             </div>
           </div>
-        </div>
-      ) : (
-        /* Mobile/Tablet: Accordion Layout */
-        <div className="w-full space-y-3 sm:space-y-4">
-          {skillCategories.map((category) => (
-            <div 
-              key={category.id} 
-              className="rounded-xl overflow-hidden"
-              style={{ 
-                backgroundColor: 'var(--color-surface)',
-                border: '1px solid var(--color-border)'
-              }}
-            >
-              {/* Category Header - Always Visible */}
-              <div className="p-3 sm:p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Icon name={category.icon} size={24} style={{ color: 'var(--color-primary)' }} />
-                    <div>
-                      <h3 className="card-title" style={{ color: 'var(--color-text)' }}>
-                        {getTranslatedCategoryTitle(category.id)}
-                      </h3>
-                      <p className="card-text" style={{ color: 'var(--color-muted)' }}>
-                        {category.skills.length} compétences
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Skills List - Compact Cards */}
-              <div className="px-3 sm:px-4 pb-3 sm:pb-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                  {category.skills.map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="flex items-center gap-3 p-3 sm:p-4 rounded-lg transition-all duration-200 hover:scale-105"
-                      style={{ 
-                        backgroundColor: 'var(--color-background)',
-                        border: '1px solid var(--color-border)'
-                      }}
-                    >
-                      <Icon name={skill.icon} size={20} style={{ color: 'var(--color-primary)' }} />
-                      <div className="flex-1 min-w-0">
-                        <div className="card-title truncate" style={{ color: 'var(--color-text)' }}>
-                          {getTranslatedSkillName(skill.name)}
-                        </div>
-                        <div 
-                          className="card-text"
-                          style={{ color: getLevelColor(skill.level) }}
-                        >
-                          {getTranslatedLevel(skill.level)}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       )}
     </div>

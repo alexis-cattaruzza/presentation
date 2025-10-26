@@ -6,6 +6,82 @@ const STORAGE_KEY = 'current-section-index';
 export const useSectionNavigation = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isMouseDevice, setIsMouseDevice] = useState(false);
+
+  // Detect mouse vs trackpad
+  useEffect(() => {
+    let wheelTimeout: ReturnType<typeof setTimeout>;
+    let wheelCount = 0;
+    
+    const detectDevice = () => {
+      wheelCount++;
+      clearTimeout(wheelTimeout);
+      
+      wheelTimeout = setTimeout(() => {
+        setIsMouseDevice(wheelCount <= 3);
+        wheelCount = 0;
+      }, 100);
+    };
+
+    document.addEventListener('wheel', detectDevice, { passive: true });
+    
+    return () => {
+      document.removeEventListener('wheel', detectDevice);
+      clearTimeout(wheelTimeout);
+    };
+  }, []);
+
+  // Save current section index to localStorage
+  const saveCurrentSection = useCallback((index: number) => {
+    localStorage.setItem(STORAGE_KEY, index.toString());
+  }, []);
+
+  // Intersection Observer to track visible sections
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the section with the highest intersection ratio
+        let mostVisibleSection = null;
+        let highestRatio = 0;
+
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > highestRatio) {
+            highestRatio = entry.intersectionRatio;
+            mostVisibleSection = entry.target.id;
+          }
+        });
+
+        if (mostVisibleSection) {
+          const sectionIndex = SECTIONS.indexOf(mostVisibleSection);
+          if (sectionIndex !== -1 && sectionIndex !== currentSectionIndex) {
+            setCurrentSectionIndex(sectionIndex);
+            saveCurrentSection(sectionIndex);
+          }
+        }
+      },
+      {
+        threshold: [0.1, 0.3, 0.5, 0.7, 0.9], // Multiple thresholds for better detection
+        rootMargin: '-10% 0px -10% 0px' // Reduced margin for more responsive detection
+      }
+    );
+
+    // Observe all sections
+    SECTIONS.forEach(sectionId => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        observer.observe(section);
+      }
+    });
+
+    return () => {
+      SECTIONS.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          observer.unobserve(section);
+        }
+      });
+    };
+  }, [currentSectionIndex, saveCurrentSection]);
 
   // Load saved section index from localStorage on mount
   useEffect(() => {
@@ -23,11 +99,6 @@ export const useSectionNavigation = () => {
         }, 100);
       }
     }
-  }, []);
-
-  // Save current section index to localStorage
-  const saveCurrentSection = useCallback((index: number) => {
-    localStorage.setItem(STORAGE_KEY, index.toString());
   }, []);
 
   // Navigate to specific section
@@ -61,58 +132,29 @@ export const useSectionNavigation = () => {
     }
   }, [currentSectionIndex, navigateToSection]);
 
-  // Handle wheel scroll for section-by-section navigation
-  const handleWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault();
-    
-    if (isScrolling) return;
-    
-    if (e.deltaY > 0) {
-      // Scrolling down
-      navigateNext();
-    } else if (e.deltaY < 0) {
-      // Scrolling up
-      navigatePrevious();
-    }
-  }, [isScrolling, navigateNext, navigatePrevious]);
-
-  // Handle keyboard navigation
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (isScrolling) return;
-    
-    switch (e.key) {
-      case 'ArrowDown':
-      case 'PageDown':
-        e.preventDefault();
-        navigateNext();
-        break;
-      case 'ArrowUp':
-      case 'PageUp':
-        e.preventDefault();
-        navigatePrevious();
-        break;
-      case 'Home':
-        e.preventDefault();
-        navigateToSection(0);
-        break;
-      case 'End':
-        e.preventDefault();
-        navigateToSection(SECTIONS.length - 1);
-        break;
-    }
-  }, [isScrolling, navigateNext, navigatePrevious, navigateToSection]);
-
-  // Set up event listeners
+  // Handle wheel scroll for mouse devices only
   useEffect(() => {
-    // Add wheel event listener with passive: false to allow preventDefault
+    const handleWheel = (e: WheelEvent) => {
+      // Only enable section navigation with mouse wheel, not trackpad
+      if (!isMouseDevice || isScrolling) return;
+      
+      e.preventDefault();
+      
+      if (e.deltaY > 0) {
+        // Scrolling down
+        navigateNext();
+      } else if (e.deltaY < 0) {
+        // Scrolling up
+        navigatePrevious();
+      }
+    };
+
     document.addEventListener('wheel', handleWheel, { passive: false });
-    document.addEventListener('keydown', handleKeyDown);
     
     return () => {
       document.removeEventListener('wheel', handleWheel);
-      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleWheel, handleKeyDown]);
+  }, [isMouseDevice, isScrolling, navigateNext, navigatePrevious]);
 
   return {
     currentSectionIndex,

@@ -4,9 +4,18 @@
     "nav": {
       "about": "About",
       "experience": "Experience",
-      "skills": "Skills", 
+      "skills": "Skills",
+      "location": "Location",
+      "hobbies": "Interests",
       "contact": "Contact"
     }
+  },
+  "common": {
+    "previous": "Previous",
+    "next": "Next",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
   },
   "hero": {
     "greeting": "Hello and welcome to my personal space. My name is",
@@ -56,6 +65,7 @@
   },
   "skills": {
     "title": "Skills",
+    "subtitle": "Technologies & Tools",
     "categories": {
       "skills": {
         "title": "Technical Skills",
@@ -93,17 +103,18 @@
       "spring": "Spring Boot",
       "javascript": "JavaScript",
       "python": "Python",
-      "agile": "Agile/Scrum",
+      "agile": "Agile/Scrum Methods",
       "devops": "DevOps",
       "codereview": "Code Review",
-      "documentation": "Documentation",
+      "documentation": "Technical Documentation",
       "debugging": "Debugging",
-      "cicd": "CI/CD",
+      "cicd": "Continuous Integration/Deployment",
       "unittests": "Unit Testing"
     }
   },
   "hobbies": {
     "title": "Interests",
+    "subtitle": "Passions & Hobbies",
     "categories": {
       "sport": {
         "name": "Sports",
@@ -134,7 +145,7 @@
       },
       "padel": {
         "name": "Padel",
-        "description": "Racket sport that I practice regularly for the social and competitive aspect"
+        "description": "Racket sport that I practice for the social and competitive aspect"
       },
       "travel": {
         "name": "Travel",
@@ -145,12 +156,12 @@
         "description": "Running to maintain physical fitness and mental balance"
       },
       "dev": {
-        "name": "Personal IT development",
+        "name": "Personal IT Development",
         "description": "Personal projects and technological experiments outside of work"
       },
       "reading": {
-        "name": "Technical reading",
-        "description": "Technology watch and reading articles on the latest IT innovations"
+        "name": "Tech Watch",
+        "description": "Reading articles and documentation on the latest IT innovations"
       },
       "cooking": {
         "name": "Cooking",

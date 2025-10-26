@@ -273,8 +273,8 @@ body {
   z-index: 0;
   background: 
     radial-gradient(circle at 20% 20%, rgba(112,135,76,0.3), transparent 45%),
-    radial-gradient(circle at 80% 80%, rgba(200,225,160,0.2), transparent 50%),
-    radial-gradient(circle at 50% 10%, rgba(112,135,76,0.15), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(200,225,160,0.2), transparent 25%),
+    radial-gradient(circle at 50% 10%, rgba(112,135,76,0.15), transparent 30%),
     linear-gradient(135deg, #FFFFFF 0%, #F0F0F2 50%, #F8F9FA 100%);
   background-size: 100% 100%;
 }
@@ -316,7 +316,7 @@ body {
 .scroll-indicator-counter {
   font-size: 0.7rem;
   color: var(--color-muted);
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(175, 201, 135, 0.3);
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
   backdrop-filter: blur(10px);
@@ -377,11 +377,6 @@ body {
   }
 }
 
-/* ===========================================
-   RESPONSIVE DESIGN - HOMOGÉNÉISATION
-   =========================================== */
-
-/* Typography Scale - Homogénéisé pour toutes les sections */
 :root {
   /* Mobile First - Base sizes */
   --text-xs: 0.75rem;    /* 12px */

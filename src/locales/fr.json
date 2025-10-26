@@ -5,8 +5,17 @@
       "about": "À propos",
       "experience": "Expérience", 
       "skills": "Compétences",
+      "location": "Localisation",
+      "hobbies": "Centres d'intérêt",
       "contact": "Contact"
     }
+  },
+  "common": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès"
   },
   "hero": {
     "greeting": "Bonjour et bienvenue dans mon espace personnel. Je m'appelle",
@@ -56,6 +65,7 @@
   },
   "skills": {
     "title": "Compétences",
+    "subtitle": "Technologies & Outils",
     "categories": {
       "skills": {
         "title": "Compétences Techniques",
@@ -79,7 +89,7 @@
     "items": {
       "fullstack": "Développement Full-Stack",
       "architecture": "Architecture Logicielle",
-      "performance": "Optimisation Performance",
+      "performance": "Optimisation des Performances",
       "testing": "Tests & Qualité",
       "project": "Gestion de Projet",
       "java": "Java",
@@ -93,17 +103,18 @@
       "spring": "Spring Boot",
       "javascript": "JavaScript",
       "python": "Python",
-      "agile": "Agile/Scrum",
+      "agile": "Méthodes Agiles/Scrum",
       "devops": "DevOps",
-      "codereview": "Code Review",
-      "documentation": "Documentation",
-      "debugging": "Debugging",
-      "cicd": "CI/CD",
+      "codereview": "Révision de Code",
+      "documentation": "Documentation Technique",
+      "debugging": "Débogage",
+      "cicd": "Intégration Continue/Déploiement",
       "unittests": "Tests Unitaires"
     }
   },
   "hobbies": {
     "title": "Centres d'intérêt",
+    "subtitle": "Passions & Loisirs",
     "categories": {
       "sport": {
         "name": "Sports",
@@ -118,7 +129,7 @@
         "icon": "💻"
       },
       "lifestyle": {
-        "name": "Lifestyle",
+        "name": "Style de vie",
         "icon": "🎨"
       }
     },
@@ -134,7 +145,7 @@
       },
       "padel": {
         "name": "Padel",
-        "description": "Sport de raquette que je pratique régulièrement pour l'aspect social et compétitif"
+        "description": "Sport de raquette que je pratique pour l'aspect social et compétitif"
       },
       "travel": {
         "name": "Voyage",
@@ -142,7 +153,7 @@
       },
       "running": {
         "name": "Course à pied",
-        "description": "Running pour maintenir la forme physique et l'équilibre mental"
+        "description": "Course à pied pour maintenir la forme physique et l'équilibre mental"
       },
       "dev": {
         "name": "Développement IT personnel",
@@ -150,7 +161,7 @@
       },
       "reading": {
         "name": "Lecture technique",
-        "description": "Veille technologique et lecture d'articles sur les dernières innovations IT"
+        "description": "Lecture d'articles et documentation sur les dernières innovations IT"
       },
       "cooking": {
         "name": "Cuisine",

@@ -10,16 +10,20 @@ export default function Hobbies() {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  // Detect mobile screen size
+  // Detect screen size
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 768); // Only true mobile devices
     };
     
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Check screen types
+  const isTablet = typeof window !== 'undefined' && window.innerWidth >= 768 && window.innerWidth < 1024;
+  const isSmallPC = typeof window !== 'undefined' && window.innerWidth >= 1024 && window.innerWidth < 1200;
 
   // Auto-slide for mobile
   useEffect(() => {
@@ -51,34 +55,34 @@ export default function Hobbies() {
   };
 
   const getTranslatedHobbyName = (hobbyName: string) => {
-    const hobbyKey = hobbyName.toLowerCase()
-      .replace(/[^a-z0-9]/g, '')
-      .replace('formule1', 'f1')
-      .replace('padel', 'padel')
-      .replace('courseàpied', 'running')
-      .replace('voyage', 'travel')
-      .replace('développement', 'dev')
-      .replace('itpersonnel', '')
-      .replace('lecture', 'reading')
-      .replace('technique', '')
-      .replace('cuisine', 'cooking');
+    // Mapping direct des noms vers les clés de traduction
+    const hobbyKeyMap: { [key: string]: string } = {
+      "Formule 1": "f1",
+      "Padel": "padel",
+      "Voyage": "travel",
+      "Course à pied": "running",
+      "Développement IT personnel": "dev",
+      "Lecture technique": "reading",
+      "Cuisine": "cooking"
+    };
     
+    const hobbyKey = hobbyKeyMap[hobbyName] || hobbyName.toLowerCase().replace(/[^a-z0-9]/g, '');
     return t(`hobbies.items.${hobbyKey}.name`, hobbyName);
   };
 
   const getTranslatedHobbyDescription = (hobbyName: string) => {
-    const hobbyKey = hobbyName.toLowerCase()
-      .replace(/[^a-z0-9]/g, '')
-      .replace('formule1', 'f1')
-      .replace('padel', 'padel')
-      .replace('voyage', 'travel')
-      .replace('courseàpied', 'running')
-      .replace('développement', 'dev')
-      .replace('itpersonnel', '')
-      .replace('lecture', 'reading')
-      .replace('technique', '')
-      .replace('cuisine', 'cooking');
+    // Mapping direct des noms vers les clés de traduction
+    const hobbyKeyMap: { [key: string]: string } = {
+      "Formule 1": "f1",
+      "Padel": "padel",
+      "Voyage": "travel",
+      "Course à pied": "running",
+      "Développement IT personnel": "dev",
+      "Lecture technique": "reading",
+      "Cuisine": "cooking"
+    };
     
+    const hobbyKey = hobbyKeyMap[hobbyName] || hobbyName.toLowerCase().replace(/[^a-z0-9]/g, '');
     return t(`hobbies.items.${hobbyKey}.description`, hobbyName);
   };
 
@@ -87,12 +91,19 @@ export default function Hobbies() {
   };
 
   // Navigation functions for slider
+  const goToPrevious = () => {
+    setCurrentSlide((prev) => (prev - 1 + Object.keys(hobbyCategories).length) % Object.keys(hobbyCategories).length);
+  };
+
+  const goToNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % Object.keys(hobbyCategories).length);
+  };
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
   };
 
-  // Touch handlers for mobile swipe
+  // Touch handlers for mobile/tablet swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
@@ -106,13 +117,13 @@ export default function Hobbies() {
     if (!touchStart || !touchEnd) return;
     
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
+    const isLeftSwipe = distance > 75;
+    const isRightSwipe = distance < -75;
 
     if (isLeftSwipe) {
-      setCurrentSlide((prev) => (prev + 1) % Object.keys(hobbyCategories).length);
+      goToNext();
     } else if (isRightSwipe) {
-      setCurrentSlide((prev) => (prev - 1 + Object.keys(hobbyCategories).length) % Object.keys(hobbyCategories).length);
+      goToPrevious();
     }
   };
 
@@ -128,14 +139,48 @@ export default function Hobbies() {
 
       {/* Hobbies Slider */}
       <div className="relative">
-        {/* Hobbies Container */}
+        {/* Hobbies Container with integrated arrows */}
         <div 
-          className="overflow-hidden rounded-xl" 
+          className="overflow-hidden rounded-xl relative" 
           style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
+          {/* Navigation Arrows - Only for screens >= 1024px, integrated in container */}
+          {!isMobile && !isTablet && (
+            <>
+              {/* Previous Arrow */}
+              <button
+                onClick={goToPrevious}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                style={{
+                  backgroundColor: 'var(--color-primary)',
+                  border: '2px solid var(--color-primary-hover)',
+                  color: 'white',
+                  boxShadow: '0 4px 12px rgba(112, 135, 76, 0.3)'
+                }}
+                title={t('common.previous')}
+              >
+                <Icon name="chevron-left" size={18} />
+              </button>
+
+              {/* Next Arrow */}
+              <button
+                onClick={goToNext}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                style={{
+                  backgroundColor: 'var(--color-primary)',
+                  border: '2px solid var(--color-primary-hover)',
+                  color: 'white',
+                  boxShadow: '0 4px 12px rgba(112, 135, 76, 0.3)'
+                }}
+                title={t('common.next')}
+              >
+                <Icon name="chevron-right" size={18} />
+              </button>
+            </>
+          )}
           <div 
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -144,11 +189,10 @@ export default function Hobbies() {
               const categoryHobbies = hobbies.filter(hobby => hobby.category === key);
               return (
                 <div key={key} className="w-full shrink-0">
-                  <div className="p-4 sm:p-6">
+                  <div className="p-4 sm:p-6" style={{ paddingLeft: !isMobile ? '4rem' : '1rem', paddingRight: !isMobile ? '4rem' : '1rem' }}>
                     {/* Category Header */}
                     <div className="text-center mb-4 sm:mb-6">
                       <div className="flex items-center justify-center gap-3 mb-2">
-                        <Icon name={category.icon} size={32} style={{ color: category.color }} />
                         <h3 className="section-subtitle" style={{ color: 'var(--color-text)' }}>
                           {getTranslatedCategoryName(key)}
                         </h3>
@@ -174,15 +218,7 @@ export default function Hobbies() {
                           <div className="p-4">
                             {/* Header */}
                             <div className="flex items-center gap-3 mb-3">
-                              <div 
-                                className="w-10 h-10 rounded-lg flex items-center justify-center text-xl"
-                                style={{ 
-                                  backgroundColor: category.color + '20',
-                                  color: category.color
-                                }}
-                              >
-                                <Icon name={hobby.icon} size={24} />
-                              </div>
+                              
                               <div className="flex-1">
                                 <h4 className="card-title" style={{ color: 'var(--color-text)' }}>
                                   {getTranslatedHobbyName(hobby.name)}
@@ -220,21 +256,58 @@ export default function Hobbies() {
         </div>
       </div>
 
-      {/* Simplified Navigation - Bulles seulement */}
+      {/* Enhanced Navigation - Bulles avec flèches sur les côtés pour écrans < 1024px */}
       <div className="flex items-center justify-center gap-2 mt-6 sm:mt-8">
+        {/* Left Arrow - Only for screens < 1024px */}
+        {(isMobile || isTablet) && (
+          <button
+            onClick={goToPrevious}
+            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+            style={{
+              backgroundColor: 'var(--color-primary)',
+              border: '2px solid var(--color-primary-hover)',
+              color: 'white',
+              boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
+            }}
+            title={t('common.previous')}
+          >
+            <Icon name="chevron-left" size={16} />
+          </button>
+        )}
+
+        {/* Navigation Bulles */}
         {Object.entries(hobbyCategories).map(([key], index) => (
           <button
             key={key}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
+            className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 hover:scale-110 ${
               currentSlide === index ? 'w-6 sm:w-8' : ''
-            }`}
+            } ${isSmallPC ? 'hover:shadow-lg cursor-pointer' : ''}`}
             style={{
-              backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)'
+              backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)',
+              boxShadow: isSmallPC ? (currentSlide === index ? '0 0 8px rgba(112, 135, 76, 0.4)' : '0 2px 4px rgba(0,0,0,0.1)') : 'none',
+              border: isSmallPC ? '1px solid rgba(112, 135, 76, 0.2)' : 'none'
             }}
             title={getTranslatedCategoryName(key)}
           />
         ))}
+
+        {/* Right Arrow - Only for screens < 1024px */}
+        {(isMobile || isTablet) && (
+          <button
+            onClick={goToNext}
+            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
+            style={{
+              backgroundColor: 'var(--color-primary)',
+              border: '2px solid var(--color-primary-hover)',
+              color: 'white',
+              boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
+            }}
+            title={t('common.next')}
+          >
+            <Icon name="chevron-right" size={16} />
+          </button>
+        )}
       </div>
 
     </div>

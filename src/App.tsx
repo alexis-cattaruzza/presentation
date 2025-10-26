@@ -33,22 +33,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* section navigation dots */}
-      <div className="section-dots">
-        {Array.from({ length: totalSections }).map((_, index) => (
-          <button
-            key={index}
-            className={`section-dot ${index === currentSectionIndex ? 'active' : ''}`}
-            onClick={() => {
-              const section = document.getElementById(['hero', 'experience', 'skills', 'location', 'hobbies', 'contact'][index]);
-              if (section) {
-                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }}
-            aria-label={`Go to section ${index + 1}`}
-          />
-        ))}
-      </div>
 
       {/* page content with snapping: make sure container is scrollable body (default) */}
       <motion.div 
