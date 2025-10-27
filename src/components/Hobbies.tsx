@@ -12,16 +12,14 @@ const getLevelColor = (level: string) => {
     }
   };
 
-  /*const getLevelText = (level: string) => {
-    switch (level) {
-      case 'passion': return t('hobbies.levels.passion');
-      case 'hobby': return t('hobbies.levels.hobby');
-      case 'interest': return t('hobbies.levels.interest');
-      default: return level;
-    }
-  };
 
-  const getTranslatedHobbyName = (hobbyName: string) => {
+export default function Hobbies() {
+  const { t } = useTranslation();
+    // liste d'ids de catégories dans l'ordre souhaité
+  const categoryKeys = Object.keys(hobbyCategories) as Array<keyof typeof hobbyCategories>;
+
+  // Map hobby names to translation keys
+  const getHobbyKey = (hobbyName: string) => {
     const hobbyKeyMap: { [key: string]: string } = {
       "Formule 1": "f1",
       "Padel": "padel",
@@ -31,26 +29,8 @@ const getLevelColor = (level: string) => {
       "Lecture technique": "reading",
       "Cuisine": "cooking"
     };
-    
-    const hobbyKey = hobbyKeyMap[hobbyName] || hobbyName.toLowerCase().replace(/[^a-z0-9]/g, '');
-    return t(`hobbies.items.${hobbyKey}.name`, hobbyName);
+    return hobbyKeyMap[hobbyName] || hobbyName.toLowerCase().replace(/[^a-z0-9]/g, "");
   };
-
-  const getTranslatedHobbyDescription = (hobbyName: string) => {
-    const hobbyKeyMap: { [key: string]: string } = {
-      "Formule 1": "f1",
-      "Padel": "padel",
-      "Voyage": "travel",
-      "Course à pied": "running",
-      "Développement IT personnel": "dev",
-      "Lecture technique": "reading",
-      "Cuisine": "cooking"
-    };*/
-
-export default function Hobbies() {
-  const { t } = useTranslation();
-    // liste d'ids de catégories dans l'ordre souhaité
-  const categoryKeys = Object.keys(hobbyCategories) as Array<keyof typeof hobbyCategories>;
 
   // Calculate optimal grid columns based on item count
   const getGridCols = (itemCount: number) => {
@@ -78,7 +58,7 @@ export default function Hobbies() {
               <div key={catKey} className="h-full flex flex-col px-2">
                 {/* header per category */}
                 <div className="mb-4 flex items-center gap-3">
-                  <h3 className="text-lg font-semibold">{categoryMeta.name}</h3>
+                  <h3 className="text-lg font-semibold">{t(`hobbies.categories.${catKey}.name`, categoryMeta.name)}</h3>
                 </div>
 
                 {/* grid: dynamic columns based on item count */}
@@ -88,18 +68,21 @@ export default function Hobbies() {
                     alignItems: "stretch",
                   }}
                 >
-                  {items.map((hobby: Hobby) => (
-                    <div key={hobby.name} className="h-full rounded-lg overflow-hidden" style={{ minHeight: '200px' }}>
-                      <HobbyCard
-                        name={t(`hobbies.items.${hobby.name.toLowerCase().replace(/[^a-z0-9]/g, "")}.name`, hobby.name)}
-                        description={t(`hobbies.items.${hobby.name.toLowerCase().replace(/[^a-z0-9]/g, "")}.description`, hobby.description)}
-                        icon={hobby.icon}
-                        image={hobby.image}
-                        level={hobby.level}
-                        getLevelColor={getLevelColor}
-                      />
-                    </div>
-                  ))}
+                  {items.map((hobby: Hobby) => {
+                    const hobbyKey = getHobbyKey(hobby.name);
+                    return (
+                      <div key={hobby.name} className="h-full rounded-lg overflow-hidden" style={{ minHeight: '200px' }}>
+                        <HobbyCard
+                          name={t(`hobbies.items.${hobbyKey}.name`, hobby.name)}
+                          description={t(`hobbies.items.${hobbyKey}.description`, hobby.description)}
+                          icon={hobby.icon}
+                          image={hobby.image}
+                          level={hobby.level}
+                          getLevelColor={getLevelColor}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             );

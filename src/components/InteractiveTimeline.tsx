@@ -1,223 +1,205 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import timeline from "../data/timeline";
 import Icon from "./Icon";
 
 export default function InteractiveTimeline() {
   const { t } = useTranslation();
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  // Detect mobile screen size
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % timeline.length);
+  // Obtenir l'icône selon le type de catégorie
+  const getIconName = (category: string) => {
+    if (category.includes('Expérience Professionnelle')) return 'briefcase';
+    if (category.includes('Stage & Formation')) return 'award';
+    if (category.includes('Formation')) return 'graduation-cap';
+    return 'briefcase';
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + timeline.length) % timeline.length);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
-  // Touch handlers for mobile swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      setCurrentSlide((prev) => (prev + 1) % timeline.length);
-    } else if (isRightSwipe) {
-      setCurrentSlide((prev) => (prev - 1 + timeline.length) % timeline.length);
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'Expérience Professionnelle': return 'var(--color-success)';
+      case 'Stage & Formation': return 'var(--color-primary)';
+      case 'Formation': return 'var(--color-accent)';
+      default: return 'var(--color-muted)';
     }
   };
 
+  const skillsColors = [
+    'var(--color-primary)',
+    'var(--color-accent)', 
+    'var(--color-success)',
+    'var(--color-secondary)',
+    'var(--color-info)'
+  ];
+
   return (
-    <div className="w-full">
-      <h2 className="section-title text-center lg:text-left" style={{ color: 'var(--color-primary)' }}>
-        Parcours
+    <section className="w-full">
+      <h2 className="section-title mb-4 md:mb-6" style={{ color: 'var(--color-primary)' }}>
+        {t('timeline.title')}
       </h2>
-      
-      {/* Container principal */}
+
+      {/* Vertical Timeline */}
       <div className="relative">
-        {/* Zone de contenu avec slide */}
-        <div 
-          className="relative overflow-hidden rounded-xl mb-6" 
-          style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <motion.div 
-            className="flex"
-            animate={{ x: `-${currentSlide * 100}%` }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          >
-            {timeline.map((item) => (
-              <div key={item.id} className="w-full shrink-0">
-                <div className="p-4 sm:p-6">
-                  {/* En-tête compact */}
-                  <div className="text-center mb-4">
-                    <motion.h3 
-                      className="section-subtitle mb-1"
-                      style={{ color: 'var(--color-primary)' }}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      {t(`timeline.items.${item.translationKey}.role`)}
-                    </motion.h3>
-                    <motion.div 
-                      className="card-title mb-1"
-                      style={{ color: 'var(--color-secondary)' }}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                    >
-                      {t(`timeline.items.${item.translationKey}.company`)}
-                    </motion.div>
-                    <motion.div 
-                      className="card-text"
-                      style={{ color: 'var(--color-muted)' }}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
-                    >
-                      {t(`timeline.items.${item.translationKey}.date`)}
-                    </motion.div>
-                  </div>
+        {/* Timeline Line */}
+        <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-linear-to-b from-var(--color-primary) via-var(--color-accent) to-var(--color-success)" 
+             style={{ 
+               background: 'linear-gradient(to bottom, var(--color-primary), var(--color-accent), var(--color-success))' 
+             }} />
 
-                  {/* Description compacte */}
-                  <motion.div
-                    className="text-center"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    <p 
-                      className="section-text leading-relaxed mb-3"
-                      style={{ color: 'var(--color-text)' }}
-                    >
-                      {t(`timeline.items.${item.translationKey}.description`)}
-                    </p>
-
-                    {/* Badges de compétences compacts */}
-                    <div className="flex flex-wrap justify-center gap-1 sm:gap-1.5">
-                      {item.skills?.map((skill, skillIndex) => {
-                        const colors = [
-                          'var(--color-primary)',
-                          'var(--color-accent)', 
-                          'var(--color-success)',
-                          'var(--color-info)',
-                          'var(--color-secondary)'
-                        ];
-                        return (
-                          <motion.span
-                            key={skill}
-                            className="px-2 py-1 text-xs rounded-full font-medium"
-                            style={{ 
-                              backgroundColor: colors[skillIndex % colors.length],
-                              color: 'white'
+          {/* Timeline Items */}
+        <div className="ml-16 space-y-6">
+            {timeline.map((item, index) => {
+              const isActive = activeIndex === index;
+              const category = t(`timeline.items.${item.translationKey}.category`);
+              const iconName = getIconName(category);
+              
+              return (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative"
+                >
+                  {/* Timeline Node */}
+                  <div className="flex gap-4">
+                    {/* Left side - Timeline Node with Progress Bar */}
+                    <div className="flex flex-col items-center">
+                      <motion.div
+                        className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 z-10 ${
+                          isActive ? 'scale-125' : ''
+                        }`}
+                        style={{
+                          backgroundColor: isActive ? 'var(--color-primary)' : 'var(--color-surface)',
+                          color: isActive ? 'white' : 'var(--color-text)',
+                          border: `3px solid ${isActive ? 'var(--color-success)' : 'var(--color-border)'}`,
+                          boxShadow: isActive 
+                            ? '0 4px 16px rgba(112, 135, 76, 0.4)' 
+                            : '0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                      >
+                        <Icon name={iconName} size={20} />
+                      </motion.div>
+                      
+                      {index < timeline.length - 1 && (
+                        <div className="relative w-0.5 h-6 mt-0.5">
+                          {/* Barre de progression */}
+                          <motion.div
+                            className="absolute top-0 left-0 w-full rounded-full"
+                            style={{
+                              backgroundColor: 'var(--color-border)',
+                              height: '100%'
                             }}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.6 + skillIndex * 0.1 }}
-                          >
-                            {skill}
-                          </motion.span>
-                        );
-                      })}
+                            initial={{ scaleY: 0 }}
+                            animate={{ 
+                              scaleY: index < activeIndex ? 1 : 0,
+                              backgroundColor: index < activeIndex ? 'var(--color-success)' : 'var(--color-border)'
+                            }}
+                            transition={{ duration: 0.5 }}
+                          />
+                        </div>
+                      )}
                     </div>
-                  </motion.div>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
 
-        {/* Contrôles de navigation */}
-        <div className="flex items-center justify-center gap-4 sm:gap-6 lg:gap-8 mb-4 sm:mb-6">
-          {/* Bouton précédent - Desktop seulement */}
-          {!isMobile && (
-            <motion.button
-              onClick={prevSlide}
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200"
-              style={{ 
-                backgroundColor: 'var(--color-surface)',
-                color: 'var(--color-text)',
-                border: '1px solid var(--color-border)'
-              }}
-              whileHover={{ scale: 1.1, borderColor: 'var(--color-primary)' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Icon name="chevron-left" size={20} />
-            </motion.button>
-          )}
+                    {/* Right side - Content Card - Zone cliquable élargie */}
+                    <button 
+                      onClick={() => setActiveIndex(index)}
+                      className="flex-1 pb-6 text-left"
+                    >
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={`${item.id}-${isActive}`}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="rounded-xl p-4 transition-all duration-300"
+                          style={{
+                            backgroundColor: isActive ? 'var(--color-surface)' : 'transparent',
+                            border: `1px solid ${isActive ? 'var(--color-border)' : 'transparent'}`,
+                            boxShadow: isActive ? '0 4px 12px rgba(0,0,0,0.08)' : 'none'
+                          }}
+                        >
+                          {/* Header */}
+                          <div className="mb-2">
+                            <div className="flex items-start justify-between gap-2 flex-wrap">
+                              <div className="flex-1 min-w-0">
+                                <div 
+                                  className="text-xs font-semibold uppercase tracking-wide mb-1"
+                                  style={{ color: getCategoryColor(t(`timeline.items.${item.translationKey}.category`)) }}
+                                >
+                                  {t(`timeline.items.${item.translationKey}.category`)}
+                                </div>
+                                <h3 className="text-lg md:text-xl font-bold mb-1" style={{ color: 'var(--color-text)' }}>
+                                  {t(`timeline.items.${item.translationKey}.role`)}
+                                </h3>
+                                <p className="text-md font-semibold mb-1" style={{ color: 'var(--color-primary)' }}>
+                                  {t(`timeline.items.${item.translationKey}.company`)}
+                                </p>
+                                <p className="text-sm" style={{ color: 'var(--color-muted)' }}>
+                                  {t(`timeline.items.${item.translationKey}.date`)}
+                                </p>
+                              </div>
+                              
+                              {/* Year badge */}
+                              <div 
+                                className="px-3 py-1 rounded-full text-xs font-bold shrink-0"
+                                style={{ 
+                                  backgroundColor: getCategoryColor(t(`timeline.items.${item.translationKey}.category`)),
+                                  color: 'white'
+                                }}
+                              >
+                                {item.year}
+                              </div>
+                            </div>
+                          </div>
 
-          {/* Indicateurs de position */}
-          <div className="flex items-center gap-3">
-            {timeline.map((_, index) => (
-              <motion.button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentSlide ? 'w-8' : ''
-                }`}
-                style={{
-                  backgroundColor: index === currentSlide 
-                    ? 'var(--color-primary)' 
-                    : 'var(--color-muted)'
-                }}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-              />
-            ))}
-          </div>
+                          {/* Description */}
+                          <AnimatePresence>
+                            {isActive && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="overflow-hidden"
+                              >
+                                <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--color-text)' }}>
+                                  {t(`timeline.items.${item.translationKey}.description`)}
+                                </p>
 
-          {/* Bouton suivant - Desktop seulement */}
-          {!isMobile && (
-            <motion.button
-              onClick={nextSlide}
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200"
-              style={{ 
-                backgroundColor: 'var(--color-primary)',
-                color: 'var(--color-text)',
-                border: '1px solid var(--color-border)'
-              }}
-              whileHover={{ scale: 1.1, borderColor: 'var(--color-text)' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Icon name="chevron-right" size={20} />
-            </motion.button>
-          )}
+                                {/* Skills */}
+                                <div className="flex flex-wrap gap-1.5">
+                                  {item.skills.map((skill, skillIndex) => (
+                                    <motion.span
+                                      key={skill}
+                                      initial={{ opacity: 0, scale: 0.8 }}
+                                      animate={{ opacity: 1, scale: 1 }}
+                                      transition={{ delay: skillIndex * 0.05 }}
+                                      className="px-2 py-0.5 text-xs rounded-md font-medium"
+                                      style={{ 
+                                        backgroundColor: skillsColors[skillIndex % skillsColors.length],
+                                        color: 'white',
+                                        boxShadow: `0 2px 4px ${skillsColors[skillIndex % skillsColors.length]}40`
+                                      }}
+                                    >
+                                      {skill}
+                                    </motion.span>
+                                  ))}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.div>
+                      </AnimatePresence>
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

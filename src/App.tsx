@@ -8,11 +8,9 @@ import Skills from "./components/Skills";
 import Location from "./components/Location";
 import Hobbies from "./components/Hobbies";
 import ContactForm from "./components/ContactForm";
-import { useSectionNavigation } from "./hooks/useSectionNavigation";
 import AnalyticsAndInsights from "./AnalyticsAndInsights"; 
 
 export default function App() {
-  const { currentSectionIndex, totalSections } = useSectionNavigation();
 
   return (
     <motion.div 
@@ -27,17 +25,9 @@ export default function App() {
       {/* background layers (fixed) */}
       <Background />
 
-      {/* scroll indicator with section counter */}
-      <div className="scroll-indicator">
-        <div className="scroll-indicator-counter">
-          {currentSectionIndex + 1} / {totalSections}
-        </div>
-      </div>
-
-
-      {/* page content with snapping: make sure container is scrollable body (default) */}
+      {/* page content with natural scrolling */}
       <motion.div 
-        className="page-content scroll-snap-y"
+        className="page-content"
         initial={{ y: 20 }}
         animate={{ y: 0 }}
         transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
@@ -67,8 +57,8 @@ export default function App() {
           <ContactForm />
         </Section>
       </motion.div>
-      {/* Analytics + Speed Insights (only in production). On passe currentSectionIndex pour générer une "route" unique par section */}
-      <AnalyticsAndInsights currentSectionIndex={currentSectionIndex} />
+      {/* Analytics + Speed Insights (only in production) */}
+      <AnalyticsAndInsights currentSectionIndex={0} />
     </motion.div>
   );
 }

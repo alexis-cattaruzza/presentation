@@ -7,150 +7,166 @@ export default function Skills() {
   const { t } = useTranslation();
 
   const getLevelColor = (level: string) => {
-    switch (level) {
-      case 'Expert': return 'var(--color-success)';
-      case 'Avancé': return 'var(--color-primary)';
-      case 'Intermédiaire': return 'var(--color-accent)';
-      case 'Connaissance': return 'var(--color-muted)';
+    const levelKey = level.toLowerCase();
+    switch (levelKey) {
+      case 'expert': return 'var(--color-secondary)';
+      case 'avancé': case 'advanced': return 'var(--color-primary)';
+      case 'intermédiaire': case 'intermediate': return 'var(--color-accent)';
+      case 'connaissance': case 'knowledge': return 'var(--color-muted)';
       default: return 'var(--color-muted)';
     }
   };
 
   const getTranslatedLevel = (level: string) => {
-    switch (level) {
-      case 'Expert': return t('skills.levels.expert');
-      case 'Avancé': return t('skills.levels.advanced');
-      case 'Intermédiaire': return t('skills.levels.intermediate');
-      case 'Connaissance': return t('skills.levels.knowledge');
+    const levelKey = level.toLowerCase();
+    switch (levelKey) {
+      case 'expert': return t('skills.levels.expert');
+      case 'avancé': case 'advanced': return t('skills.levels.advanced');
+      case 'intermédiaire': case 'intermediate': return t('skills.levels.intermediate');
+      case 'connaissance': case 'knowledge': return t('skills.levels.knowledge');
       default: return level;
     }
   };
 
-  const getTranslatedSkillName = (skillName: string) => {
-    // Mapping direct des noms vers les clés de traduction
+  const getSkillKey = (skillName: string) => {
     const skillKeyMap: { [key: string]: string } = {
       "Développement Full-Stack": "fullstack",
-      "Tests & Qualité": "testing",
-      "Gestion de Projet": "project",
+      "Architecture Logicielle": "architecture",
+      "Software Architecture": "architecture",
       "Optimisation des Performances": "performance",
+      "Performance Optimization": "performance",
+      "Optimisation Performance": "performance",
+      "Tests & Qualité": "testing",
+      "Testing & Quality": "testing",
+      "Gestion de Projet": "project",
+      "Project Management": "project",
+      "Java": "java",
+      "TypeScript": "typescript",
+      "Angular": "angular",
+      "SQL": "sql",
+      "Git": "git",
+      "HTML/CSS": "htmlcss",
+      "Spring Boot": "spring",
+      "React": "react",
+      "Docker": "docker",
+      "JavaScript": "javascript",
+      "Python": "python",
+      "Agile/Scrum": "agile",
+      "Agile/Scrum Methods": "agile",
       "Méthodes Agiles/Scrum": "agile",
+      "DevOps": "devops",
+      "Code Review": "codereview",
+      "Révision de Code": "codereview",
       "Documentation Technique": "documentation",
-      "Intégration Continue/Déploiement": "cicd"
+      "Technical Documentation": "documentation",
+      "Documentation": "documentation",
+      "Débogage": "debugging",
+      "Debugging": "debugging",
+      "CI/CD": "cicd",
+      "Intégration Continue/Déploiement": "cicd",
+      "Continuous Integration/Deployment": "cicd",
+      "Tests Unitaires": "unittests",
+      "Unit Testing": "unittests"
     };
-    
-    const skillKey = skillKeyMap[skillName] || skillName.toLowerCase().replace(/[^a-z0-9]/g, '');
-    return t(`skills.items.${skillKey}.name`, skillName);
-  };
-
-  const getTranslatedCategoryName = (categoryKey: string) => {
-    return t(`skills.categories.${categoryKey}.name`);
+    return skillKeyMap[skillName] || skillName.toLowerCase().replace(/[^a-z0-9]/g, "");
   };
 
   return (
-    <div className="w-full">
-      {/* Header */}
-      <h2 className="section-title" style={{ color: 'var(--color-primary)' }}>
+    <section className="w-full max-h-[calc(100vh-140px)] flex flex-col">
+      <h2 className="section-title mb-4 md:mb-6" style={{ color: 'var(--color-primary)' }}>
         {t('skills.title')}
       </h2>
 
-      {/* Skills Carousel */}
-      <Carousel
-        itemsPerView={{ mobile: 1, tablet: 2, desktop: 3 }}
-        showArrows={true}
-        showDots={true}
-        autoPlay={false}
-        className="p-4"
-        itemClassName="p-2"
-      >
-        {Object.entries(skillCategories).map(([key, category]) => (
-          <div
-            key={key}
-            className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg h-full"
-            style={{ 
-              backgroundColor: 'var(--color-surface)',
-              border: '1px solid var(--color-border)',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-            }}
-          >
-            {/* Category Card Content */}
-            <div className="p-6 h-full flex flex-col">
-              {/* Category Header */}
-              <div className="text-center mb-6">
-                <div className="flex items-center justify-center gap-3 mb-2">
-                  <Icon name={category.icon} size={24} />
-                  <h3 className="section-subtitle" style={{ color: 'var(--color-text)' }}>
-                    {getTranslatedCategoryName(key)}
-                  </h3>
-                </div>
-                <p className="card-text" style={{ color: 'var(--color-muted)' }}>
-                  {category.skills.length} compétences
-                </p>
-              </div>
+      <div className="flex-1 min-h-0 flex flex-col">
+        <div className="md:px-12">
+          <Carousel showArrows showDots className="flex-1" autoPlay={false}>
+            {skillCategories.map((category) => {
+              const categoryKey = category.id;
+              const skillCount = category.skills.length;
+              
+              return (
+                <div key={categoryKey} className="h-full flex flex-col px-2">
+                  {/* Category Header */}
+                  <div className="mb-6 flex flex-col items-center gap-2">  
+                    <h3 className="text-xl md:text-2xl font-bold text-center" style={{ color: 'var(--color-text)' }}>
+                      {t(`skills.categories.${categoryKey}.title`)}
+                    </h3>
+                  </div>
 
-              {/* Skills Grid */}
-              <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {category.skills.map((skill) => (
-                  <div
-                    key={skill.name}
-                    className="group/item relative overflow-hidden rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md"
-                    style={{
-                      backgroundColor: 'var(--color-background)',
-                      border: '1px solid var(--color-border)',
-                      boxShadow: '0 1px 4px rgba(0,0,0,0.1)'
-                    }}
-                  >
-                    <div className="p-4">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Icon name={skill.icon} size={20}/>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="card-title text-sm leading-tight mb-1" style={{ color: 'var(--color-text)' }}>
-                            {getTranslatedSkillName(skill.name)}
-                          </h4>
-                          <div
-                            className="card-text text-xs"
-                            style={{ color: getLevelColor(skill.level) }}
-                          >
-                            {getTranslatedLevel(skill.level)}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Level Badge */}
-                      <div className="mt-2 flex justify-end">
-                        <span 
-                          className="px-2 py-1 text-xs rounded-full font-medium"
-                          style={{ 
-                            backgroundColor: getLevelColor(skill.level),
-                            color: 'white'
+                  {/* Skills Grid - Responsive based on count */}
+                  <div className={`
+                    flex-1
+                    grid gap-3
+                    ${skillCount <= 4 ? 'grid-cols-1 sm:grid-cols-2' : ''}
+                    ${skillCount > 4 && skillCount <= 8 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : ''}
+                    ${skillCount > 8 ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : ''}
+                  `}>
+                    {category.skills.map((skill) => {
+                      const skillKey = getSkillKey(skill.name);
+                      const skillColor = getLevelColor(skill.level);
+                      
+                      return (
+                        <div
+                          key={skill.name}
+                          className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                          style={{
+                            backgroundColor: 'var(--color-surface)',
+                            border: '1px solid var(--color-border)',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
                           }}
                         >
-                          {getTranslatedLevel(skill.level)}
-                        </span>
-                      </div>
-                    </div>
+                          <div className="p-4 h-full flex flex-col">
+                            {/* Icon, Name and Level on same line */}
+                            <div className="flex items-start gap-2">
+                              <div 
+                                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
+                                style={{ 
+                                  backgroundColor: `${skillColor}15`,
+                                }}
+                              >
+                                <Icon name={skill.icon} size={20}/>
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between gap-2 mb-1">
+                                  <h4 className="font-semibold text-md leading-tight" style={{ color: 'var(--color-text)' }}>
+                                    {t(`skills.items.${skillKey}`, skill.name)}
+                                  </h4>
+                                  {/* Progress Dots and Badge */}
+                                  <div className="flex items-center gap-2 shrink-0">
+                                    
+                                    <span 
+                                      className="px-2 py-1 text-xs font-semibold rounded-lg"
+                                      style={{ 
+                                        backgroundColor: skillColor,
+                                        color: 'white',
+                                        boxShadow: `0 2px 6px ${skillColor}40`
+                                      }}
+                                    >
+                                      {getTranslatedLevel(skill.level)}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
-                    {/* Hover Effect Overlay */}
-                    <div 
-                      className="absolute inset-0 opacity-0 group-hover/item:opacity-5 transition-opacity duration-300"
-                      style={{
-                        background: `linear-gradient(135deg, var(--color-primary)20, transparent)`
-                      }}
-                    />
+                          {/* Hover Gradient Overlay */}
+                          <div 
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                            style={{
+                              background: `linear-gradient(135deg, ${skillColor}08, transparent)`
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Category Hover Effect */}
-            <div 
-              className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300"
-              style={{
-                background: `linear-gradient(135deg, var(--color-primary)20, transparent)`
-              }}
-            />
-          </div>
-        ))}
-      </Carousel>
-    </div>
+                </div>
+              );
+            })}
+          </Carousel>
+        </div>
+      </div>
+    </section>
   );
 }

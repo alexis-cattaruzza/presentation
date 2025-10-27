@@ -33,12 +33,6 @@ export default function HobbyCard({
       {/* content */}
       <div className="relative z-10 h-full flex flex-col justify-between p-4 md:p-6">
         <div className="flex justify-end">
-          <span
-            className="px-3 py-1 rounded-full text-xs font-semibold"
-            style={{ backgroundColor: color, color: "white", boxShadow: "0 2px 8px rgba(0,0,0,0.3)" }}
-          >
-            {level}
-          </span>
         </div>
 
         <div className="space-y-2 md:space-y-3">

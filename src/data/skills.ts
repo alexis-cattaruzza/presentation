@@ -19,8 +19,8 @@ const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Développement Full-Stack", level: "Expert", icon: "code" },
       { name: "Architecture Logicielle", level: "Avancé", icon: "laptop" },
-      { name: "Optimisation Performance", level: "Avancé", icon: "zap" },
-      { name: "Tests & Qualité", level: "Intermédiaire", icon: "test-tube" },
+      { name: "Tests & Qualité", level: "Avancé", icon: "test-tube" },
+      { name: "Optimisation Performance", level: "Intermédiaire", icon: "zap" },
       { name: "Gestion de Projet", level: "Intermédiaire", icon: "briefcase" }
     ]
   },
@@ -52,14 +52,15 @@ const skillCategories: SkillCategory[] = [
     icon: 'refresh',
     skills: [
       // Avancé
-      { name: "Agile/Scrum", level: "Avancé", icon: "trending-up" },
+      { name: "Tests Unitaires", level: "Avancé", icon: "test-tube" },
       { name: "Code Review", level: "Avancé", icon: "eye" },
       { name: "Documentation", level: "Avancé", icon: "file-text" },
       { name: "Debugging", level: "Avancé", icon: "bug" },
       // Intermédiaire
+      { name: "Agile/Scrum", level: "Intermédiaire", icon: "trending-up" },
       { name: "DevOps", level: "Intermédiaire", icon: "refresh" },
       { name: "CI/CD", level: "Intermédiaire", icon: "rocket" },
-      { name: "Tests Unitaires", level: "Intermédiaire", icon: "test-tube" }
+      
     ]
   }
 ];
