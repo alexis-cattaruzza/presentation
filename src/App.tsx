@@ -9,6 +9,7 @@ import Location from "./components/Location";
 import Hobbies from "./components/Hobbies";
 import ContactForm from "./components/ContactForm";
 import { useSectionNavigation } from "./hooks/useSectionNavigation";
+import AnalyticsAndInsights from "./AnalyticsAndInsights"; 
 
 export default function App() {
   const { currentSectionIndex, totalSections } = useSectionNavigation();
@@ -66,6 +67,8 @@ export default function App() {
           <ContactForm />
         </Section>
       </motion.div>
+      {/* Analytics + Speed Insights (only in production). On passe currentSectionIndex pour générer une "route" unique par section */}
+      <AnalyticsAndInsights currentSectionIndex={currentSectionIndex} />
     </motion.div>
   );
 }
