@@ -66,20 +66,13 @@ export default function Map({ className = '', style = {} }: MapProps) {
     }).addTo(map);
 
     // Ajouter un cercle pour montrer la zone
-    const circle = L.circle(genevaCoords, {
+    L.circle(genevaCoords, {
       color: 'var(--color-primary)',
       fillColor: 'var(--color-primary)',
       fillOpacity: 0.1,
       radius: 20000, // 5km en mètres
       weight: 2,
     }).addTo(map);
-
-    // Ajouter un tooltip au cercle
-    circle.bindTooltip('Zone de disponibilité (5km)', {
-      permanent: false,
-      direction: 'center',
-      className: 'custom-tooltip'
-    });
 
     // Stocker l'instance de la carte
     mapInstanceRef.current = map;

@@ -1,42 +1,9 @@
-import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { hobbies, hobbyCategories } from "../data/hobbies";
-import Icon from "./Icon";
+import { hobbies, hobbyCategories, type Hobby } from "../data/hobbies";
+import Carousel from "./Carousel";
+import HobbyCard from "./HobbyCard";
 
-export default function Hobbies() {
-  const { t } = useTranslation();
-  const [isMobile, setIsMobile] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  // Detect screen size
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // Only true mobile devices
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Check screen types
-  const isTablet = typeof window !== 'undefined' && window.innerWidth >= 768 && window.innerWidth < 1024;
-  const isSmallPC = typeof window !== 'undefined' && window.innerWidth >= 1024 && window.innerWidth < 1200;
-
-  // Auto-slide for mobile
-  useEffect(() => {
-    if (!isMobile) return;
-    
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % Object.keys(hobbyCategories).length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [isMobile]);
-
-  const getLevelColor = (level: string) => {
+const getLevelColor = (level: string) => {
     switch (level) {
       case 'passion': return 'var(--color-success)';
       case 'hobby': return 'var(--color-primary)';
@@ -45,7 +12,7 @@ export default function Hobbies() {
     }
   };
 
-  const getLevelText = (level: string) => {
+  /*const getLevelText = (level: string) => {
     switch (level) {
       case 'passion': return t('hobbies.levels.passion');
       case 'hobby': return t('hobbies.levels.hobby');
@@ -55,7 +22,6 @@ export default function Hobbies() {
   };
 
   const getTranslatedHobbyName = (hobbyName: string) => {
-    // Mapping direct des noms vers les clés de traduction
     const hobbyKeyMap: { [key: string]: string } = {
       "Formule 1": "f1",
       "Padel": "padel",
@@ -71,7 +37,6 @@ export default function Hobbies() {
   };
 
   const getTranslatedHobbyDescription = (hobbyName: string) => {
-    // Mapping direct des noms vers les clés de traduction
     const hobbyKeyMap: { [key: string]: string } = {
       "Formule 1": "f1",
       "Padel": "padel",
@@ -80,236 +45,68 @@ export default function Hobbies() {
       "Développement IT personnel": "dev",
       "Lecture technique": "reading",
       "Cuisine": "cooking"
-    };
-    
-    const hobbyKey = hobbyKeyMap[hobbyName] || hobbyName.toLowerCase().replace(/[^a-z0-9]/g, '');
-    return t(`hobbies.items.${hobbyKey}.description`, hobbyName);
+    };*/
+
+export default function Hobbies() {
+  const { t } = useTranslation();
+    // liste d'ids de catégories dans l'ordre souhaité
+  const categoryKeys = Object.keys(hobbyCategories) as Array<keyof typeof hobbyCategories>;
+
+  // Calculate optimal grid columns based on item count
+  const getGridCols = (itemCount: number) => {
+    if (itemCount === 1) return 'grid-cols-1';
+    if (itemCount === 2) return 'grid-cols-1 md:grid-cols-2';
+    if (itemCount === 3) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+    return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
   };
-
-  const getTranslatedCategoryName = (categoryKey: string) => {
-    return t(`hobbies.categories.${categoryKey}.name`);
-  };
-
-  // Navigation functions for slider
-  const goToPrevious = () => {
-    setCurrentSlide((prev) => (prev - 1 + Object.keys(hobbyCategories).length) % Object.keys(hobbyCategories).length);
-  };
-
-  const goToNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % Object.keys(hobbyCategories).length);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
-  // Touch handlers for mobile/tablet swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 75;
-    const isRightSwipe = distance < -75;
-
-    if (isLeftSwipe) {
-      goToNext();
-    } else if (isRightSwipe) {
-      goToPrevious();
-    }
-  };
-
-
-
 
   return (
-    <div className="w-full">
-      {/* Header */}
-      <h2 className="section-title" style={{ color: 'var(--color-primary)' }}>
-        {t('hobbies.title')}
+    <section className="w-full max-h-[calc(100vh-140px)] flex flex-col">
+      <h2 className="section-title mb-4 md:mb-6" style={{ color: "var(--color-primary)" }}>
+        {t("hobbies.title")}
       </h2>
 
-      {/* Hobbies Slider */}
-      <div className="relative">
-        {/* Hobbies Container with integrated arrows */}
-        <div 
-          className="overflow-hidden rounded-xl relative" 
-          style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {/* Navigation Arrows - Only for screens >= 1024px, integrated in container */}
-          {!isMobile && !isTablet && (
-            <>
-              {/* Previous Arrow */}
-              <button
-                onClick={goToPrevious}
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
-                style={{
-                  backgroundColor: 'var(--color-primary)',
-                  border: '2px solid var(--color-primary-hover)',
-                  color: 'white',
-                  boxShadow: '0 4px 12px rgba(112, 135, 76, 0.3)'
-                }}
-                title={t('common.previous')}
-              >
-                <Icon name="chevron-left" size={18} />
-              </button>
+      <div className="flex-1 min-h-0 flex flex-col">
+        <div className="md:px-12">
+          <Carousel showArrows showDots className="flex-1" autoPlay={false}>
+          {categoryKeys.map((catKey) => {
+            const items = hobbies.filter((h) => h.category === catKey);
+            const categoryMeta = hobbyCategories[catKey];
+            const itemCount = items.length;
 
-              {/* Next Arrow */}
-              <button
-                onClick={goToNext}
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
-                style={{
-                  backgroundColor: 'var(--color-primary)',
-                  border: '2px solid var(--color-primary-hover)',
-                  color: 'white',
-                  boxShadow: '0 4px 12px rgba(112, 135, 76, 0.3)'
-                }}
-                title={t('common.next')}
-              >
-                <Icon name="chevron-right" size={18} />
-              </button>
-            </>
-          )}
-          <div 
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {Object.entries(hobbyCategories).map(([key, category]) => {
-              const categoryHobbies = hobbies.filter(hobby => hobby.category === key);
-              return (
-                <div key={key} className="w-full shrink-0">
-                  <div className="p-4 sm:p-6" style={{ paddingLeft: !isMobile ? '4rem' : '1rem', paddingRight: !isMobile ? '4rem' : '1rem' }}>
-                    {/* Category Header */}
-                    <div className="text-center mb-4 sm:mb-6">
-                      <div className="flex items-center justify-center gap-3 mb-2">
-                        <h3 className="section-subtitle" style={{ color: 'var(--color-text)' }}>
-                          {getTranslatedCategoryName(key)}
-                        </h3>
-                      </div>
-                      <p className="card-text" style={{ color: 'var(--color-muted)' }}>
-                        {categoryHobbies.length} {categoryHobbies.length === 1 ? 'hobby' : 'hobbies'}
-                      </p>
-                    </div>
-
-                    {/* Hobbies Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                      {categoryHobbies.map((hobby) => (
-                        <div
-                          key={hobby.name}
-                          className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                          style={{ 
-                            backgroundColor: 'var(--color-background)',
-                            border: '1px solid var(--color-border)',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                          }}
-                        >
-                          {/* Hobby Card Content */}
-                          <div className="p-4">
-                            {/* Header */}
-                            <div className="flex items-center gap-3 mb-3">
-                              
-                              <div className="flex-1">
-                                <h4 className="card-title" style={{ color: 'var(--color-text)' }}>
-                                  {getTranslatedHobbyName(hobby.name)}
-                                </h4>
-                                <div 
-                                  className="card-text"
-                                  style={{ color: getLevelColor(hobby.level) }}
-                                >
-                                  {getLevelText(hobby.level)}
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Description */}
-                            <p className="card-text leading-relaxed" style={{ color: 'var(--color-muted)' }}>
-                              {getTranslatedHobbyDescription(hobby.name)}
-                            </p>
-                          </div>
-
-                          {/* Hover Effect */}
-                          <div 
-                            className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300"
-                            style={{
-                              background: `linear-gradient(135deg, ${category.color}20, transparent)`
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+            return (
+              <div key={catKey} className="h-full flex flex-col px-2">
+                {/* header per category */}
+                <div className="mb-4 flex items-center gap-3">
+                  <h3 className="text-lg font-semibold">{categoryMeta.name}</h3>
                 </div>
-              );
-            })}
-          </div>
+
+                {/* grid: dynamic columns based on item count */}
+                <div
+                  className={`grid ${getGridCols(itemCount)} gap-4 flex-1`}
+                  style={{
+                    alignItems: "stretch",
+                  }}
+                >
+                  {items.map((hobby: Hobby) => (
+                    <div key={hobby.name} className="h-full rounded-lg overflow-hidden" style={{ minHeight: '200px' }}>
+                      <HobbyCard
+                        name={t(`hobbies.items.${hobby.name.toLowerCase().replace(/[^a-z0-9]/g, "")}.name`, hobby.name)}
+                        description={t(`hobbies.items.${hobby.name.toLowerCase().replace(/[^a-z0-9]/g, "")}.description`, hobby.description)}
+                        icon={hobby.icon}
+                        image={hobby.image}
+                        level={hobby.level}
+                        getLevelColor={getLevelColor}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+          </Carousel>
         </div>
       </div>
-
-      {/* Enhanced Navigation - Bulles avec flèches sur les côtés pour écrans < 1024px */}
-      <div className="flex items-center justify-center gap-2 mt-6 sm:mt-8">
-        {/* Left Arrow - Only for screens < 1024px */}
-        {(isMobile || isTablet) && (
-          <button
-            onClick={goToPrevious}
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{
-              backgroundColor: 'var(--color-primary)',
-              border: '2px solid var(--color-primary-hover)',
-              color: 'white',
-              boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
-            }}
-            title={t('common.previous')}
-          >
-            <Icon name="chevron-left" size={16} />
-          </button>
-        )}
-
-        {/* Navigation Bulles */}
-        {Object.entries(hobbyCategories).map(([key], index) => (
-          <button
-            key={key}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 hover:scale-110 ${
-              currentSlide === index ? 'w-6 sm:w-8' : ''
-            } ${isSmallPC ? 'hover:shadow-lg cursor-pointer' : ''}`}
-            style={{
-              backgroundColor: currentSlide === index ? 'var(--color-primary)' : 'var(--color-muted)',
-              boxShadow: isSmallPC ? (currentSlide === index ? '0 0 8px rgba(112, 135, 76, 0.4)' : '0 2px 4px rgba(0,0,0,0.1)') : 'none',
-              border: isSmallPC ? '1px solid rgba(112, 135, 76, 0.2)' : 'none'
-            }}
-            title={getTranslatedCategoryName(key)}
-          />
-        ))}
-
-        {/* Right Arrow - Only for screens < 1024px */}
-        {(isMobile || isTablet) && (
-          <button
-            onClick={goToNext}
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            style={{
-              backgroundColor: 'var(--color-primary)',
-              border: '2px solid var(--color-primary-hover)',
-              color: 'white',
-              boxShadow: '0 2px 8px rgba(112, 135, 76, 0.3)'
-            }}
-            title={t('common.next')}
-          >
-            <Icon name="chevron-right" size={16} />
-          </button>
-        )}
-      </div>
-
-    </div>
+    </section>
   );
 }

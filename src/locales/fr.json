@@ -36,14 +36,14 @@
       "contract": {
         "role": "Full stack Java/Angular — Contrat",
         "company": "Cronos Europa",
-        "date": "Juil 2025",
+        "date": "Juillet 2025",
         "description": "Intervention post-livraison : corrections de bugs, maintenance et optimisation. Intégration de l'API LinkedIn pour l'importation automatisée de CV, optimisation de requêtes SQL et amélioration des performances du système.",
         "category": "Expérience Professionnelle"
       },
       "internship": {
         "role": "Full stack Java/Angular — Stagiaire",
         "company": "Cronos Europa",
-        "date": "Fév 2025 — Juin 2025",
+        "date": "Février 2025 — Juin 2025",
         "description": "Développement et livraison de user stories full-stack : front, back, base de données et documentation. Migration de données legacy vers un schéma structuré. Création de fonctions SQL pour calculs et optimisation des requêtes.",
         "category": "Stage & Formation"
       },

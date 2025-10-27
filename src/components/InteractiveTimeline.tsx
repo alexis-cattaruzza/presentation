@@ -7,7 +7,6 @@ import Icon from "./Icon";
 export default function InteractiveTimeline() {
   const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -23,30 +22,16 @@ export default function InteractiveTimeline() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Auto-play functionality (desktop only)
-  useEffect(() => {
-    if (!isAutoPlaying || isMobile) return;
-    
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % timeline.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, isMobile]);
-
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % timeline.length);
-    setIsAutoPlaying(false);
   };
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + timeline.length) % timeline.length);
-    setIsAutoPlaying(false);
   };
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
-    setIsAutoPlaying(false);
   };
 
   // Touch handlers for mobile swipe
@@ -68,10 +53,8 @@ export default function InteractiveTimeline() {
 
     if (isLeftSwipe) {
       setCurrentSlide((prev) => (prev + 1) % timeline.length);
-      setIsAutoPlaying(false);
     } else if (isRightSwipe) {
       setCurrentSlide((prev) => (prev - 1 + timeline.length) % timeline.length);
-      setIsAutoPlaying(false);
     }
   };
 
@@ -233,76 +216,6 @@ export default function InteractiveTimeline() {
               <Icon name="chevron-right" size={20} />
             </motion.button>
           )}
-        </div>
-
-        {/* Barre de progression simplifiée */}
-        <div className="relative">
-          {/* Barre de base (complète) */}
-          <div 
-            className="absolute top-1/2 left-0 h-1 transform -translate-y-1/2 rounded-full"
-            style={{ 
-              width: '100%',
-              backgroundColor: 'var(--color-muted)'
-            }}
-          />
-          
-          {/* Ligne de progression */}
-          <div 
-            className="absolute top-1/2 left-0 h-1 transform -translate-y-1/2 rounded-full"
-            style={{ 
-              width: `${(currentSlide / (timeline.length - 1)) * 100}%`,
-              backgroundColor: 'var(--color-primary)'
-            }}
-          />
-
-          {/* Points de la timeline */}
-          <div className="relative flex justify-between items-center py-3">
-            {timeline.map((item, index) => (
-              <motion.button
-                key={item.id}
-                onClick={() => goToSlide(index)}
-                className="relative flex flex-col items-center cursor-pointer"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {/* Point de la timeline */}
-                <motion.div
-                  className={`w-3 h-3 rounded-full ${
-                    index <= currentSlide ? 'scale-110' : ''
-                  }`}
-                  style={{ 
-                    backgroundColor: index <= currentSlide 
-                      ? 'var(--color-primary)' 
-                      : 'var(--color-muted)'
-                  }}
-                />
-              </motion.button>
-            ))}
-          </div>
-        </div>
-
-        {/* Contrôles additionnels compacts */}
-        <div className="flex items-center justify-center gap-2 mt-3">
-          <motion.button
-            onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-            className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-all duration-200"
-            style={{ 
-              backgroundColor: 'var(--color-surface)',
-              color: 'var(--color-text)',
-              border: '1px solid var(--color-border)'
-            }}
-            whileHover={{ scale: 1.05, borderColor: 'var(--color-primary)' }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Icon name={isAutoPlaying ? "pause" : "play"} size={12} />
-          </motion.button>
-
-          <div 
-            className="text-xs"
-            style={{ color: 'var(--color-muted)' }}
-          >
-            {currentSlide + 1} / {timeline.length}
-          </div>
         </div>
       </div>
     </div>
