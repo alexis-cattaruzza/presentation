@@ -2,18 +2,76 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/site-logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cattaruzza Alexis - Développeur fullstack</title>
-    
-    <!-- Preload critical hobby images for instant display -->
-    <link rel="preload" as="image" href="/images/formule1.jpg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/padel.jpg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/travel.jpg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/running.jpg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/devIt.jpg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/techRead.jpg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/cooking.jpg" fetchpriority="high" />
+
+    <!-- Primary meta -->
+    <meta name="description" content="Alexis Cattaruzza — Développeur Fullstack & Frontend. Portfolio, projets et case-studies en React, TypeScript, Angular et Java. Ouvert aux opportunités." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://alexis-cattaruzza-presentation.vercel.app/" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content="Alexis Cattaruzza — Fullstack Developer" />
+    <meta property="og:description" content="Portfolio & projets — React, TypeScript, Angular, Java. Ouvert aux opportunités." />
+    <meta property="og:image" content="https://alexis-cattaruzza-presentation.vercel.app/images/og-image-1280.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Preload critical images (use optimized outputs: avif / webp ) -->
+    <!-- Précharge uniquement l'image principale / hero et au besoin la première image de la section hobbies -->
+    <link rel="preload" as="image" href="/images/optimized/pro-linkedIn-960.avif" type="image/avif" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/optimized/formule1-640.avif" type="image/avif" fetchpriority="high" />
+
+    <!-- Sitemap-->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <!-- Structured data: Person + WebSite-->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Alexis Cattaruzza",
+      "url": "https://alexis-cattaruzza-presentation.vercel.app/",
+      "image": "https://alexis-cattaruzza-presentation.vercel.app/images/Pro-linkedIn.jpg",
+      "jobTitle": "Fullstack Developer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Cronos Europa (stagiaire / mission contractuelle) | Freelance"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/alexis-cattaruzza",
+        "https://github.com/alexiscattaruzza"
+      ],
+      "description": "Développeur Fullstack & Frontend (React, TypeScript, Angular, Java). Diplômé Haute École Léonard de Vinci (2025). Ouvert aux opportunités."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Alexis Cattaruzza",
+      "url": "https://alexis-cattaruzza-presentation.vercel.app/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://alexis-cattaruzza-presentation.vercel.app/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Optional: alternate languages / hreflang (si tu sers FR & EN) -->
+    <link rel="alternate" href="https://alexis-cattaruzza-presentation.vercel.app/" hreflang="fr" />
+    <link rel="alternate" href="https://alexis-cattaruzza-presentation.vercel.app/en" hreflang="en" />
+
+    <!-- Favicons / theme color -->
+    <meta name="theme-color" content="#0f172a" />
+
+    <title>Alexis Cattaruzza - Développeur fullstack</title>
+
   </head>
   <body>
     <div id="root"></div>
