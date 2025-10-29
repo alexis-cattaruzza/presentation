@@ -20,6 +20,17 @@
   --color-success: #70874C;        /* Palm Leaf */
   --color-danger: #B85450;          /* Muted Red */
   --color-info: #6C513C;            /* Mud Brown */
+  
+  /* Typography sizes */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem;  /* 36px */
+  --text-5xl: 3rem;     /* 48px */
 }
 
 /* ---------------------------
@@ -28,6 +39,12 @@
 html, body, #root {
   height: 100%;
 }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   background: radial-gradient(circle at 30% 20%, #70874C 0%, #6C513C 30%, #F0F0F2 70%, #FFFFFF 100%);
@@ -36,207 +53,23 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-}
-
-/* ---------------------------
-   Creative Gradients & Effects
-   --------------------------- */
-.gradient-primary {
-  background: radial-gradient(circle at 30% 20%, #70874C 0%, #6C513C 30%, #F0F0F2 70%, #FFFFFF 100%);
-}
-
-.gradient-card {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
-  border: 1px solid #D4C4B8;
-  box-shadow: 0 4px 6px -1px rgba(108, 81, 60, 0.1), 0 2px 4px -1px rgba(108, 81, 60, 0.06);
-}
-
-.gradient-accent {
-  background: linear-gradient(135deg, #C8E1A0 0%, #CAAB8F 100%);
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #70874C 0%, #6C513C 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Creative Card Styles */
-.card-natural {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
-  border: 1px solid #D4C4B8;
-  box-shadow: 0 4px 6px -1px rgba(108, 81, 60, 0.1), 0 2px 4px -1px rgba(108, 81, 60, 0.06);
-  transition: all 0.3s ease;
-}
-
-.card-natural:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 12px -2px rgba(108, 81, 60, 0.15), 0 4px 6px -1px rgba(108, 81, 60, 0.1);
-}
-
-.card-organic {
-  background: linear-gradient(135deg, #C8E1A0 0%, #FFFFFF 100%);
-  border: 1px solid #B8D888;
-  box-shadow: 0 2px 4px rgba(200, 225, 160, 0.2);
-}
-
-.card-earth {
-  background: linear-gradient(135deg, #CAAB8F 0%, #F0F0F2 100%);
-  border: 1px solid #B8A896;
-  box-shadow: 0 2px 4px rgba(202, 171, 143, 0.2);
-}
-
-/* Natural Theme Animations */
-@keyframes natural-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
-}
-
-.natural-float {
-  animation: natural-float 3s ease-in-out infinite;
-}
-
-/* Organic Glow Effect */
-.organic-glow {
-  box-shadow: 0 0 20px rgba(200, 225, 160, 0.3);
-  transition: box-shadow 0.3s ease;
-}
-
-.organic-glow:hover {
-  box-shadow: 0 0 30px rgba(200, 225, 160, 0.5);
-}
-
-/* ---------------------------
-   Reusable components (safe @apply usage)
-   --------------------------- */
-.btn-primary {
-  /* spacing / layout / typography via Tailwind @apply */
-  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-all duration-200;
-  /* colors via CSS vars (safe for v4) */
-  background: linear-gradient(135deg, #70874C 0%, #8BA066 100%);
-  color: white;
-  box-shadow: 0 2px 4px rgba(112, 135, 76, 0.3);
-}
-.btn-primary:hover { 
-  background: linear-gradient(135deg, #8BA066 0%, #70874C 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(112, 135, 76, 0.4);
-}
-
-.btn-accent {
-  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-all duration-200;
-  background: linear-gradient(135deg, #CAAB8F 0%, #D4BFA8 100%);
-  color: #6C513C;
-  box-shadow: 0 2px 4px rgba(202, 171, 143, 0.3);
-}
-.btn-accent:hover {
-  background: linear-gradient(135deg, #D4BFA8 0%, #CAAB8F 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(202, 171, 143, 0.4);
-}
-
-.btn-ghost {
-  @apply inline-flex items-center justify-center px-3 py-1 rounded-md font-medium transition-colors duration-150;
-  background: transparent;
-  color: var(--color-text);
-  border: 1px solid transparent;
-}
-.btn-ghost:hover {
-  border-color: rgba(255,255,255,0.06);
-}
-
-/* Card */
-.card {
-  @apply rounded-lg p-4 shadow-sm;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-}
-
-/* Input */
-.input-default {
-  @apply rounded-md p-2 w-full transition-shadow duration-150;
-  background-color: var(--color-surface);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-}
-.input-default:focus {
-  outline: none;
-  box-shadow: 0 0 0 6px rgba(124,58,237,0.08); /* subtle ring */
-  border-color: var(--color-primary);
-}
-
-/* Badge */
-.badge-primary {
-  @apply inline-block px-2 py-1 rounded text-xs font-medium;
-  background-color: var(--color-primary);
-  color: white;
-}
-.badge-secondary {
-  @apply inline-block px-2 py-1 rounded text-xs font-medium;
-  background-color: var(--color-secondary);
-  color: white;
-}
-
-/* Utility helpers (direct usage allowed) */
-.bg-surface { background-color: var(--color-surface) !important; }
-.bg-background { background-color: var(--color-background) !important; }
-.text-primary { color: var(--color-primary) !important; }
-.text-secondary { color: var(--color-secondary) !important; }
-.text-muted { color: var(--color-muted) !important; }
-.border-border { border-color: var(--color-border) !important; }
-
-/* small responsive tweaks if needed */
-@media (prefers-reduced-motion: reduce) {
-  .btn-primary, .btn-accent, .btn-ghost {
-    transition: none;
-  }
-}
-
-/* ---------- Scrolling / Layout helpers ---------- */
-
-/* Enhanced smooth scroll with momentum */
-:root { 
-  scroll-behavior: smooth;
-  scroll-padding-top: 0;
-}
-
-/* Smooth scroll container */
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
-
-body {
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  min-height: 100vh;
   min-height: 100dvh;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
-/* Natural scrolling container */
+/* ---------------------------
+   Layout & Scrolling
+   --------------------------- */
 .page-content {
+  position: relative;
+  z-index: 10;
   min-height: calc(100vh - 80px);
 }
 
-/* Disable scroll snap for mobile and tablet */
-@media (max-width: 1024px) {
-  .scroll-snap-y {
-    scroll-snap-type: none;
-    scroll-behavior: smooth;
-  }
-  
-  .section-snap {
-    scroll-snap-align: none;
-    min-height: auto;
-    padding: 2rem 0;
-  }
-}
-
-/* each section with natural flow */
 .section-snap {
-  min-height: 80vh; /* minimum section height */
-  min-height: 80dvh; /* dynamic viewport height for mobile */
+  min-height: 80vh;
+  min-height: 80dvh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -244,13 +77,12 @@ body {
   padding: 4rem 0;
 }
 
-/* content wrapper to center content and limit width */
 .section-inner {
   max-width: 1200px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem; /* px-6 */
+  padding-left: 1.5rem;
   padding-right: 1.5rem;
   display: flex;
   align-items: flex-start;
@@ -258,11 +90,9 @@ body {
   min-height: 100%;
   position: relative;
   z-index: 2;
-  padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
-/* Static background with same color palette */
 .bg-static {
   position: fixed;
   inset: 0;
@@ -275,125 +105,57 @@ body {
   background-size: 100% 100%;
 }
 
-/* Section-specific background overlays - simplified */
-.section-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.3;
-  transition: opacity 0.3s ease;
+/* ---------------------------
+   Components
+   --------------------------- */
+.btn-primary {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-all duration-200;
+  background: linear-gradient(135deg, #70874C 0%, #8BA066 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(112, 135, 76, 0.3);
 }
 
-/* ensure page content sits above */
-.page-content {
-  position: relative;
-  z-index: 10;
+.btn-primary:hover {
+  background: linear-gradient(135deg, #8BA066 0%, #70874C 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(112, 135, 76, 0.4);
 }
 
-/* Scroll indicator */
-.scroll-indicator {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
+.btn-accent {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-all duration-200;
+  background: linear-gradient(135deg, #CAAB8F 0%, #D4BFA8 100%);
+  color: #6C513C;
+  box-shadow: 0 2px 4px rgba(202, 171, 143, 0.3);
 }
 
-.scroll-indicator:hover {
-  opacity: 1;
+.btn-accent:hover {
+  background: linear-gradient(135deg, #D4BFA8 0%, #CAAB8F 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(202, 171, 143, 0.4);
 }
 
-.scroll-indicator-counter {
-  font-size: 0.7rem;
-  color: var(--color-muted);
-  background: rgba(175, 201, 135, 0.3);
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  backdrop-filter: blur(10px);
+.card {
+  @apply rounded-lg p-4 shadow-sm;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
 }
 
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
-  }
+.input-default {
+  @apply rounded-md p-2 w-full transition-shadow duration-150;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
-/* Section navigation dots */
-.section-dots {
-  position: fixed;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.section-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid var(--color-muted);
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0.6;
-}
-
-.section-dot:hover {
-  opacity: 1;
-  transform: scale(1.2);
-}
-
-.section-dot.active {
-  background: var(--color-primary);
+.input-default:focus {
+  outline: none;
+  box-shadow: 0 0 0 6px rgba(124,58,237,0.08);
   border-color: var(--color-primary);
-  opacity: 1;
-  transform: scale(1.3);
 }
 
-/* Hide navigation elements on mobile */
-@media (max-width: 768px) {
-  .scroll-indicator,
-  .section-dots {
-    display: none;
-  }
-}
-
-:root {
-  /* Mobile First - Base sizes */
-  --text-xs: 0.75rem;    /* 12px */
-  --text-sm: 0.875rem;    /* 14px */
-  --text-base: 1rem;      /* 16px */
-  --text-lg: 1.125rem;    /* 18px */
-  --text-xl: 1.25rem;     /* 20px */
-  --text-2xl: 1.5rem;     /* 24px */
-  --text-3xl: 1.875rem;   /* 30px */
-  --text-4xl: 2.25rem;    /* 36px */
-  --text-5xl: 3rem;       /* 48px */
-  
-  /* Responsive breakpoints */
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
-}
-
-/* Section Titles - Homogénéisés */
+/* ---------------------------
+   Typography
+   --------------------------- */
 .section-title {
   font-size: var(--text-3xl);
   font-weight: 700;
@@ -401,405 +163,28 @@ body {
   margin-bottom: 10px;
 }
 
-/* Section Subtitle */
-.section-subtitle {
-  font-size: var(--text-xl);
-  font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 1rem;
-}
-
-/* Section Text */
 .section-text {
   font-size: var(--text-lg);
   line-height: 1.5;
 }
 
-/* Card Title */
 .card-title {
   font-size: var(--text-lg);
   font-weight: 600;
   line-height: 1.3;
 }
 
-/* Card Text */
 .card-text {
   font-size: var(--text-sm);
   line-height: 1.4;
 }
 
-/* Responsive design improvements */
-/* Large screens (1536px+) */
-@media (min-width: 1536px) {
-  .section-inner { 
-    max-width: 1400px;
-  }
-  
-  .section-title {
-    font-size: var(--text-5xl);
-  }
-  
-  .section-subtitle {
-    font-size: var(--text-3xl);
-  }
-  
-  .section-text {
-    font-size: var(--text-xl);
-  }
-  
-  .card-title {
-    font-size: var(--text-2xl);
-  }
-  
-  .card-text {
-    font-size: var(--text-lg);
-  }
-}
-
-/* Medium-large screens (1280px - 1535px) */
-@media (min-width: 1280px) and (max-width: 1535px) {
-  .section-inner { 
-    max-width: 1200px;
-  }
-  
-  .section-title {
-    font-size: var(--text-4xl);
-  }
-  
-  .section-subtitle {
-    font-size: var(--text-2xl);
-  }
-  
-  .section-text {
-    font-size: var(--text-lg);
-  }
-  
-  .card-title {
-    font-size: var(--text-xl);
-  }
-  
-  .card-text {
-    font-size: var(--text-base);
-  }
-}
-
-/* Medium screens (1024px - 1279px) */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .section-inner { 
-    max-width: 1000px;
-  }
-  
-  .section-title {
-    font-size: var(--text-3xl);
-  }
-  
-  .section-subtitle {
-    font-size: var(--text-xl);
-  }
-  
-  .section-text {
-    font-size: var(--text-lg);
-  }
-  
-  .card-title {
-    font-size: var(--text-lg);
-  }
-  
-  .card-text {
-    font-size: var(--text-base);
-  }
-}
-
-@media (max-width: 1536px) {
-  .section-inner { 
-    max-width: 1200px;
-  }
-}
-
-@media (max-width: 1279px) {
-  .section-inner { 
-    max-width: 1000px;
-  }
-  
-  .section-title {
-    font-size: var(--text-2xl);
-  }
-}
-
-@media (max-width: 1023px) {
-  .section-inner { 
-    max-width: 900px;
-  }
-  
-  .section-title {
-    font-size: var(--text-xl);
-  }
-  
-  .section-subtitle {
-    font-size: var(--text-lg);
-  }
-  
-  .section-text {
-    font-size: var(--text-base);
-  }
-}
-
-@media (max-width: 768px) {
-  .section-inner { 
-    padding-left: 1rem; 
-    padding-right: 1rem; 
-    max-width: 100%;
-  }
-  
-  .section-overlay {
-    opacity: 0.2;
-  }
-  
-  .section-snap {
-    min-height: 100vh;
-    min-height: 100svh;
-  }
-  
-  .section-title {
-    font-size: var(--text-2xl);
-    margin-bottom: 1rem;
-  }
-  
-  .section-subtitle {
-    font-size: var(--text-lg);
-  }
-  
-  .section-text {
-    font-size: var(--text-lg);
-  }
-}
-
-@media (max-width: 640px) {
-  .section-inner { 
-    padding-left: 0.75rem; 
-    padding-right: 0.75rem; 
-  }
-  
-  .section-overlay {
-    opacity: 0.15;
-  }
-  
-  .section-title {
-    font-size: var(--text-xl);
-  }
-  
-  .section-subtitle {
-    font-size: var(--text-base);
-  }
-  
-  .section-text {
-    font-size: var(--text-base);
-  }
-}
-
-@media (max-width: 480px) {
-  .section-inner { 
-    padding-left: 0.5rem; 
-    padding-right: 0.5rem; 
-  }
-}
-
-@media (max-width: 360px) {
-  .section-inner { 
-    padding-left: 0.25rem; 
-    padding-right: 0.25rem; 
-  }
-}
-
-/* Améliorations pour très petits écrans */
-@media (max-width: 320px) {
-  .section-inner { 
-    padding-left: 0.125rem; 
-    padding-right: 0.125rem; 
-  }
-  
-  .card {
-    padding: 0.75rem;
-  }
-  
-  .btn-primary, .btn-accent, .btn-ghost {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-  }
-}
-
-/* Améliorations pour les écrans très larges */
-@media (min-width: 1920px) {
-  .section-inner { 
-    max-width: 1400px;
-  }
-}
-
-/* Skills Section - Optimized for Single Section Display */
-.skills-section {
-  height: 100%;
-  max-height: calc(100vh - 120px); /* Account for header */
-  overflow: hidden;
-}
-
-/* Skills Categories Grid - Responsive Layout */
-.skills-categories-grid {
-  display: grid;
-  gap: 1rem;
-  height: 100%;
-}
-
-/* Mobile: Single column */
-@media (max-width: 767px) {
-  .skills-categories-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-}
-
-/* Tablet: Single column with more space */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .skills-categories-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-}
-
-/* Desktop: Three columns */
-@media (min-width: 1024px) {
-  .skills-categories-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-}
-
-/* Large Desktop: Three columns with more space */
-@media (min-width: 1280px) {
-  .skills-categories-grid {
-    gap: 2.5rem;
-  }
-}
-
-/* Ultra-wide: Three columns with maximum space */
-@media (min-width: 1920px) {
-  .skills-categories-grid {
-    gap: 3rem;
-  }
-}
-
-/* Optimisations pour les très petits écrans */
-@media (max-width: 320px) {
-  .skills-item {
-    padding: 0.5rem;
-    font-size: 0.75rem;
-  }
-  
-  .skills-icon {
-    font-size: 1rem;
-  }
-}
-
-/* Optimisations pour les écrans 4K et plus */
-@media (min-width: 2560px) {
-  .skills-item {
-    padding: 1.5rem;
-    font-size: 1.125rem;
-  }
-  
-  .skills-icon {
-    font-size: 2rem;
-  }
-}
-
-@media (min-width: 3840px) {
-  .skills-item {
-    padding: 2rem;
-    font-size: 1.25rem;
-  }
-  
-  .skills-icon {
-    font-size: 2.5rem;
-  }
-}
-
-/* Améliorations pour les tablettes en mode paysage */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  .section-snap {
-    min-height: 100vh;
-    min-height: 100dvh;
-  }
-}
-
-/* Améliorations pour les mobiles en mode paysage */
-@media (max-width: 896px) and (orientation: landscape) {
-  .section-snap {
-    min-height: 100vh;
-    min-height: 100dvh;
-  }
-  
-  .section-inner {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-}
-
-/* Améliorations pour les écrans haute résolution */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .bg-static {
-    background-size: 100% 100%;
-  }
-}
-
-/* Améliorations pour l'accessibilité et les préférences utilisateur */
-@media (prefers-reduced-motion: reduce) {
-  .scroll-indicator-arrow {
-    animation: none;
-  }
-  
-  .section-dot {
-    transition: none;
-  }
-}
-
-/* Améliorations pour le mode sombre (déjà géré par les variables CSS) */
-@media (prefers-color-scheme: light) {
-  /* Les couleurs sont déjà gérées par les variables CSS */
-}
-
-/* Améliorations pour les écrans tactiles */
-@media (hover: none) and (pointer: coarse) {
-  .section-dot {
-    min-width: 16px;
-    min-height: 16px;
-  }
-  
-  .btn-primary, .btn-accent, .btn-ghost {
-    min-height: 44px;
-  }
-}
-
-/* Leaflet Map Styles */
+/* ---------------------------
+   Leaflet Map Styles
+   --------------------------- */
 .leaflet-container {
-  background: var(--color-surface) !important;
   font-family: Inter, ui-sans-serif, system-ui !important;
-}
-
-.leaflet-popup-content-wrapper {
-  background: var(--color-surface) !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
-}
-
-.leaflet-popup-content {
-  margin: 8px 12px !important;
-  line-height: 1.4 !important;
-  font-size: 13px !important;
-}
-
-.leaflet-popup-tip {
-  background: var(--color-surface) !important;
-  border: 1px solid var(--color-border) !important;
+  filter: contrast(1.1) brightness(0.9);
 }
 
 .leaflet-control-zoom a {
@@ -819,28 +204,59 @@ body {
   font-size: 10px !important;
 }
 
-/* Custom tooltip styles */
-.custom-tooltip {
-  background: var(--color-primary) !important;
-  color: white !important;
-  border: none !important;
-  border-radius: 4px !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  padding: 4px 8px !important;
+/* ---------------------------
+   Responsive Media Queries
+   --------------------------- */
+/* Disable scroll snap for mobile and tablet */
+@media (max-width: 1024px) {
+  .section-snap {
+    scroll-snap-align: none;
+    min-height: auto;
+    padding: 2rem 0;
+  }
 }
 
-.custom-tooltip::before {
-  border-top-color: var(--color-primary) !important;
+/* Section responsive adjustments */
+@media (max-width: 768px) {
+  .section-inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 100%;
+  }
+  
+  .section-snap {
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+  
+  .section-title {
+    font-size: var(--text-2xl);
+    margin-bottom: 1rem;
+  }
+  
+  .section-text {
+    font-size: var(--text-lg);
+  }
 }
 
-/* Map grayscale filter */
-.leaflet-container {
-  filter: grayscale(100%) contrast(1.1) brightness(0.9);
-}
-
-/* Responsive map adjustments */
 @media (max-width: 640px) {
+  .section-inner {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  .section-title {
+    font-size: var(--text-xl);
+  }
+  
+  .section-text {
+    font-size: var(--text-base);
+  }
+  
+  .card-text {
+    font-size: var(--text-xs);
+  }
+  
   .leaflet-popup-content {
     font-size: 12px !important;
     margin: 6px 10px !important;
@@ -851,3 +267,117 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+  .section-inner {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .card {
+    padding: 0.75rem;
+  }
+  
+  .btn-primary, .btn-accent {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .section-inner {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1280px) {
+  .section-inner {
+    max-width: 1200px;
+  }
+  
+  .section-title {
+    font-size: var(--text-4xl);
+  }
+  
+  .section-text {
+    font-size: var(--text-lg);
+  }
+  
+  .card-title {
+    font-size: var(--text-xl);
+  }
+  
+  .card-text {
+    font-size: var(--text-base);
+  }
+}
+
+@media (min-width: 1536px) {
+  .section-inner {
+    max-width: 1400px;
+  }
+  
+  .section-title {
+    font-size: var(--text-5xl);
+  }
+  
+  .section-text {
+    font-size: var(--text-xl);
+  }
+  
+  .card-title {
+    font-size: var(--text-2xl);
+  }
+  
+  .card-text {
+    font-size: var(--text-lg);
+  }
+}
+
+@media (min-width: 1920px) {
+  .section-inner {
+    max-width: 1400px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .section-snap {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
+
+@media (max-width: 896px) and (orientation: landscape) {
+  .section-snap {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  
+  .section-inner {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+/* High resolution displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .bg-static {
+    background-size: 100% 100%;
+  }
+}
+
+/* Accessibility - Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary, .btn-accent {
+    transition: none;
+  }
+}
+
+/* Touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary, .btn-accent {
+    min-height: 44px;
+  }
+}

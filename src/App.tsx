@@ -8,9 +8,17 @@ import Skills from "./components/Skills";
 import Location from "./components/Location";
 import Hobbies from "./components/Hobbies";
 import ContactForm from "./components/ContactForm";
-import AnalyticsAndInsights from "./AnalyticsAndInsights"; 
+import AnalyticsAndInsights from "./AnalyticsAndInsights";
+import { useImagePreloader } from "./hooks/useImagePreloader";
+import { hobbies } from "./data/hobbies";
 
 export default function App() {
+  // Preload all hobby images on app start
+  const hobbyImages = hobbies
+    .map((hobby) => hobby.image)
+    .filter((img): img is string => Boolean(img));
+  
+  useImagePreloader(hobbyImages);
 
   return (
     <motion.div 

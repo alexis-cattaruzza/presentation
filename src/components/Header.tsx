@@ -91,14 +91,14 @@ export default function Header() {
             className="text-sm font-medium transition-colors duration-200 hover:scale-105"
             style={{ color: 'var(--color-text)' }}
           >
-            Localisation
+            {t('header.nav.location')}
           </button>
           <button
             onClick={() => scrollToSection('hobbies')}
             className="text-sm font-medium transition-colors duration-200 hover:scale-105"
             style={{ color: 'var(--color-text)' }}
           >
-            Hobbies
+            {t('header.nav.hobbies')}
           </button>
           <button
             onClick={() => scrollToSection('contact')}

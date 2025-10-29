@@ -2,22 +2,37 @@ import { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Fix for default markers in Leaflet with Vite
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-import markerRetina from 'leaflet/dist/images/marker-icon-2x.png';
-
-const DefaultIcon = L.icon({
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-  iconRetinaUrl: markerRetina,
-});
-
-L.Marker.prototype.options.icon = DefaultIcon;
+// Create a blue marker icon
+const createBlueIcon = () => {
+  return L.divIcon({
+    className: 'custom-blue-marker',
+    html: `
+      <div style="
+        width: 30px;
+        height: 30px;
+        background-color: #3b82f6;
+        border: 3px solid white;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      ">
+        <div style="
+          width: 8px;
+          height: 8px;
+          background-color: white;
+          border-radius: 50%;
+          transform: rotate(45deg);
+        "></div>
+      </div>
+    `,
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -30]
+  });
+};
 
 interface MapProps {
   className?: string;
@@ -33,7 +48,7 @@ export default function Map({ className = '', style = {} }: MapProps) {
 
     // Coordonnées de Genève
     const genevaCoords: [number, number] = [46.2044, 6.1432];
-    const zoomLevel = 9;
+    const zoomLevel = 10;
 
     // Créer la carte
     const map = L.map(mapRef.current, {
@@ -43,26 +58,17 @@ export default function Map({ className = '', style = {} }: MapProps) {
       attributionControl: true,
     });
 
-    // Ajouter le tile layer grayscale
-    const grayscaleLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // Ajouter le tile layer avec couleurs
+    const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
       maxZoom: 19,
     });
 
-    // Appliquer un filtre CSS grayscale
-    const style = document.createElement('style');
-    style.textContent = `
-      .leaflet-container {
-        filter: grayscale(100%) contrast(1.2);
-      }
-    `;
-    document.head.appendChild(style);
+    tileLayer.addTo(map);
 
-    grayscaleLayer.addTo(map);
-
-    // Ajouter un marqueur pour Genève
+    // Ajouter un marqueur bleu pour Genève
     L.marker(genevaCoords, {
-      icon: DefaultIcon
+      icon: createBlueIcon()
     }).addTo(map);
 
     // Ajouter un cercle pour montrer la zone
@@ -82,10 +88,6 @@ export default function Map({ className = '', style = {} }: MapProps) {
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
-      }
-      // Nettoyer le style CSS
-      if (style.parentNode) {
-        style.parentNode.removeChild(style);
       }
     };
   }, []);

@@ -15,14 +15,18 @@
     "next": "Suivant",
     "loading": "Chargement...",
     "error": "Erreur",
-    "success": "Succès"
+    "success": "Succès",
+    "read_more": "Lire la suite",
+    "read_less": "Lire moins"
   },
   "hero": {
     "greeting": "Bonjour et bienvenue dans mon espace personnel. Je m'appelle",
     "name": "Alexis Cattaruzza",
-    "title": "Développeur Frontend passionné par des interfaces modernes et performantes — React, TypeScript, Tailwind.",
-    "download_cv": "Télécharge mon CV !",
-    "contact": "Me contacter"
+    "title": "Développeur Full-stack junior — interfaces modernes, performantes et maintenables.",
+    "summary": "Diplômé avec distinction en Informatique et Développement d'applications, j'ai acquis une expérience pratique en développement full-stack lors d'un stage puis d'une mission contractuelle chez Cronos Europa. J'y ai travaillé sur des applications Java / Spring Boot et Angular / TypeScript, optimisé des requêtes SQL, réalisé des migrations de données, intégré l'API LinkedIn pour l'import automatique de CV, et assuré le debugging et la maintenance post-production. Je maîtrise Docker, Git et les bonnes pratiques de tests et documentation ; j'ai également suivi une option cybersécurité pendant mes études.",
+    "objective": "Ouvert à toute proposition, je cible un poste où je pourrai apprendre en continu et développer mes compétences techniques et produit. Idéalement un rôle frontend ou full-stack au sein d'une équipe Agile, impliqué dans la conception de composants UI réutilisables, l'optimisation des performances, la mise en place de pratiques DevOps/CI-CD et l'amélioration de l'accessibilité et des tests. Je souhaite prendre des responsabilités techniques, apprendre via le pair-programming et contribuer aux choix d'architecture.",
+    "objective_title": "Objectif",
+    "available": "Disponible"
   },
   "timeline": {
     "title": "Parcours",
@@ -50,7 +54,7 @@
       "studies": {
         "role": "Bachelier en Informatique & Développement d'applications",
         "company": "Haute école Léonard de Vinci",
-        "date": "2022 — 2025",
+        "date": "Septembre 2022 — Juin 2025",
         "description": "Diplôme obtenu avec distinction. Spécialisation Web, projet final et élective en cybersécurité. Formation orientée développement full-stack et bonnes pratiques (architecture, tests).",
         "category": "Formation"
       },
@@ -175,8 +179,8 @@
     "address": "Basé à Genève",
     "region": "Suisse - Région lémanique",
     "local_zone": {
-      "title": "Zone locale (20km)",
-      "description": "Disponible pour déplacements dans un rayon de 20km autour de Genève",
+      "title": "Zone locale",
+      "description": "Disponible pour déplacements autour de la région lémanique",
       "status": "✅ Disponible"
     },
     "remote": {

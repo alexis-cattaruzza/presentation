@@ -29,9 +29,8 @@ export default function Section({ id, children }: PropsWithChildren<Props>) {
       id={id} 
       className="section-snap"
       style={{ 
-        minHeight: "60vh",
-        paddingTop: "40px",
-        paddingBottom: "40px"
+        minHeight: "auto",
+        paddingBottom: "60px"
       }}
     >
       <div className="section-inner">

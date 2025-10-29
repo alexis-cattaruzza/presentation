@@ -18,8 +18,7 @@ export default function Location() {
         <div className="order-2 lg:order-1">
           <div 
             className="w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 rounded-lg overflow-hidden border"
-            style={{ 
-              backgroundColor: 'var(--color-surface)',
+            style={{  
               borderColor: 'var(--color-border)'
             }}
           >

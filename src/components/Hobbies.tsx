@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { hobbies, hobbyCategories, type Hobby } from "../data/hobbies";
 import Carousel from "./Carousel";
 import HobbyCard from "./HobbyCard";
+import { useState } from "react";
 
 const getLevelColor = (level: string) => {
     switch (level) {
@@ -17,6 +18,16 @@ export default function Hobbies() {
   const { t } = useTranslation();
     // liste d'ids de catégories dans l'ordre souhaité
   const categoryKeys = Object.keys(hobbyCategories) as Array<keyof typeof hobbyCategories>;
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const totalSlides = categoryKeys.length;
+
+  // helper circular compare
+  const isNearby = (slideIndex: number) => {
+    // preload current, prev and next
+    const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+    const next = (currentSlide + 1) % totalSlides;
+    return slideIndex === currentSlide || slideIndex === prev || slideIndex === next;
+  };
 
   // Map hobby names to translation keys
   const getHobbyKey = (hobbyName: string) => {
@@ -41,29 +52,28 @@ export default function Hobbies() {
   };
 
   return (
-    <section className="w-full max-h-[calc(100vh-140px)] flex flex-col">
+    <section className="w-full">
       <h2 className="section-title mb-4 md:mb-6" style={{ color: "var(--color-primary)" }}>
         {t("hobbies.title")}
       </h2>
 
-      <div className="flex-1 min-h-0 flex flex-col">
+      <div className="w-full">
         <div className="md:px-12">
-          <Carousel showArrows showDots className="flex-1" autoPlay={false}>
-          {categoryKeys.map((catKey) => {
+          <Carousel showArrows showDots className="flex-1" autoPlay={false} onSlideChange={(idx) => setCurrentSlide(idx)}>
+          {categoryKeys.map((catKey, slideIndex) => {
             const items = hobbies.filter((h) => h.category === catKey);
-            const categoryMeta = hobbyCategories[catKey];
-            const itemCount = items.length;
+            const shouldPreloadSlide = isNearby(slideIndex);
 
             return (
               <div key={catKey} className="h-full flex flex-col px-2">
                 {/* header per category */}
                 <div className="mb-4 flex items-center gap-3">
-                  <h3 className="text-lg font-semibold">{t(`hobbies.categories.${catKey}.name`, categoryMeta.name)}</h3>
+                  <h3 className="text-lg font-semibold">{t(`hobbies.categories.${catKey}.name`)}</h3>
                 </div>
 
                 {/* grid: dynamic columns based on item count */}
                 <div
-                  className={`grid ${getGridCols(itemCount)} gap-4 flex-1`}
+                  className={`grid ${getGridCols(items.length)} gap-4 flex-1`}
                   style={{
                     alignItems: "stretch",
                   }}
@@ -79,6 +89,7 @@ export default function Hobbies() {
                           image={hobby.image}
                           level={hobby.level}
                           getLevelColor={getLevelColor}
+                          forceLoad={shouldPreloadSlide}
                         />
                       </div>
                     );
