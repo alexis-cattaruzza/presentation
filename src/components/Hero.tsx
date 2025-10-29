@@ -44,6 +44,48 @@ export default function Hero() {
           {t('hero.title')}
         </motion.p>
 
+        {/* Image Section - Mobile only (between title and summary) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 mx-auto lg:hidden"
+        >
+          {/* Decorative elements */}
+          <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full opacity-20" style={{ backgroundColor: 'var(--color-primary)' }} />
+          <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full opacity-20" style={{ backgroundColor: 'var(--color-accent)' }} />
+          
+          {/* Main image container */}
+          <div 
+            className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl"
+            style={{ 
+              border: '3px solid var(--color-border)',
+              backgroundColor: 'var(--color-surface)'
+            }}
+          >
+            <img 
+              src="/images/Pro-linkedIn.jpg" 
+              alt="Photo Alexis" 
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" 
+            />
+            
+            {/* Overlay gradient */}
+            <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
+          </div>
+
+          {/* Floating badge */}
+          <motion.div
+            className="absolute -bottom-4 -right-4 px-3 py-1.5 rounded-full shadow-lg"
+            style={{ backgroundColor: 'var(--color-success)', color: 'white' }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1, duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            <span className="text-xs font-semibold">{t('hero.available')}</span>
+          </motion.div>
+        </motion.div>
+
         {/* Summary Section */}
         <motion.div 
           className="max-w-3xl mx-auto lg:mx-0 space-y-4"
@@ -181,12 +223,12 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Image Section - Fixed position */}
+      {/* Image Section - Desktop only (right side) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9, rotateY: -15 }}
         animate={{ opacity: 1, scale: 1, rotateY: 0 }}
         transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-        className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 shrink-0 self-start lg:sticky lg:top-8"
+        className="hidden lg:block w-96 h-96 shrink-0 self-start sticky top-8"
       >
         {/* Decorative elements */}
         <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full opacity-20" style={{ backgroundColor: 'var(--color-primary)' }} />

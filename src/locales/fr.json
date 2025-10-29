@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "Portfolio",
+    "title": "Présentation",
     "nav": {
       "about": "À propos",
       "experience": "Expérience", 
@@ -24,7 +24,7 @@
     "name": "Alexis Cattaruzza",
     "title": "Développeur Full-stack junior — interfaces modernes, performantes et maintenables.",
     "summary": "Diplômé avec distinction en Informatique et Développement d'applications, j'ai acquis une expérience pratique en développement full-stack lors d'un stage puis d'une mission contractuelle chez Cronos Europa. J'y ai travaillé sur des applications Java / Spring Boot et Angular / TypeScript, optimisé des requêtes SQL, réalisé des migrations de données, intégré l'API LinkedIn pour l'import automatique de CV, et assuré le debugging et la maintenance post-production. Je maîtrise Docker, Git et les bonnes pratiques de tests et documentation ; j'ai également suivi une option cybersécurité pendant mes études.",
-    "objective": "Ouvert à toute proposition, je cible un poste où je pourrai apprendre en continu et développer mes compétences techniques et produit. Idéalement un rôle frontend ou full-stack au sein d'une équipe Agile, impliqué dans la conception de composants UI réutilisables, l'optimisation des performances, la mise en place de pratiques DevOps/CI-CD et l'amélioration de l'accessibilité et des tests. Je souhaite prendre des responsabilités techniques, apprendre via le pair-programming et contribuer aux choix d'architecture.",
+    "objective": "Ouvert à toute proposition, je cible un poste où je pourrai apprendre en continu et développer mes compétences techniques et produit. Idéalement un rôle backend, frontend ou full-stack au sein d'une équipe Agile, impliqué dans la conception de composants UI réutilisables, l'optimisation des performances, la mise en place de pratiques DevOps/CI-CD et l'amélioration de l'accessibilité et des tests. Je souhaite prendre des responsabilités techniques, apprendre via le pair-programming et contribuer aux choix d'architecture.",
     "objective_title": "Objectif",
     "available": "Disponible"
   },
@@ -47,7 +47,7 @@
       "internship": {
         "role": "Full stack Java/Angular — Stagiaire",
         "company": "Cronos Europa",
-        "date": "Février 2025 — Juin 2025",
+        "date": "Février 2025 — Mai 2025",
         "description": "Développement et livraison de user stories full-stack : front, back, base de données et documentation. Migration de données legacy vers un schéma structuré. Création de fonctions SQL pour calculs et optimisation des requêtes.",
         "category": "Stage & Formation"
       },

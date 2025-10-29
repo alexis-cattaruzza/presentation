@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "Portfolio",
+    "title": "Presentation",
     "nav": {
       "about": "About",
       "experience": "Experience",
@@ -24,7 +24,7 @@
     "name": "Alexis Cattaruzza",
     "title": "Junior Full-stack Developer — building modern, fast and maintainable interfaces.",
     "summary": "Graduated with distinction in Applied Computer Science, I gained hands-on full-stack experience during an internship and a contract at Cronos Europa. I worked on Java / Spring Boot backends and Angular / TypeScript frontends, optimized SQL queries, performed legacy data migrations, integrated the LinkedIn API for automated CV import, and handled post-production bug fixes and maintenance. I am experienced with Docker, Git, testing practices and documentation, and I took a cybersecurity elective during my studies.",
-    "objective": "Open to any opportunity, I am aiming for a role where I can continuously learn and grow my skills. Preferably a frontend or full-stack position within an Agile product team focused on reusable UI components, performance optimization, CI/CD and DevOps practices, accessibility and robust testing. I want to take on technical ownership, learn through pair programming, and contribute to frontend architecture decisions.",
+    "objective": "Open to any opportunity, I am aiming for a role where I can continuously learn and grow my skills. Preferably a backend, frontend or full-stack position within an Agile product team focused on reusable UI components, performance optimization, CI/CD and DevOps practices, accessibility and robust testing. I want to take on technical ownership, learn through pair programming, and contribute to frontend architecture decisions.",
     "objective_title": "Objective",
     "available": "Available"
   },
@@ -47,7 +47,7 @@
       "internship": {
         "role": "Full stack Java/Angular — Intern",
         "company": "Cronos Europa",
-        "date": "February 2025 — June 2025",
+        "date": "February 2025 — May 2025",
         "description": "Development and delivery of full-stack user stories: front, back, database and documentation. Legacy data migration to structured schema. SQL function creation for calculations and query optimization.",
         "category": "Internship & Training"
       },

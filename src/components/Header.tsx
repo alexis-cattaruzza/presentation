@@ -120,7 +120,7 @@ export default function Header() {
           <div className="flex items-center gap-2 sm:gap-3">
             {/* GitHub */}
             <motion.a
-              href="https://github.com/neuralbody"
+              href="https://github.com/alexis-cattaruzza"
               target="_blank"
               rel="noopener noreferrer"
               className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-lg transition-all duration-200"
