@@ -39,28 +39,28 @@
     "items": {
       "contract": {
         "role": "Full stack Java/Angular — Contract",
-        "company": "Cronos Europa",
+        "company": "Cronos Europa (Brussels, Belgium)",
         "date": "July 2025",
         "description": "Post-delivery intervention: bug fixes, maintenance and optimization. LinkedIn API integration for automated CV import, SQL query optimization and system performance improvement.",
         "category": "Professional Experience"
       },
       "internship": {
         "role": "Full stack Java/Angular — Intern",
-        "company": "Cronos Europa",
+        "company": "Cronos Europa (Brussels, Belgium)",
         "date": "February 2025 — May 2025",
         "description": "Development and delivery of full-stack user stories: front, back, database and documentation. Legacy data migration to structured schema. SQL function creation for calculations and query optimization.",
         "category": "Internship & Training"
       },
       "studies": {
         "role": "Bachelor in Computer Science & Application Development",
-        "company": "Haute école Léonard de Vinci",
+        "company": "Haute école Léonard de Vinci (Brussels, Belgium)",
         "date": "September 2022 — June 2025",
         "description": "Degree obtained with distinction. Web specialization, final project and cybersecurity elective. Full-stack development oriented training and best practices (architecture, testing).",
         "category": "Education"
       },
       "retail": {
         "role": "Cashier",
-        "company": "Intermarché",
+        "company": "Intermarché (Braine-l'Alleud, Belgium)",
         "date": "Summer 2022 & 2023",
         "description": "Customer service experience, cash management and store restocking.",
         "category": "Professional Experience"

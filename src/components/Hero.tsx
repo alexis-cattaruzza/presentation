@@ -64,7 +64,7 @@ export default function Hero() {
             }}
           >
             <img 
-              src="/images/Pro-linkedIn.jpg" 
+              src="/images/Pro-linkedIn-Shine-zoom.jpg" 
               alt="Photo Alexis" 
               className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" 
             />
@@ -243,7 +243,7 @@ export default function Hero() {
           }}
         >
           <img 
-            src="/images/Pro-linkedIn.jpg" 
+            src="/images/Pro-linkedIn-Shine-zoom.jpg" 
             alt="Photo Alexis" 
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" 
           />

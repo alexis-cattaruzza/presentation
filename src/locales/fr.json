@@ -39,28 +39,28 @@
     "items": {
       "contract": {
         "role": "Full stack Java/Angular — Contrat",
-        "company": "Cronos Europa",
+        "company": "Cronos Europa (Bruxelles, Belgique)",
         "date": "Juillet 2025",
         "description": "Intervention post-livraison : corrections de bugs, maintenance et optimisation. Intégration de l'API LinkedIn pour l'importation automatisée de CV, optimisation de requêtes SQL et amélioration des performances du système.",
         "category": "Expérience Professionnelle"
       },
       "internship": {
         "role": "Full stack Java/Angular — Stagiaire",
-        "company": "Cronos Europa",
+        "company": "Cronos Europa (Bruxelles, Belgique)",
         "date": "Février 2025 — Mai 2025",
         "description": "Développement et livraison de user stories full-stack : front, back, base de données et documentation. Migration de données legacy vers un schéma structuré. Création de fonctions SQL pour calculs et optimisation des requêtes.",
         "category": "Stage & Formation"
       },
       "studies": {
         "role": "Bachelier en Informatique & Développement d'applications",
-        "company": "Haute école Léonard de Vinci",
+        "company": "Haute école Léonard de Vinci (Bruxelles, Belgique)",
         "date": "Septembre 2022 — Juin 2025",
         "description": "Diplôme obtenu avec distinction. Spécialisation Web, projet final et élective en cybersécurité. Formation orientée développement full-stack et bonnes pratiques (architecture, tests).",
         "category": "Formation"
       },
       "retail": {
         "role": "Caissier",
-        "company": "Intermarché",
+        "company": "Intermarché (Braine-l'Alleud, Belgique)",
         "date": "Été 2022 & 2023",
         "description": "Expérience en service client, gestion de caisse et réassort en magasin.",
         "category": "Expérience Professionnelle"
